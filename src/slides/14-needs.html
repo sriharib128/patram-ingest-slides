@@ -1,0 +1,60 @@
+<section class="slide light" id="needs" data-steps="0" data-section="0 · The problem" data-time="0.8" data-title="So the engine needs three things">
+  <div class="hd">
+    <div class="eyebrow">What the engine must do</div>
+    <h2>So the engine needs three things</h2>
+  </div>
+  <div class="abs" style="left:120px;top:262px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
+    <div class="card nd"><i>1</i><h3>Busy GPUs</h3><p>The GPUs are the expensive part. They should never wait for anything.</p>
+      <div class="nv"><svg viewBox="0 0 580 130">
+        <g>
+          <rect x="0" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="32.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
+          <rect x="65" y="20" width="28" height="52" rx="7" fill="#E4ECFA"><animate attributeName="fill" values="#E4ECFA;#E4ECFA;#F28C28;#F28C28;#E4ECFA" keyTimes="0;.35;.4;.95;1" dur="6s" repeatCount="indefinite"/></rect>
+          <rect x="97.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="130" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
+          <rect x="162.5" y="20" width="28" height="52" rx="7" fill="#E4ECFA"><animate attributeName="fill" values="#E4ECFA;#E4ECFA;#F28C28;#F28C28;#E4ECFA" keyTimes="0;.38;.43;.95;1" dur="6s" repeatCount="indefinite"/></rect>
+          <rect x="195" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="227.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
+          <rect x="260" y="20" width="28" height="52" rx="7" fill="#E4ECFA"><animate attributeName="fill" values="#E4ECFA;#E4ECFA;#F28C28;#F28C28;#E4ECFA" keyTimes="0;.41;.46;.95;1" dur="6s" repeatCount="indefinite"/></rect>
+          <rect x="292.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="325" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
+          <rect x="357.5" y="20" width="28" height="52" rx="7" fill="#E4ECFA"><animate attributeName="fill" values="#E4ECFA;#E4ECFA;#F28C28;#F28C28;#E4ECFA" keyTimes="0;.44;.49;.95;1" dur="6s" repeatCount="indefinite"/></rect>
+          <rect x="390" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="422.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
+          <rect x="455" y="20" width="28" height="52" rx="7" fill="#E4ECFA"><animate attributeName="fill" values="#E4ECFA;#E4ECFA;#F28C28;#F28C28;#E4ECFA" keyTimes="0;.47;.52;.95;1" dur="6s" repeatCount="indefinite"/></rect>
+          <rect x="487.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="520" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
+          <rect x="552.5" y="20" width="28" height="52" rx="7" fill="#E4ECFA"><animate attributeName="fill" values="#E4ECFA;#E4ECFA;#F28C28;#F28C28;#E4ECFA" keyTimes="0;.5;.55;.95;1" dur="6s" repeatCount="indefinite"/></rect>
+        </g>
+        <g font-family="IBM Plex Sans" font-size="24" font-weight="600">
+          <text x="0" y="112" fill="#C93C3C">GPU waiting, doing nothing<animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;.5;.55;.95;1" dur="6s" repeatCount="indefinite"/></text>
+          <text x="0" y="112" fill="#0E7C61" opacity="0">GPU always busy<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.55;.95;1" dur="6s" repeatCount="indefinite"/></text>
+        </g>
+      </svg></div></div>
+    <div class="card nd"><i>2</i><h3>No lost work</h3><p>Nodes die, GPUs come and go. Every record is still written exactly once.</p>
+      <div class="nv"><svg viewBox="0 0 580 130">
+        <g fill="#0E7C61">
+          <circle cx="18" cy="26" r="15"/><circle cx="88" cy="26" r="15"/><circle cx="158" cy="26" r="15"/><circle cx="228" cy="26" r="15"/><circle cx="298" cy="26" r="15"/><circle cx="368" cy="26" r="15"/><circle cx="438" cy="26" r="15"/><circle cx="508" cy="26" r="15"/>
+          <circle cx="18" cy="66" r="15"/><circle cx="88" cy="66" r="15"/><circle cx="158" cy="66" r="15"/><circle cx="228" cy="66" r="15"/>
+          <circle cx="298" cy="66" r="15"><animate attributeName="fill" values="#0E7C61;#0E7C61;#C93C3C;#C93C3C;#0E7C61;#0E7C61" keyTimes="0;.3;.33;.6;.63;1" dur="6s" repeatCount="indefinite"/></circle>
+          <circle cx="368" cy="66" r="15"/><circle cx="438" cy="66" r="15"/><circle cx="508" cy="66" r="15"/>
+        </g>
+        <g font-family="IBM Plex Sans" font-size="24" font-weight="600">
+          <text x="0" y="112" fill="#0E7C61">16 records in, 16 out<animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;.3;.33;.6;.63;1" dur="6s" repeatCount="indefinite"/></text>
+          <text x="0" y="112" fill="#C93C3C" opacity="0">a process dies… the record is redone<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.3;.33;.6;.63;1" dur="6s" repeatCount="indefinite"/></text>
+        </g>
+      </svg></div></div>
+    <div class="card nd"><i>3</i><h3>Any workflow, little code</h3><p>Picture a pipeline, and have it running across every node with a few lines of code.</p>
+      <div class="nv"><svg viewBox="0 0 580 130">
+        <g fill="none" stroke-width="6" stroke-linecap="round">
+          <path d="M30 65 C110 65 110 25 200 25" stroke="#2A63C9" stroke-dasharray="200" stroke-dashoffset="200"><animate attributeName="stroke-dashoffset" values="200;200;0;0;200" keyTimes="0;.1;.25;.9;1" dur="6s" repeatCount="indefinite"/></path>
+          <path d="M30 65 C110 65 110 105 200 105" stroke="#F28C28" stroke-dasharray="200" stroke-dashoffset="200"><animate attributeName="stroke-dashoffset" values="200;200;0;0;200" keyTimes="0;.1;.25;.9;1" dur="6s" repeatCount="indefinite"/></path>
+          <path d="M200 25 C300 25 300 65 380 65" stroke="#2A63C9" stroke-dasharray="200" stroke-dashoffset="200"><animate attributeName="stroke-dashoffset" values="200;200;0;0;200" keyTimes="0;.25;.4;.9;1" dur="6s" repeatCount="indefinite"/></path>
+          <path d="M200 105 C300 105 300 65 380 65" stroke="#F28C28" stroke-dasharray="200" stroke-dashoffset="200"><animate attributeName="stroke-dashoffset" values="200;200;0;0;200" keyTimes="0;.25;.4;.9;1" dur="6s" repeatCount="indefinite"/></path>
+          <path d="M380 65 H500" stroke="#0E7C61" stroke-dasharray="130" stroke-dashoffset="130"><animate attributeName="stroke-dashoffset" values="130;130;0;0;130" keyTimes="0;.4;.5;.9;1" dur="6s" repeatCount="indefinite"/></path>
+        </g>
+        <g fill="#fff" stroke="#0E1A3A" stroke-width="4"><circle cx="30" cy="65" r="14"/><circle cx="200" cy="25" r="14"/><circle cx="200" cy="105" r="14"/><circle cx="380" cy="65" r="14"/><circle cx="500" cy="65" r="14"/></g>
+      </svg></div></div>
+  </div>
+  <aside class="notes">
+    <p>From those problems come three needs, and we take them in order.</p>
+    <p>First, busy GPUs. The GPUs are the expensive part of the cluster, and part one is about never letting them wait for anything: not the host, not the disk, not another stage.</p>
+    <p>Second, no lost work. Nodes die and GPUs come and go, and when the dust settles the output must still hold every record exactly once, without a person cleaning up. That is part two. Normally this need is expensive, because engines that survive crashes write every step to a database; part two shows how we avoid that.</p>
+    <p>Third, any workflow with very little code. Once someone can picture a pipeline, with stages that branch and merge on what the data contains, getting it running across every node should take a few lines of code and one command. Coordination, retries and scaling should come for free. That is part three.</p>
+    <p>First, busy GPUs.</p>
+  </aside>
+</section>

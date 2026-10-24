@@ -1,0 +1,42 @@
+<section class="slide light" id="share" data-steps="1" data-section="1 · Keeping the GPUs busy" data-time="1.1" data-title="Sharing work through one queue">
+  <div class="hd">
+    <div class="eyebrow">Load balancing</div>
+    <h2>How do the workers share the work?</h2>
+    <div class="sub">The easy way: one shared queue, and every worker pulls from it.</div>
+  </div>
+  <svg class="abs sh3" viewBox="0 0 1680 600" style="left:120px;top:300px;width:1680px;height:600px">
+    <defs><marker id="sh3h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5B6785"/></marker>
+      <g id="sh3lock"><path d="M-13 -4 V-14 A13 13 0 0 1 13 -14 V-4" fill="none" stroke-width="6"/><rect x="-21" y="-6" width="42" height="34" rx="7"/></g></defs>
+    <text x="150" y="40" class="t" text-anchor="middle">Shared queue</text>
+    <rect x="40" y="62" width="220" height="440" rx="18" class="qf"/>
+    <g class="qi"><rect x="70" y="88" width="160" height="50" rx="10"/><rect x="70" y="154" width="160" height="50" rx="10"/><rect x="70" y="220" width="160" height="50" rx="10"/><rect x="70" y="286" width="160" height="50" rx="10"/><rect x="70" y="352" width="160" height="50" rx="10"/><rect x="70" y="418" width="160" height="50" rx="10"/></g>
+    <g class="ar"><path d="M262 282 C500 282 600 120 756 120"/><path d="M262 282 C500 282 600 300 756 300"/><path d="M262 282 C500 282 600 480 756 480"/></g>
+    <g class="wk"><rect x="760" y="60" width="380" height="120" rx="18"/><rect x="760" y="240" width="380" height="120" rx="18"/><rect x="760" y="420" width="380" height="120" rx="18"/></g>
+    <g class="wn"><text x="790" y="110">Worker 1</text><text x="790" y="290">Worker 2</text><text x="790" y="470">Worker 3</text></g>
+    <g data-h="1" class="ok"><text x="790" y="148">working</text><text x="790" y="328">working</text><text x="790" y="508">working</text></g>
+    <g data-h="1" class="lk"><animateTransform attributeName="transform" type="translate" values="0 0;0 180;0 360" keyTimes="0;.333;.667" dur="3.6s" calcMode="discrete" repeatCount="indefinite"/>
+      <use href="#sh3lock" x="1070" y="104"/><text x="1070" y="152" text-anchor="middle" class="lt">has the lock</text></g>
+    <g data-s="1">
+      <rect x="760" y="240" width="380" height="120" rx="18" class="dead"/>
+      <text x="790" y="290" class="dn">Worker 2  ✕</text><text x="790" y="328" class="dx">killed holding the lock</text>
+      <use href="#sh3lock" x="1090" y="292" class="lr"/>
+      <text x="790" y="148" class="wt">waiting for the lock…</text><text x="790" y="508" class="wt">waiting for the lock…</text>
+    </g>
+  </svg>
+  <div class="abs sh3p" data-h="1" style="left:1300px;top:300px;width:500px">
+    <h3>Inside every pull</h3>
+    <ol><li><i>1</i>Take the lock</li><li><i>2</i>Pull one request</li><li><i>3</i>Release the lock</li></ol>
+    <p>Simple, and it balances itself: a fast worker just pulls more often.</p>
+  </div>
+  <div class="abs sh3p bad" data-s="1" style="left:1300px;top:300px;width:500px">
+    <h3>The lock is never released</h3>
+    <p>A killed process runs no cleanup, so it never lets go. Every other worker waits forever.</p>
+    <div class="st"><span>pool status</span><b class="g">healthy ✓</b><span>throughput</span><b class="r">0</b></div>
+    <p class="fin3">No error and no timeout. The run just stops.</p>
+  </div>
+  <aside class="notes">
+    <p>We now have several workers, and requests to hand out. How do we balance the load between them? The easiest way is one shared queue: put every request in it, and let each worker pull the next one when it is free. A fast worker simply pulls more often, so the load balances itself.</p>
+    <p>Look at what a pull does inside. The worker takes the queue's lock, pulls one request, and releases the lock. Only one worker holds the lock at any moment; you can see it passing between them.</p>
+    <p data-step="1">Now a worker is killed, for example by an out-of-memory kill, at the moment it holds the lock. A killed process runs no cleanup, so the lock is never released. Every other worker is now waiting for a lock that nobody will ever give back. The supervisor restarts the dead worker, and the new one waits on the same lock. So the pool reports itself healthy, with every worker alive, but throughput is zero. There is no error and no timeout; the run just stops. This happened to us: in a test that killed one of two workers mid-request, the pool hung in three of eight trials.</p>
+  </aside>
+</section>

@@ -1,0 +1,40 @@
+<section class="slide light" id="state1" data-steps="0" data-section="Wrap-up" data-time="0.8" data-title="The DB is the single source of truth">
+  <div class="hd">
+    <div class="eyebrow">The key takeaway · everything else is stateless</div>
+    <h2>The DB is the single source of truth</h2>
+  </div>
+  <div class="abs card st1" style="left:120px;top:246px;width:1680px;height:420px">
+    <svg viewBox="0 0 1600 360" class="st1-svg">
+      <g font-family="IBM Plex Sans" font-weight="600">
+        <rect x="4" y="4" width="1000" height="352" rx="22" fill="#F7F9FC" stroke="#9DB3DC" stroke-width="2.5" stroke-dasharray="10 8"/>
+        <text x="30" y="42" font-size="18" fill="#5B6785" font-family="IBM Plex Mono" letter-spacing="2.5">EVERY OTHER COMPONENT · HOLDS NO STATE</text>
+        <g class="st1-chips">
+          <g transform="translate(30 70)"><rect class="st1-dead" width="300" height="124" rx="16" fill="#fff" stroke="#C3CEE5" stroke-width="2.5"/><text x="22" y="46" font-size="25" fill="#0E1A3A" font-family="Sora">Stage workers</text><text class="st1-ok" x="22" y="84" font-size="19" fill="#7C879F">no state</text><text class="st1-x" x="22" y="84" font-size="19" fill="#C93C3C">✕ crashed</text><text class="st1-back" x="22" y="84" font-size="19" fill="#0E7C61">restarted · reads the DB ✓</text></g>
+          <g transform="translate(354 70)"><rect width="300" height="124" rx="16" fill="#fff" stroke="#C3CEE5" stroke-width="2.5"/><text x="22" y="46" font-size="25" fill="#0E1A3A" font-family="Sora">Worker pools</text><text x="22" y="84" font-size="19" fill="#7C879F">no state</text></g>
+          <g transform="translate(678 70)"><rect width="300" height="124" rx="16" fill="#fff" stroke="#C3CEE5" stroke-width="2.5"/><text x="22" y="46" font-size="25" fill="#0E1A3A" font-family="Sora">Supervisors</text><text x="22" y="84" font-size="19" fill="#7C879F">no state</text></g>
+          <g transform="translate(30 212)"><rect width="300" height="124" rx="16" fill="#fff" stroke="#C3CEE5" stroke-width="2.5"/><text x="22" y="46" font-size="25" fill="#0E1A3A" font-family="Sora">Watchers</text><text x="22" y="84" font-size="19" fill="#7C879F">no state</text></g>
+          <g transform="translate(354 212)"><rect width="300" height="124" rx="16" fill="#fff" stroke="#C3CEE5" stroke-width="2.5"/><text x="22" y="46" font-size="25" fill="#0E1A3A" font-family="Sora">Model servers</text><text x="22" y="84" font-size="19" fill="#7C879F">no state</text></g>
+          <g transform="translate(678 212)"><rect width="300" height="124" rx="16" fill="#fff" stroke="#C3CEE5" stroke-width="2.5" stroke-dasharray="8 6"/><text x="22" y="46" font-size="25" fill="#0E1A3A" font-family="Sora">Nodes 1 … N</text><text x="22" y="84" font-size="19" fill="#7C879F">no state · join any time</text></g>
+        </g>
+        <path d="M1010 180 H1118" stroke="#2A63C9" stroke-width="4" stroke-dasharray="3 10" stroke-linecap="round" fill="none"/>
+        <path d="M1114 172 L1130 180 L1114 188Z" fill="#2A63C9"/>
+        <g transform="translate(1150 50)">
+          <path d="M0 40 v190 a210 36 0 0 0 420 0 v-190" fill="#E4ECFA" stroke="#2A63C9" stroke-width="3"/>
+          <ellipse cx="210" cy="40" rx="210" ry="36" fill="#CBDAF3" stroke="#2A63C9" stroke-width="3"/>
+          <text x="210" y="138" font-size="44" fill="#0E1A3A" text-anchor="middle" font-family="Sora">DB</text>
+          <text x="210" y="180" font-size="21" fill="#1F4FA8" text-anchor="middle">the only place state lives</text>
+          <text x="210" y="214" font-size="18" fill="#5B6785" text-anchor="middle" font-weight="500">waiting · claimed · done · failed</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <div class="abs st1-row" style="left:120px;top:704px;width:1680px">
+    <div class="card st1-c"><b>Survive any restart</b><span>Any component can crash and restart. It held nothing, so it lost nothing.</span></div>
+    <div class="card st1-c"><b>Add or remove nodes freely</b><span>No handover, nothing to move. A new node just asks the DB for work.</span></div>
+    <div class="card st1-c"><b>Recovery is a query</b><span>Where everything stands is always in the DB. No procedure to run.</span></div>
+  </div>
+  <aside class="notes">
+    <p>If you remember one thing from this talk, make it this. Nowhere in the whole system, in the stage workers, the worker pools, the supervisors, the watchers, the model servers or the nodes, do we keep any state. Every one of them is stateless. The entire state of the run, what is waiting, claimed, done or failed, lives in one place: the DB. It is the single source of truth. Results go to files, and the DB says which ones count.</p>
+    <p>That one decision is where the distributed-system guarantees come from. Any component can crash and restart at any moment, like the stage worker here, and we survive it, because it held nothing: it simply reads the DB and carries on. Nodes can join or leave at any time, because there is nothing to hand over. And recovery is just a query on the DB, not a procedure someone has to run.</p>
+  </aside>
+</section>

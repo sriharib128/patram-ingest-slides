@@ -1,0 +1,28 @@
+<section class="slide light" id="err3" data-steps="0" data-section="2 · Never losing work" data-time="1.0" data-title="Every error is followed to the end">
+  <div class="hd">
+    <div class="eyebrow">When something goes wrong</div>
+    <h2>Every error is followed to the end</h2>
+    <div class="sub">At production scale, something fails every minute. Each error is sorted into one of two kinds.</div>
+  </div>
+  <div class="abs er3-q" style="left:810px;top:332px;width:300px">An error</div>
+  <svg class="abs" viewBox="0 0 1680 90" style="left:120px;top:400px;width:1680px;height:90px"><g fill="none" stroke="#5B6785" stroke-width="4" stroke-linecap="round"><path d="M840 4 V30 Q840 46 824 46 H436 Q420 46 420 62 V84"/><path d="M840 30 Q840 46 856 46 H1244 Q1260 46 1260 62 V84"/></g></svg>
+  <div class="abs" style="left:120px;top:494px;width:1680px;display:grid;grid-template-columns:1fr 1fr;gap:36px">
+    <div class="card er3 s">
+      <small>The sample’s fault</small><h3>Retrying will not help</h3>
+      <div class="chips"><span>corrupt image</span><span>image too large</span><span>unreadable file</span><span>answer never parses</span></div>
+      <div class="act"><b>Discard it</b>mark it failed and record why</div>
+    </div>
+    <div class="card er3 y">
+      <small>The system’s fault</small><h3>The sample is fine</h3>
+      <div class="chips"><span>server crashed</span><span>out of memory</span><span>process killed</span><span>network blip</span><span>server asleep</span></div>
+      <div class="act"><b>Retry it</b>on another node, or later</div>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>At production scale, something fails every minute, and every error has to be followed through to the end: no error is dropped, and none is left vague. To do that, every error is sorted, where it happens, into one of two kinds.</p>
+    <p>In the first kind, the sample itself is the problem: a corrupt image, an image too large for the model, a file that cannot be read, an answer that still does not parse after a retry with a stricter prompt. Retrying again would only waste time. So we discard it: mark it failed and record the reason.</p>
+    <p>In the second kind, the system or the infrastructure is at fault: a server crashed, a process ran out of memory or was killed, the network dropped, a server was put to sleep. The sample is fine, so it must never be marked failed. It is retried, on another node or at a later time. And if everything is failing at once, the run pauses instead of failing samples.</p>
+    <p>When it is unclear, treat it as the system's fault, because the two mistakes do not cost the same: a retry costs seconds, but a good sample thrown away is lost for good. The result is a dataset where every missing sample has a recorded reason, and none are missing because of an outage.</p>
+    <p><i>If asked: a fuse stops the whole run, failing nothing, after max(2b, 64) consecutive infrastructure failures with no success; and a request that fails as infrastructure more than five times while others succeed is failed as itself. Before this classification existed, a dead backend marched whole datasets into the failed state.</i></p>
+  </aside>
+</section>

@@ -1,0 +1,33 @@
+<section class="slide light" id="eco2" data-steps="3" data-section="Wrap-up" data-time="1.2" data-title="The bigger picture">
+  <div class="hd">
+    <div class="eyebrow">The bigger picture</div>
+    <h2>Patram-Ingest is one part of a bigger stack</h2>
+  </div>
+  <div class="abs py" style="left:120px;top:300px;width:1000px;height:690px">
+    <div class="py-t ev" style="top:0px;left:305px;width:390px;clip-path:polygon(55px 0,335px 0,100% 100%,0 100%)"><h3>Evaluation</h3><p>PatramBench · Patram-Eval</p></div>
+    <div class="py-t md" style="top:117px;left:244px;width:512px;clip-path:polygon(55px 0,457px 0,100% 100%,0 100%)"><h3>Models</h3><p><b>Patram Suite</b></p></div>
+    <div class="py-t tr" style="top:234px;left:183px;width:634px;clip-path:polygon(55px 0,579px 0,100% 100%,0 100%)"><h3>Training infrastructure</h3><p>Patram-Core</p></div>
+    <div class="py-t me" style="top:351px;left:122px;width:756px;clip-path:polygon(55px 0,701px 0,100% 100%,0 100%)"><h3>Training data generation</h3><p><b class="me">Patram-Ingest · this talk</b></p></div>
+    <div class="py-t raw" style="top:468px;left:61px;width:433px;clip-path:polygon(55px 0,100% 0,100% 100%,0 100%)"><h3>Raw data collection</h3><p>Patram-Scraper · Synthetic docs</p></div>
+    <div class="py-t an" style="top:468px;left:506px;width:433px;clip-path:polygon(0 0,378px 0,100% 100%,0 100%)"><h3>Annotation &amp; visualization</h3><p>DarshinAI</p></div>
+    <div class="py-t st" style="top:585px;left:0px;width:1000px;clip-path:polygon(55px 0,945px 0,100% 100%,0 100%)"><h3>Storage</h3><p>Patram-FS · Patram-DB</p></div>
+  </div>
+  <div class="abs eco2-col" style="left:1220px;top:300px;width:580px">
+    <div class="card eco2-c me"><small>This talk</small><b>Patram-Ingest</b><span>turns raw pages into training data, for weeks, on a cluster that never stops changing.</span></div>
+    <div class="card eco2-c" data-s="1"><small>Below it</small><b>Storage and raw data</b><span>Patram-FS and Patram-DB hold everything. The scraper and synthetic docs feed it; DarshinAI lets us annotate and look at it.</span></div>
+    <div class="card eco2-c" data-s="2"><small>Above it</small><b>From corpus to models</b><span>Patram-Core turns that data into our training corpus, and trains the Patram Suite of foundation models.</span></div>
+  </div>
+  <div class="abs card eco2-rel" data-s="3" style="left:1220px;top:300px;width:580px;height:690px">
+    <small>Coming soon</small>
+    <h3>Patram 1.5</h3>
+    <p>Our models are internal today. We plan to release <b>Patram 1.5</b> soon.</p>
+    <div class="eco2-qr">QR · sign-up form</div>
+    <p class="eco2-ask">Interested? Sign up and we will let you know.</p>
+  </div>
+  <aside class="notes">
+    <p>To step back: Patram-Ingest, everything we talked about today, is just one part of the infrastructure we have.</p>
+    <p data-step="1">There is a lot supporting it from below: our storage layer, Patram-FS and Patram-DB, the scraper and our synthetic documents that bring raw data in, and DarshinAI for annotation and visualization.</p>
+    <p data-step="2">And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks.</p>
+    <p data-step="3">These are all internal models as of now. We are soon planning to release Patram 1.5. If you are interested, please sign up using this form, and we will let you know.</p>
+  </aside>
+</section>

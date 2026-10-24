@@ -1,0 +1,17 @@
+<section class="slide dark" id="title" data-section="Context" data-time="0.3" data-title="Patram-Ingest: durable execution around vLLM">
+  <canvas class="abs" width="1920" height="1080" style="left:0;top:0;width:1920px;height:1080px"></canvas>
+  <div class="abs" style="left:120px;top:140px;width:1240px">
+    <div class="eyebrow">BharatGen · Vision Team</div>
+    <h1 style="font-size:132px">Patram-Ingest</h1>
+    <div style="font-family:Sora,sans-serif;font-weight:600;font-size:46px;line-height:1.22;margin-top:26px;color:#FFC078">Durable execution around vLLM<br>for large-scale data generation</div>
+    <p class="t" style="margin-top:26px;font-size:29px;max-width:900px">Crash-safe coordination for model-driven pipelines on shared GPU clusters</p>
+  </div>
+  <div class="abs" style="left:120px;bottom:56px;font-size:26px;color:#C7D6F3;line-height:1.55"><div><b style="color:#fff;font-weight:600">Anirudh Srinivasan</b> · Team Lead - Vision</div><div><b style="color:#fff;font-weight:600">Srihari Bandarupalli</b> · Generative AI Engineer - Vision</div></div>
+  <div class="abs" style="right:120px;bottom:50px;display:flex;gap:28px;align-items:center;background:#fff;border-radius:18px;padding:16px 30px">
+    <img src="assets/bharatgen_logo_crop.png" style="height:66px" alt="BharatGen"><span style="width:2px;height:60px;background:#DCE2EE"></span><img src="assets/vllm_text_crop.png" style="height:50px" alt="vLLM">
+  </div>
+  <aside class="notes">
+    <p>We are from the Vision team at BharatGen. Patram is our vision-language model for Indian documents. This talk is about the system that generated its training data: Patram-Ingest, and specifically the layer around vLLM that decides whether the GPUs stay busy and whether a crash costs us any work.</p>
+    <p>Structure: first the problem, then how we keep the GPUs busy, how we never lose work, how a page moves through a graph of models, and finally how it scales.</p>
+  </aside>
+</section>

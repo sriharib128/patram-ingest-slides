@@ -1,0 +1,32 @@
+<section class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.8" data-title="Question 3: over to you">
+  <div class="hd">
+    <div class="eyebrow">Question 3 · over to you</div>
+    <h2>How should the database coordinate the stages?</h2>
+  </div>
+  <div class="abs card qo-where" style="left:120px;top:250px;width:1680px">
+    <svg viewBox="0 0 1600 260" class="qo-dia">
+      <g font-family="IBM Plex Sans" font-weight="600">
+        <g fill="#F4F6FA" stroke="#9DB3DC" stroke-width="2.5" stroke-dasharray="8 6"><rect x="10" y="20" width="300" height="96" rx="16"/><rect x="10" y="144" width="300" height="96" rx="16"/></g>
+        <text x="30" y="48" font-size="17" fill="#5B6785" font-family="IBM Plex Mono" letter-spacing="1.5">MACHINE 3</text><text x="30" y="90" font-size="23" fill="#0E7C61">Text finished ✓</text>
+        <text x="30" y="172" font-size="17" fill="#5B6785" font-family="IBM Plex Mono" letter-spacing="1.5">MACHINE 7</text><text x="30" y="214" font-size="23" fill="#0E7C61">Layout finished ✓</text>
+        <path d="M310 68 C420 68 440 130 560 130 M310 192 C420 192 440 130 560 130" fill="none" stroke="#7C879F" stroke-width="4"/><path d="M556 122 L572 130 L556 138Z" fill="#7C879F"/>
+        <path d="M600 70 v120 a170 30 0 0 0 340 0 v-120" fill="#E4ECFA" stroke="#2A63C9" stroke-width="3"/><ellipse cx="770" cy="70" rx="170" ry="30" fill="#CBDAF3" stroke="#2A63C9" stroke-width="3"/>
+        <text x="770" y="150" font-size="30" fill="#0E1A3A" text-anchor="middle" font-family="Sora">The database</text>
+        <text x="770" y="186" font-size="20" fill="#5B6785" text-anchor="middle" font-weight="500">we already have</text>
+        <path d="M950 130 H1150" stroke="#7C879F" stroke-width="4" stroke-dasharray="10 8"/><path d="M1146 122 L1162 130 L1146 138Z" fill="#7C879F"/>
+        <rect x="1170" y="82" width="300" height="96" rx="18" fill="#fff" stroke="#0E1A3A" stroke-width="3"/>
+        <text x="1320" y="126" font-size="24" fill="#0E1A3A" text-anchor="middle">Grounded Q&amp;A</text><text x="1320" y="156" font-size="18" fill="#5B6785" text-anchor="middle" font-weight="500">starts exactly once</text>
+        <circle cx="1050" cy="130" r="30" fill="#F28C28"/><text x="1050" y="144" font-size="38" fill="#fff" text-anchor="middle" font-family="Sora" font-weight="700">?</text>
+      </g>
+    </svg>
+  </div>
+  <div class="abs qo-row" style="left:120px;top:590px;width:1680px">
+    <div class="card qo-c"><small>Where we landed</small><p>Use the database for coordination <b>across nodes and across stages</b>.</p></div>
+    <div class="card qo-c"><small>The hard part</small><p>Crashes at any moment, no messages between machines, every stage <b>exactly once</b>, still fast at 32 nodes.</p></div>
+  </div>
+  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> The details are a talk of their own. <span class="hi">Send us how you would solve it.</span></div>
+  <aside class="notes">
+    <p>So that is where we landed: the database we already have does the coordination, across nodes and across stages. Machine 3 and machine 7 each write down what they finished, and from that the database has to make Grounded Q&amp;A start exactly once. How exactly to do that, so it survives a crash at any moment, needs no messages between machines, and stays fast at 32 nodes, is a talk of its own.</p>
+    <p data-step="1">So instead of going into it, we will hand it to you: the form is on the next slide. Send us how you would solve it. We will compare your ideas with what we built, and we are happy to talk through it afterwards.</p>
+  </aside>
+</section>

@@ -1,0 +1,34 @@
+<section class="slide light" id="backends" data-steps="0" data-section="1 · Keeping the GPUs busy" data-time="1.0" data-title="A worker can run any backend">
+  <div class="hd">
+    <div class="eyebrow">What runs in a worker</div>
+    <h2>A worker can call any backend</h2>
+    <div class="sub">The pool, the inboxes and the crash handling are the same for all of them.</div>
+  </div>
+  <div class="abs" style="left:120px;top:310px;width:1680px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
+    <div class="card bk3">
+      <svg viewBox="0 0 300 130"><g fill="none" stroke-width="4" stroke-linecap="round"><path d="M44 30 H196 M44 30 L196 65 M44 65 H196 M44 100 H196 M44 100 L196 65" stroke="#9DB3DC"/></g><g fill="#2A63C9"><circle cx="34" cy="30" r="12"/><circle cx="34" cy="65" r="12"/><circle cx="34" cy="100" r="12"/></g><g fill="#FCE6CF" stroke="#F28C28" stroke-width="3"><rect x="196" y="14" width="90" height="32" rx="8"/><rect x="196" y="49" width="90" height="32" rx="8"/><rect x="196" y="84" width="90" height="32" rx="8"/></g><g font-family="IBM Plex Mono" font-size="15" font-weight="700" fill="#B85C0A" text-anchor="middle"><text x="241" y="35">vLLM</text><text x="241" y="70">vLLM</text><text x="241" y="105">vLLM</text></g></svg>
+      <h3>Hosted vLLM</h3><p>Shared vLLM servers, called over HTTP. The node itself needs no GPU.</p>
+    </div>
+    <div class="card bk3">
+      <svg viewBox="0 0 300 130"><rect x="80" y="15" width="140" height="100" rx="14" fill="#E4ECFA" stroke="#2A63C9" stroke-width="4"/><g stroke="#2A63C9" stroke-width="4" stroke-linecap="round"><path d="M100 15 V3 M130 15 V3 M160 15 V3 M190 15 V3 M100 115 V127 M130 115 V127 M160 115 V127 M190 115 V127"/></g><text x="150" y="60" font-family="IBM Plex Mono" font-size="20" font-weight="700" fill="#1F4FA8" text-anchor="middle">GPU</text><text x="150" y="90" font-family="IBM Plex Sans" font-size="17" fill="#1F4FA8" text-anchor="middle">model loaded</text></svg>
+      <h3>Hugging Face models</h3><p>Any model loaded on this node’s own GPU.</p>
+    </div>
+    <div class="card bk3">
+      <svg viewBox="0 0 300 130"><rect x="40" y="10" width="220" height="110" rx="12" fill="#fff" stroke="#6B4BB8" stroke-width="4"/><path d="M40 36 H260" stroke="#6B4BB8" stroke-width="3"/><g fill="#6B4BB8"><circle cx="58" cy="23" r="5"/><circle cx="74" cy="23" r="5"/><circle cx="90" cy="23" r="5"/></g><g fill="#ECE6F8"><rect x="58" y="50" width="120" height="12" rx="6"/><rect x="58" y="70" width="180" height="12" rx="6"/><rect x="58" y="90" width="150" height="12" rx="6"/></g></svg>
+      <h3>CPU work</h3><p>Rendering pages in a headless browser, image processing.</p>
+    </div>
+    <div class="card bk3">
+      <svg viewBox="0 0 300 130"><rect x="40" y="10" width="220" height="110" rx="12" fill="#F4F6FA" stroke="#C3CEE5" stroke-width="3"/><rect x="62" y="28" width="90" height="70" rx="6" fill="none" stroke="#0E7C61" stroke-width="4"/><rect x="170" y="44" width="68" height="54" rx="6" fill="none" stroke="#F28C28" stroke-width="4"/><rect x="62" y="16" width="56" height="18" rx="4" fill="#0E7C61"/><text x="90" y="30" font-family="IBM Plex Mono" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">table</text><rect x="170" y="32" width="56" height="18" rx="4" fill="#F28C28"/><text x="198" y="46" font-family="IBM Plex Mono" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">stamp</text></svg>
+      <h3>Vision models</h3><p>SAM3, YOLO and other detectors and segmenters.</p>
+    </div>
+  </div>
+  <div class="abs bk3c" style="left:120px;top:790px;width:1680px">
+    <span>A backend is three functions</span>
+    <code>init()</code><u>·</u><code>call(request)</code><u>·</u><code>terminate()</code>
+  </div>
+  <aside class="notes">
+    <p>So what actually runs inside one of those worker processes? Anything that fits three functions: initialise, call and terminate. The pool, the inboxes, the supervisor and the error handling are the same whatever the backend is.</p>
+    <p>Most of our work calls hosted vLLM servers over HTTP: shared servers that many pipelines use, so an ingestion node needs no GPU of its own. A worker can also load a Hugging Face model on the node's own GPU, do CPU work such as rendering pages in a headless browser, or run vision models such as SAM3 and YOLO.</p>
+    <p>vLLM itself got here in steps. We started with batch generate inside the pipeline process, moved to vLLM's async engine for continuous batching, then found its outputs differed from vllm serve with the same arguments, so we now drive vllm serve over HTTP, and finally shared hosted servers. The lesson from that path: run the model the way vLLM itself serves it.</p>
+  </aside>
+</section>

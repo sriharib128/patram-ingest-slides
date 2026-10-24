@@ -1,0 +1,57 @@
+/* decisions table */
+.dh,.dr{display:grid;grid-template-columns:64px 460px 360px 470px 1fr;column-gap:16px;align-items:center}
+.dh{padding:0 24px 10px}
+.dh span{font-size:20px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);font-weight:600}
+.dr{padding:18px 24px;background:var(--card);border:1px solid var(--line);border-radius:20px;margin-bottom:14px;box-shadow:0 8px 22px rgba(14,26,58,.06)}
+.dr i{font-style:normal;width:52px;height:52px;border-radius:50%;background:var(--orange);color:#fff;font-family:Sora,sans-serif;font-weight:700;font-size:26px;display:flex;align-items:center;justify-content:center}
+.dr b{font-size:28px;font-weight:600;line-height:1.2}
+.dr s{font-size:23px;color:var(--faint);text-decoration-color:var(--red);text-decoration-thickness:2.5px;line-height:1.3}
+.dr span{font-size:23px;color:var(--body);line-height:1.3}
+.dr em{font-style:normal;text-align:right;font-size:20px;color:var(--muted);line-height:1.2}
+.dr em strong{display:block;font-family:Sora,sans-serif;font-weight:700;font-size:32px;color:var(--green);white-space:nowrap}
+
+/* evolution */
+#ev-line{height:14px;border-radius:7px;background:rgba(157,179,220,.18);overflow:hidden}
+#ev-line i{display:block;height:100%;width:0;border-radius:7px;background:linear-gradient(90deg,#2A63C9,#9DB3DC,#FFC078,#5FDDB2);transition:width 1.4s var(--ease)}
+.era{background:rgba(255,255,255,.05);border:1px solid rgba(157,179,220,.25);border-radius:22px;padding:22px 24px 14px}
+.era h3{color:#fff;font-size:31px}
+.era small{display:block;font-family:'IBM Plex Mono',monospace;font-size:20px;color:#FFC078;margin:4px 0 12px;letter-spacing:1px}
+.era p{font-size:24px;color:#E4ECFA;padding:9px 0;border-top:1px dashed rgba(157,179,220,.28);line-height:1.25}
+.era p i{font-style:normal;font-family:'IBM Plex Mono',monospace;color:#FFC078;font-size:20px;margin-right:10px;display:inline-block;min-width:78px}
+
+/* validate */
+.vt{padding:26px 26px 22px}
+.vt .stat b{font-size:76px}
+.vt .stat b.red{color:var(--red)}.vt .stat b.green{color:var(--green)}
+.vt .stat span{font-size:24px}
+.vt p{font-size:25px;color:var(--ink);font-weight:600;margin-top:16px}
+.chip.lg{font-size:29px;padding:14px 28px;transition:all .4s}
+.chip.lit{background:var(--peach);border-color:var(--orange);transform:translateY(-4px)}
+.chip.kill{border-color:var(--red);color:var(--red)}
+.chip.kill.lit{background:var(--red-pale)}
+.arr{font-size:36px;color:var(--faint);align-self:center}
+
+/* author */
+.gchip{display:flex;align-items:center;gap:16px;padding:14px 24px;background:var(--card);border:1px solid var(--line);border-radius:16px;font-size:27px;font-weight:500;box-shadow:0 6px 16px rgba(14,26,58,.05)}
+.gchip i{flex:none;width:32px;height:32px;border-radius:50%;background:var(--green);position:relative}
+.gchip i::after{content:"";position:absolute;left:11px;top:6px;width:8px;height:15px;border:solid #fff;border-width:0 4px 4px 0;transform:rotate(40deg)}
+
+/* results */
+#rs-chips .chip{font-size:27px;padding:12px 26px;opacity:0;transform:translateY(20px) scale(.9);transition:all .6s var(--ease)}
+#rs-chips .chip.in{opacity:1;transform:none;animation:floaty 5s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-6px)}}
+
+/* takeaways */
+.tk{padding:32px 34px;min-height:250px}
+.tk i{font-style:normal;display:flex;width:60px;height:60px;border-radius:50%;color:#fff;font-family:Sora,sans-serif;font-weight:700;font-size:30px;align-items:center;justify-content:center;margin-bottom:20px}
+.tk h3{font-size:35px;line-height:1.2}
+.tk p{font-size:26px;color:var(--body);margin-top:12px;line-height:1.3}
+
+/* close */
+#cl-chain .cs{padding:20px 34px;border-radius:20px;border:2.5px dashed #34457A;color:#9DB3DC;text-align:center;flex:1}
+#cl-chain .cs b{display:block;font-family:Sora,sans-serif;font-size:34px}
+#cl-chain .cs span{font-size:24px}
+#cl-chain .cs.on{border:2.5px solid #FFC078;color:#fff;background:rgba(242,140,40,.16);box-shadow:0 0 40px rgba(242,140,40,.35);animation:cspulse 2.4s ease-in-out infinite}
+@keyframes cspulse{50%{box-shadow:0 0 64px rgba(242,140,40,.55)}}
+#cl-chain em{display:block;width:60px;height:4px;flex:none;background:repeating-linear-gradient(90deg,#5C6F9E 0 10px,transparent 10px 20px);animation:dashm 1s linear infinite}
+@keyframes dashm{to{background-position:20px 0}}

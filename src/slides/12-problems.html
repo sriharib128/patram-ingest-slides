@@ -1,0 +1,91 @@
+<section class="slide light" id="probs" data-steps="0" data-section="0 · The problem" data-time="1.2" data-title="Three things stop a weeks-long run">
+  <div class="hd">
+    <div class="eyebrow">What gets in the way</div>
+    <h2>Weeks without stopping, on a changing cluster</h2>
+  </div>
+  <div class="abs" style="left:120px;top:262px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
+    <div class="card pb3">
+      <i>1</i><h3>Nodes die and restart</h3>
+      <p>The run must <b>heal itself</b>: notice, respawn what died and carry on, with nobody watching.</p>
+      <svg class="pb3v" viewBox="0 0 480 200">
+        <g font-family="IBM Plex Sans" font-size="19" font-weight="600" text-anchor="middle">
+          <rect x="10" y="10" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
+          <rect x="130" y="10" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
+          <rect x="250" y="10" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
+          <rect x="370" y="10" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
+          <rect x="10" y="86" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
+          <rect x="130" y="86" width="100" height="60" rx="12" stroke-width="2">
+            <animate attributeName="fill" values="#DDF1EA;#DDF1EA;#FBE6E4;#FBE6E4;#E4ECFA;#E4ECFA;#DDF1EA;#DDF1EA" keyTimes="0;.22;.24;.5;.52;.78;.8;1" dur="7s" repeatCount="indefinite"/>
+            <animate attributeName="stroke" values="#0E7C61;#0E7C61;#C93C3C;#C93C3C;#2A63C9;#2A63C9;#0E7C61;#0E7C61" keyTimes="0;.22;.24;.5;.52;.78;.8;1" dur="7s" repeatCount="indefinite"/>
+          </rect>
+          <text x="180" y="124" font-size="30" fill="#C93C3C" opacity="0">✕<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.22;.24;.5;.52;1" dur="7s" repeatCount="indefinite"/></text>
+          <text x="180" y="123" font-size="18" fill="#2A63C9" opacity="0">restarting<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.5;.52;.78;.8;1" dur="7s" repeatCount="indefinite"/></text>
+          <rect x="250" y="86" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
+          <rect x="370" y="86" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
+        </g>
+        <g font-family="IBM Plex Sans" font-size="22" font-weight="600">
+          <text x="10" y="186" fill="#0E7C61">all nodes working<animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;.22;.24;.78;.8;1" dur="7s" repeatCount="indefinite"/></text>
+          <text x="10" y="186" fill="#C93C3C" opacity="0">a node dies in the middle of its work<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.22;.24;.5;.52;1" dur="7s" repeatCount="indefinite"/></text>
+          <text x="10" y="186" fill="#2A63C9" opacity="0">it restarts and must rejoin the run<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.5;.52;.78;.8;1" dur="7s" repeatCount="indefinite"/></text>
+        </g>
+      </svg>
+    </div>
+    <div class="card pb3">
+      <i>2</i><h3>GPUs are lent out</h3>
+      <p>We lend GPUs to other jobs for a while. When they come back, the run must <b>scale up by itself</b>.</p>
+      <svg class="pb3v" viewBox="0 0 480 200">
+        <g>
+          <rect x="10" y="40" width="48" height="90" rx="9" fill="#F28C28"/>
+          <rect x="68" y="40" width="48" height="90" rx="9" fill="#F28C28"/>
+          <rect x="126" y="40" width="48" height="90" rx="9" fill="#F28C28"/>
+          <rect x="184" y="40" width="48" height="90" rx="9" fill="#F28C28"/>
+          <rect x="242" y="40" width="48" height="90" rx="9" fill="#F28C28"/>
+          <rect x="300" y="40" width="48" height="90" rx="9"><animate attributeName="fill" values="#F28C28;#F28C28;#C3CEE5;#C3CEE5;#F28C28;#F28C28" keyTimes="0;.22;.25;.6;.63;1" dur="7s" repeatCount="indefinite"/></rect>
+          <rect x="358" y="40" width="48" height="90" rx="9"><animate attributeName="fill" values="#F28C28;#F28C28;#C3CEE5;#C3CEE5;#F28C28;#F28C28" keyTimes="0;.22;.25;.6;.63;1" dur="7s" repeatCount="indefinite"/></rect>
+          <rect x="416" y="40" width="48" height="90" rx="9"><animate attributeName="fill" values="#F28C28;#F28C28;#C3CEE5;#C3CEE5;#F28C28;#F28C28" keyTimes="0;.22;.25;.6;.63;1" dur="7s" repeatCount="indefinite"/></rect>
+          <g opacity="0"><animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.22;.25;.6;.63;1" dur="7s" repeatCount="indefinite"/>
+            <path d="M302 28 V18 H462 V28" fill="none" stroke="#5B6785" stroke-width="2.5"/>
+            <text x="382" y="12" font-family="IBM Plex Sans" font-size="18" fill="#5B6785" text-anchor="middle">another team</text>
+          </g>
+        </g>
+        <g font-family="IBM Plex Sans" font-size="22" font-weight="600">
+          <text x="10" y="186" fill="#B85C0A">the run uses all 8 GPUs<animate attributeName="opacity" values="1;1;0;0;0" keyTimes="0;.22;.24;.99;1" dur="7s" repeatCount="indefinite"/></text>
+          <text x="10" y="186" fill="#5B6785" opacity="0">3 lent out: carry on with 5<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.22;.24;.6;.62;1" dur="7s" repeatCount="indefinite"/></text>
+          <text x="10" y="186" fill="#0E7C61" opacity="0">back: the run must use them again<animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.62;.64;1" dur="7s" repeatCount="indefinite"/></text>
+        </g>
+      </svg>
+    </div>
+    <div class="card pb3">
+      <i>3</i><h3>Work spans nodes</h3>
+      <p>Complex workloads need <b>pipeline parallelism</b>: every stage running at once, split across nodes.</p>
+      <svg class="pb3v" viewBox="0 0 480 200">
+        <g font-family="IBM Plex Sans" text-anchor="middle">
+          <rect x="2" y="12" width="230" height="132" rx="14" fill="none" stroke="#9DB3DC" stroke-width="2" stroke-dasharray="6 5"/>
+          <rect x="248" y="12" width="230" height="132" rx="14" fill="none" stroke="#9DB3DC" stroke-width="2" stroke-dasharray="6 5"/>
+          <text x="117" y="36" font-size="17" fill="#5B6785" font-weight="600">NODE 1</text>
+          <text x="363" y="36" font-size="17" fill="#5B6785" font-weight="600">NODE 2</text>
+          <path d="M20 96 H460" stroke="#C3CEE5" stroke-width="4"/>
+          <rect x="14" y="70" width="98" height="52" rx="10" fill="#fff" stroke="#2A63C9" stroke-width="2.5"/>
+          <rect x="122" y="70" width="98" height="52" rx="10" fill="#fff" stroke="#2A63C9" stroke-width="2.5"/>
+          <rect x="260" y="70" width="98" height="52" rx="10" fill="#fff" stroke="#6B4BB8" stroke-width="2.5"/>
+          <rect x="368" y="70" width="98" height="52" rx="10" fill="#fff" stroke="#6B4BB8" stroke-width="2.5"/>
+          <g font-size="16" font-weight="600" fill="#0E1A3A"><text x="63" y="102">Understand</text><text x="171" y="102">Ask</text><text x="309" y="102">Answer</text><text x="417" y="102">Verify</text></g>
+          <g fill="#F28C28">
+            <circle r="8" cy="0"><animateMotion path="M20 135 H460" dur="4s" begin="0s" repeatCount="indefinite"/></circle>
+            <circle r="8" cy="0"><animateMotion path="M20 135 H460" dur="4s" begin="-1s" repeatCount="indefinite"/></circle>
+            <circle r="8" cy="0"><animateMotion path="M20 135 H460" dur="4s" begin="-2s" repeatCount="indefinite"/></circle>
+            <circle r="8" cy="0"><animateMotion path="M20 135 H460" dur="4s" begin="-3s" repeatCount="indefinite"/></circle>
+          </g>
+        </g>
+        <text x="10" y="186" font-family="IBM Plex Sans" font-size="22" font-weight="600" fill="#6B4BB8">pages flow through all four stages at once</text>
+      </svg>
+    </div>
+  </div>
+  <aside class="notes">
+    <p>We just said a run must keep going for weeks. On a real cluster, three things get in the way, and the engine has to handle all three by itself.</p>
+    <p>One: nodes die and restart. Over weeks, nodes crash, reboot, run out of memory or are taken back. The run has to heal itself: notice what died, respawn it, and carry on, without a person watching.</p>
+    <p>Two: GPUs are lent out. The cluster is shared, so we sometimes lend GPUs to another team for a while. The run should carry on with fewer, and when the GPUs come back it should scale up and use them again on its own, without a restart.</p>
+    <p>Three: complex workloads need pipeline parallelism. A page goes through several model stages, and we want every stage running at the same time, with stages spread over different nodes.</p>
+    <p>If asked whether this really happens: in one run, nine of 24 nodes stopped working, and nobody noticed for six hours, because nothing was in place to notice.</p>
+  </aside>
+</section>

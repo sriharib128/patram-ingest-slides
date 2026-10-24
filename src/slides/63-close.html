@@ -1,0 +1,20 @@
+<section class="slide dark" id="close" data-steps="0" data-section="Close" data-time="0.6" data-title="Putting it together">
+  <canvas class="abs" width="1920" height="1080" style="left:0;top:0;width:1920px;height:1080px"></canvas>
+  <div class="abs" style="left:120px;top:78px;width:1680px">
+    <div class="eyebrow">Putting it together</div>
+    <h2 style="font-size:64px;max-width:1500px;margin-top:120px">Describe the pipeline. The engine keeps it busy, safe and scalable.</h2>
+  </div>
+  <div class="abs" style="left:120px;top:520px;width:1100px"><h1 style="font-size:150px">Thank you</h1></div>
+  <div class="abs cl-form" style="right:120px;top:470px;width:560px">
+    <div class="cl-qr">QR · form link</div>
+    <div><b>Over to you</b><span>How would you coordinate stages across nodes with a database? Send us your idea.</span></div>
+  </div>
+  <div class="abs" style="left:120px;bottom:54px;font-size:25px;color:#C7D6F3;line-height:1.5"><div class="cl-au"><b>Anirudh Srinivasan</b> · Team Lead - Vision · <svg class="cl-li" viewBox="0 0 24 24" aria-label="LinkedIn"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M5.3 9.2h2.9V19H5.3zM6.75 4.6a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10 9.2h2.8v1.35h.04c.39-.74 1.34-1.52 2.76-1.52 2.95 0 3.5 1.94 3.5 4.47V19h-2.9v-4.84c0-1.15-.02-2.64-1.6-2.64-1.61 0-1.86 1.26-1.86 2.55V19H10z"/></svg><span>linkedin.com/in/anirudh-srini</span></div><div class="cl-au"><b>Srihari Bandarupalli</b> · Generative AI Engineer - Vision · <svg class="cl-li" viewBox="0 0 24 24" aria-label="LinkedIn"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M5.3 9.2h2.9V19H5.3zM6.75 4.6a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10 9.2h2.8v1.35h.04c.39-.74 1.34-1.52 2.76-1.52 2.95 0 3.5 1.94 3.5 4.47V19h-2.9v-4.84c0-1.15-.02-2.64-1.6-2.64-1.61 0-1.86 1.26-1.86 2.55V19H10z"/></svg><span>linkedin.com/in/sriharib128</span></div></div>
+  <div class="abs" style="right:120px;bottom:50px;display:flex;gap:28px;align-items:center;background:#fff;border-radius:18px;padding:16px 30px">
+    <img src="assets/bharatgen_logo_crop.png" style="height:66px" alt="BharatGen"><span style="width:2px;height:60px;background:#DCE2EE"></span><img src="assets/vllm_text_crop.png" style="height:50px" alt="vLLM">
+  </div>
+  <aside class="notes">
+    <p>To bring it together: you describe the pipeline, and the engine keeps it busy, safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. Scan the code on the right to send us how you would coordinate stages across nodes with a database, and we are happy to take your questions now.</p>
+    <p><b>Likely questions.</b> Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.</p>
+  </aside>
+</section>

@@ -1,0 +1,25 @@
+<section class="slide light" id="dag" data-steps="1" data-section="3 · Graphs of stages" data-time="0.8" data-title="A dynamic DAG fits our workloads">
+  <div class="hd">
+    <div class="eyebrow">Three things every one of our pipelines has</div>
+    <h2 class="h2sw"><span data-h="1">Every pipeline we build has these three things</span><span data-s="1" class="fade">So a dynamic DAG fits almost all our workloads</span></h2>
+  </div>
+  <div class="abs" style="left:120px;top:290px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
+    <div class="card dg4">
+      <svg viewBox="0 0 460 140"><g fill="none" stroke="#7C879F" stroke-width="4"><path d="M70 70H150M230 70C290 70 290 30 340 30M230 70C290 70 290 110 340 110"/></g><g fill="#fff" stroke="#2A63C9" stroke-width="4"><circle cx="40" cy="70" r="28"/><circle cx="190" cy="70" r="28"/><circle cx="380" cy="30" r="24"/><circle cx="380" cy="110" r="24"/></g></svg>
+      <small>Graph</small><h3>Declared once, in code</h3><p>Each stage names its inputs. The engine works out the rest.</p>
+    </div>
+    <div class="card dg4">
+      <svg viewBox="0 0 460 140"><g fill="none" stroke="#7C879F" stroke-width="4"><path d="M70 70H170M230 70H330"/></g><path d="M370 44 C430 -10 120 -10 60 40" fill="none" stroke="#C93C3C" stroke-width="4" stroke-dasharray="8 7"/><text x="230" y="22" font-family="IBM Plex Sans" font-size="30" font-weight="700" fill="#C93C3C" text-anchor="middle">✕</text><g fill="#fff" stroke="#2A63C9" stroke-width="4"><circle cx="40" cy="70" r="28"/><circle cx="200" cy="70" r="28"/><circle cx="360" cy="70" r="28"/></g></svg>
+      <small>Acyclic</small><h3>No loops</h3><p>A retry is a bounded decision in a routing function, never a cycle.</p>
+    </div>
+    <div class="card dg4">
+      <svg viewBox="0 0 460 140"><g fill="none" stroke-width="5" stroke-linecap="round"><path d="M70 70C140 70 140 25 210 25H330" stroke="#F28C28"/><path d="M70 70C140 70 140 115 210 115H330" stroke="#C3CEE5" stroke-dasharray="6 7"/></g><g fill="#fff" stroke="#2A63C9" stroke-width="4"><circle cx="40" cy="70" r="28"/><circle cx="360" cy="25" r="22"/><circle cx="360" cy="115" r="22"/></g><circle cx="200" cy="34" r="10" fill="#F28C28"/></svg>
+      <small>Dynamic</small><h3>Routes decided while it runs</h3><p>Each sample’s path depends on what earlier stages found in it.</p>
+    </div>
+  </div>
+  <div class="abs v4cap2" data-s="1" style="left:120px;top:770px;width:1680px;font-size:34px">Chains, branches, merges and early exits are all <span class="hi">special cases of one dynamic DAG</span>.</div>
+  <aside class="notes">
+        <p>Look at the pipelines we build. Every one of them has three things. It is a graph, declared once in code: each stage names its inputs, and the engine works out who feeds whom. Acyclic: no loops. Verification loops are common, but a cycle makes it impossible to say when a sample is finished, so a retry is a bounded decision inside a routing function, with a counter so it cannot go on forever. And dynamic: the graph is fixed, but each sample's route through it is decided while it runs, from what earlier stages found.</p>
+    <p data-step="1">Put the three together and you get the conclusion: a dynamic directed acyclic graph fits almost every workload we have. Straight chains, branches by content, merges and early exits are all special cases of that one shape, so the engine only has to run one thing well.</p>
+  </aside>
+</section>

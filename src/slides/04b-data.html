@@ -1,0 +1,28 @@
+<section class="slide light" id="egdata" data-steps="0" data-section="Context" data-time="1.2" data-title="What training data looks like">
+  <div class="hd">
+    <div class="eyebrow">The data</div>
+    <h2>What does a model actually learn from?</h2>
+    <div class="sub">Examples. Millions of them. Here is one.</div>
+  </div>
+  <div class="abs card egd-img" style="left:120px;top:292px;width:500px;height:690px">
+    <div class="egd-pg"><img src="assets/electricity_bill.jpg" alt="Scanned electricity bill"><i class="egd-box"></i></div>
+  </div>
+  <div class="abs card egd-ex" style="left:690px;top:292px;width:1110px">
+    <small class="egd-cap">One training example, for this page</small>
+    <div class="egd-r"><label>Question</label><span class="q">“What is the payment due date?”</span></div>
+    <div class="egd-r"><label>Answer</label><span class="a">“15 July 2015”</span></div>
+    <div class="egd-r"><label>Where</label><span><i class="sw"></i>the box on the page that shows it</span></div>
+  </div>
+  <div class="abs egd-how" style="left:690px;top:656px;width:1110px">
+    <small class="egd-cap">Made automatically, in a chain</small>
+    <div class="egd-ch"><span>Understand<em>an electricity bill</em></span><u>›</u><span>Ask<em>write a question</em></span><u>›</u><span>Answer<em>from the page</em></span><u>›</u><span>Verify<em>matches the page ✓</em></span></div>
+  </div>
+  <div class="abs egd-more" style="left:690px;top:892px;width:1110px">
+    <div class="egd-x">× <b>100 million+</b> pages, in 22+ languages. That is the workload.</div>
+  </div>
+  <aside class="notes">
+    <p>Before the problems, what does a model actually learn from? Examples, millions of them. Here is one. The input is the image of a page, here an electricity bill. The example pairs it with a question, "What is the payment due date?", the answer, "15 July 2015", and where on the page the answer is: the orange box. A model that sees millions of these learns to read documents and to point at its evidence.</p>
+    <p>Who writes these? Not people: there are far too many. They are made automatically, in a chain. One model understands what the page is. Another writes a question. Another answers it from the page. And a last one verifies the answer against the page. Each call needs the output of the one before.</p>
+    <p>The same page also teaches other things: reading all its text, finding the tables, turning a table into rows. Now multiply by a hundred million pages, in more than 22 languages. That is the workload this talk is about.</p>
+  </aside>
+</section>

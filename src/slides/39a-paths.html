@@ -1,0 +1,15 @@
+<section class="slide light" id="route4" data-steps="0" data-section="3 · Graphs of stages" data-time="1.2" data-title="One pipeline, a different route for every page">
+  <div class="hd">
+    <div class="eyebrow">The problem: one example needs many models</div>
+    <h2>One pipeline, a different route for every page</h2>
+  </div>
+  <div class="abs card rt4" id="route-demo" data-noclick style="left:120px;top:222px;width:1680px;height:820px">
+    <svg class="graph" id="route-graph" viewBox="0 0 1110 590"></svg>
+    <div class="rt4-bot"><p class="route-out"></p><button class="rt4-b" type="button" data-act="all" tabindex="-1">▶ Play all six</button></div>
+  </div>
+  <aside class="notes">
+    <p>Here is the problem part three solves. A good training example is never the output of a single model. Six pages enter the same pipeline of seventeen agents. Understand reads each page and decides where it goes next, and later agents keep deciding too.</p>
+    <p>A chart is read, then re-read by a second model to catch wrong numbers. A table is rebuilt as HTML and rendered in a browser to check it matches. A form has one field hidden, so the questions test whether the model notices it is missing. A text page goes through key-fact extraction, and if Verify rejects the answer a larger teacher model writes the final one. A scan is straightened first, then handled like any text page. A blank page is dropped straight away, so no expensive stage runs on it.</p>
+    <p>All six run together, each on its own route. You can click any page to replay just its route; the line at the bottom shows the route it took, which every output records.</p>
+  </aside>
+</section>

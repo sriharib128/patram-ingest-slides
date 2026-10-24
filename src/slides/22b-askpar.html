@@ -1,0 +1,15 @@
+<section class="slide light" id="askpar" data-steps="0" data-section="1 · Keeping the GPUs busy" data-time="0.8" data-title="Your turn: which parallelism where?">
+  <div class="hd">
+    <div class="eyebrow">Your turn · all of these run at once</div>
+    <h2>Which kind of parallelism for each piece?</h2>
+  </div>
+  <div class="abs" id="ar3-q" style="left:120px;top:228px;width:1680px;height:640px"></div>
+  <div class="abs wh3 ask" style="left:120px;top:900px;width:1680px">
+    <div class="p"><b>Process?</b>truly parallel, a crash stays inside</div>
+    <div class="t"><b>Thread?</b>cheap helpers, good at waiting</div>
+    <div class="e"><b>Event loop?</b>one thread, many calls in flight</div>
+  </div>
+  <aside class="notes">
+    <p>Now that you know the three options, here is the node again. Every one of these boxes has to run at the same time. Over to you: which ones would you make processes, which threads, and which an event loop? A hint: ask of each box whether it computes, whether it mostly waits, or whether it juggles many calls at once. Take a few answers from the room before moving on.</p>
+  </aside>
+</section>

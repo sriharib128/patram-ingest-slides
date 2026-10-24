@@ -1,0 +1,27 @@
+<section class="slide light" id="eco" data-steps="0" data-section="Context" data-time="0.8" data-title="What we do: the Patram stack">
+  <div class="hd">
+    <div class="eyebrow">What we do</div>
+    <h2>We build sovereign vision foundation models</h2>
+    <div class="sub">Patram: vision-language models for Indian documents, and the whole stack that builds them.</div>
+  </div>
+  <div class="abs py" style="left:120px;top:300px;width:1000px;height:690px">
+    <div class="py-t ev" style="top:0px;left:305px;width:390px;clip-path:polygon(55px 0,335px 0,100% 100%,0 100%)"><h3>Evaluation</h3><p>PatramBench · Patram-Eval</p></div>
+    <div class="py-t md" style="top:117px;left:244px;width:512px;clip-path:polygon(55px 0,457px 0,100% 100%,0 100%)"><h3>Models</h3><p><b>Patram Suite</b></p></div>
+    <div class="py-t tr" style="top:234px;left:183px;width:634px;clip-path:polygon(55px 0,579px 0,100% 100%,0 100%)"><h3>Training infrastructure</h3><p>Patram-Core</p></div>
+    <div class="py-t me" style="top:351px;left:122px;width:756px;clip-path:polygon(55px 0,701px 0,100% 100%,0 100%)"><h3>Training data generation</h3><p><b class="me">Patram-Ingest · this talk</b></p></div>
+    <div class="py-t raw" style="top:468px;left:61px;width:433px;clip-path:polygon(55px 0,100% 0,100% 100%,0 100%)"><h3>Raw data collection</h3><p>Patram-Scraper · Synthetic docs</p></div>
+    <div class="py-t an" style="top:468px;left:506px;width:433px;clip-path:polygon(0 0,378px 0,100% 100%,0 100%)"><h3>Annotation &amp; visualization</h3><p>DarshinAI</p></div>
+    <div class="py-t st" style="top:585px;left:0px;width:1000px;clip-path:polygon(55px 0,945px 0,100% 100%,0 100%)"><h3>Storage</h3><p>Patram-FS · Patram-DB</p></div>
+  </div>
+  <svg class="abs" style="left:0;top:0;width:1920px;height:1080px;pointer-events:none" viewBox="0 0 1920 1080"><g stroke="#7C9BD6" stroke-width="2.5" stroke-dasharray="3 9" stroke-linecap="round" fill="none"><path d="M823 417 L1300 300"/><path d="M878 522 L1300 990"/></g></svg>
+  <div class="abs ps" style="left:1300px;top:300px;width:500px;height:690px">
+    <h3>Patram Suite</h3>
+    <div class="ps-g"><small>Multi-task foundation models</small><p><b class="big">Patram 1.5</b><b class="big">Patram 2.0</b></p></div>
+    <div class="ps-g"><small>Task-specific models</small><p><b>Patram-Grounder</b><b>Patram-Layout</b><b>Patram-CoT</b></p></div>
+    <div class="ps-g"><small>Agents</small><p><b>PatramParse</b></p></div>
+  </div>
+  <aside class="notes">
+    <p>What we do: the Vision team at BharatGen builds sovereign vision foundation models for Indian documents. The model reads the page image directly, so layout, tables and stamps are not lost on the way.</p>
+    <p>This is our stack as a pyramid, read from the bottom up. At the base is storage: our own file system and database. On it, we collect raw data, scraped and synthetic documents, and beside that sits our annotation and visualization tool, DarshinAI. Above that is training data generation: that is Patram-Ingest, what this talk is about, which turns raw pages into training data. Then the training infrastructure. Then the models, the Patram Suite, shown on the right: multi-task foundation models, Patram 1.5 today, one model for 34 tasks, and Patram 2.0 next, with more than 22 Indian languages; task-specific models for grounding, layout and grounded reasoning; and agents such as PatramParse. At the top, evaluation measures all of it. Everything above the ETL layer is trained or measured on data Patram-Ingest produced.</p>
+  </aside>
+</section>

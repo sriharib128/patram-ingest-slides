@@ -1,0 +1,20 @@
+<section class="slide light" id="pp2" data-steps="0" data-section="3 · Graphs of stages" data-time="1.2" data-title="Run every stage at once">
+  <div class="hd">
+    <div class="eyebrow">The engine runs the stages in parallel</div>
+    <h2>Run every stage at once, not one after another</h2>
+  </div>
+  <div class="abs" id="pp2-pl" style="left:120px;top:956px;width:560px"></div>
+  <div class="abs card bp" id="pp2-staged" style="left:120px;top:236px;width:1680px">
+    <div class="bp-top"><h4>Stage by stage<small>All GPUs on one stage at a time.</small></h4><div class="bp-bigs"><div class="bp-big fin"><b>0</b><span></span></div></div></div>
+    <div class="bp-grid"></div>
+  </div>
+  <div class="abs card bp piped" id="pp2-piped" style="left:120px;top:582px;width:1680px">
+    <div class="bp-top"><h4>Pipeline parallel<small>GPUs shared across stages, all running at once.</small></h4><div class="bp-bigs"><div class="bp-big fin"><b>0</b><span></span></div></div></div>
+    <div class="bp-grid"></div>
+  </div>
+  <aside class="notes">
+    <p>Once the DAG is defined, the engine runs all of its stages at the same time, automatically. Why does that matter? The obvious way is one stage at a time: run stage one over everything, wait, check, then launch stage two. It is simple and it is how most groups start. We did too. This is the same work on the same hardware, twice. Press play, or drag the slider to stop both runs anywhere.</p>
+    <p>Watch the big number on each side. On top, stage by stage: nothing usable exists until the last stage begins, and a person has to notice each stage finish and launch the next, for days. Below, every stage running at once: each record moves on as soon as it is saved, so finished examples start arriving almost immediately. Both runs finish at the same moment, because they do the same work. What changes is when usable results arrive.</p>
+    <p>If asked for a measured number: in the paper, a four-stage pipeline over 10 to the 5 pages on 16 emulated nodes produced its first thousand usable records after 10.7 minutes, against 81 minutes stage by stage. The counters on the slide are a simulation of a million examples.</p>
+  </aside>
+</section>

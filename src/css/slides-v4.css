@@ -1,0 +1,37 @@
+/* ── v4: ledger, author, scaling ── */
+/* ledger */
+.lg2{padding:26px 30px}
+.lg2h,.lg2r{display:grid;grid-template-columns:190px repeat(4,1fr);gap:10px;align-items:center}
+.lg2h{margin:8px 0 12px}
+.lg2h b{font-size:19px;color:var(--muted);text-align:center;font-weight:600}
+.lg2r{margin-top:22px}
+.lg2r label{font-family:Sora,sans-serif;font-weight:600;font-size:26px;color:var(--ink);line-height:1.1}
+.lg2r label small{display:block;font-family:'IBM Plex Sans',sans-serif;font-size:18px;font-weight:400;color:var(--muted);margin-top:4px}
+.lg2r>div{grid-column:2/6;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.lg2r i{display:block;height:64px;border-radius:14px;background:#EEF2F9;border:2px solid #D5DDEB;transition:all .5s}
+#lg-f i.on{background:var(--green);border-color:var(--green)}
+#lg-r i.on{background:var(--orange);border-color:var(--orange)}
+#lg-graph svg .nd rect{fill:#fff;stroke:#C3CEE5;stroke-width:3;transition:all .5s}
+#lg-graph svg .nd text{font-family:Sora,sans-serif;font-weight:600;font-size:26px;fill:#0E1A3A;text-anchor:middle}
+#lg-graph svg .nd.rdy rect{stroke:#F28C28;fill:#FFF4E2;stroke-width:5}
+#lg-graph svg .nd.dn rect{stroke:#0E7C61;fill:#DDF1EA;stroke-width:4}
+
+/* author */
+.au2{padding:30px 34px;height:400px;position:relative}
+.au2 i{display:inline-flex;width:44px;height:44px;border-radius:50%;background:var(--orange);color:#fff;align-items:center;justify-content:center;font-style:normal;font-family:Sora,sans-serif;font-weight:700;font-size:23px;margin-bottom:14px}
+.au2 h3{font-size:34px;margin-bottom:8px}
+.au2 p{font-size:26px;color:var(--body);line-height:1.38}
+.au2 .auc{position:absolute;left:34px;right:34px;bottom:30px;font-family:'IBM Plex Mono',monospace;font-size:21px;line-height:1.5;background:#0E1A3A;color:#E4ECFA;border-radius:14px;padding:16px 20px}
+.au2.go .auc{font-size:34px;text-align:center;padding:26px 20px;color:#8FE0C0}
+
+/* scaling */
+#sc2-chart svg{display:block}
+.sc2c{padding:20px 28px}
+.sc2c h3{font-size:32px;margin-bottom:8px}
+.sc2c p{font-size:23px;color:var(--body);line-height:1.4}
+.sc2c p b{color:var(--ink)}
+.sc2c.good{border-left:8px solid var(--green)}
+.sc2s+.sc2s{margin-top:12px}
+.sc2s b{display:block;font-family:Sora,sans-serif;font-size:50px;color:var(--green);line-height:1}
+.sc2s span{display:block;font-size:24px;color:var(--body);margin-top:6px;line-height:1.3}
+

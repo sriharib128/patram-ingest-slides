@@ -1,0 +1,23 @@
+<section class="slide light" id="swcap" data-steps="0" data-section="3 · Graphs of stages" data-time="0.6" data-title="What Patram-Ingest supports">
+  <div class="hd">
+    <div class="eyebrow">Everything you get from one DAG</div>
+    <h2>What Patram-Ingest supports</h2>
+    <div class="sub">A graph of stages declared in code. Coordination lives in the database, never in a process.</div>
+  </div>
+  <div class="abs" id="sw-kinds" style="left:120px;top:370px;width:700px;height:540px"></div>
+  <div class="abs" style="left:870px;top:370px;width:930px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
+    <div class="card cap" style="--d:0.50s"><i></i><b>Any graph shape</b><span>declared in a few lines of code</span></div>
+    <div class="card cap" style="--d:0.85s"><i></i><b>Routing functions</b><span>each sample picks its next stage</span></div>
+    <div class="card cap" style="--d:1.20s"><i></i><b>Fan-in policies</b><span>needs every input, or just one</span></div>
+    <div class="card cap" style="--d:1.55s"><i></i><b>Failure propagation</b><span>upstream-failed reaches every later stage</span></div>
+    <div class="card cap" style="--d:1.90s"><i></i><b>Start-up validation</b><span>cycles, unreachable stages, route targets</span></div>
+    <div class="card cap" style="--d:2.25s"><i></i><b>Route lineage</b><span>every record carries the stages it passed</span></div>
+  </div>
+  <aside class="notes">
+    <p>Putting it together, this is what the graph layer of Patram-Ingest supports; the cards appear on their own. A graph is a list of stage declarations: each stage names its upstream stages, a policy for waiting on them, and optionally a routing function. Stage authors never see the graph.</p>
+    <p>It supports any graph shape, declared in a few lines of code: straight chains, fan-out where one stage feeds many, and per-sample routing, where a routing function inspects what a stage produced and returns the stages to send each sample to.</p>
+    <p>Fan-in with two policies: a stage can need every input, or start as soon as one arrives.</p>
+    <p>Failure propagation: if a stage fails a sample, every later stage marks it upstream-failed when it next looks, so no stage waits forever for an input that will never arrive; resetting a derived upstream-failed is always safe, which makes fix-and-rerun possible.</p>
+    <p>Validation at start-up: acyclicity, reachability, routing-target isolation and the split between the two activation paths. And every output records the stages its sample passed through, so any record can be traced through the graph. Bit positions are stored in 64-bit integers; a wider bit string would serve any number of stages. Graphs are acyclic.</p>
+  </aside>
+</section>

@@ -1,0 +1,18 @@
+<section class="slide light" id="scale2" data-steps="3" data-section="3 · Graphs of stages" data-time="1.5" data-title="Only one keeps scaling as nodes are added">
+  <div class="hd">
+    <div class="eyebrow">Few alternatives come close · same database, same model servers</div>
+    <h2>Only one keeps scaling as nodes are added</h2>
+  </div>
+  <div class="abs card" style="left:120px;top:270px;width:1060px;height:680px;padding:26px 34px"><div class="v4cap">Throughput against number of nodes (pages per second)</div><div id="sc2-chart"></div></div>
+  <div class="abs" style="left:1220px;top:270px;width:580px;display:flex;flex-direction:column;gap:16px">
+    <div class="card sc2c" data-s="1"><h3>DBOS and Temporal</h3><p>Also survive crashes. But past a few nodes, the database becomes the limit.</p></div>
+    <div class="card sc2c good" data-s="2"><h3>Patram-Ingest</h3><p>Keeps growing with every node. The database stays mostly idle.</p><p class="sc2why"><b>Why:</b> the database holds only small state rows. Results go to files on each node.</p></div>
+    <div class="card sc2c" data-s="3"><div class="sc2s"><b>~99%</b><span>of perfectly linear scaling, from 1 to 48 nodes</span></div></div>
+  </div>
+  <aside class="notes">
+    <p>Very few alternatives come close to these features. Among the 13 systems in our comparison, only DBOS and Temporal do: they already survive crashes, route per sample and run across machines. So we ran the same pipeline on both, on the same DB server and the same emulated model servers. We made the servers answer in 20 milliseconds, so inference could not be the limit, and added nodes until throughput stopped growing.</p>
+    <p data-step="1">DBOS gained nothing from nodes past 16: about 1,350 pages per second at 16 nodes and at 40. Temporal peaked at 546 on 4 nodes and stayed between roughly 260 and 390 from 8 to 32. In both, the database's replication path was saturated: most DBOS backends were waiting inside a commit for the standby.</p>
+    <p data-step="2">Ours kept growing with every added node, to 8,571 pages per second at 32 nodes, which is 6 times DBOS and 28 times Temporal, with the database mostly idle. Why: the database only holds state, a few small rows per page, written in the background in groups; the results themselves go to files on each node, and no node ever waits on another. A driver replaying our statements with no model calls reached over 13,000 pages per second, so the database could give more.</p>
+    <p data-step="3">And the overhead stays tiny as nodes are added. Against a bare client that reads prompts from a file and writes answers to local disk, with no database at all, we reach 98.9 to 99.7 percent of its throughput at every scale from 1 to 48 nodes. Throughput grew from 3.88 requests per second on one node to 183.6 on 48, which is 98.6 percent of linear. Caveat: this is one deployment of each system, each configuration ran once, and the servers were emulated.</p>
+  </aside>
+</section>

@@ -1,0 +1,55 @@
+<section class="slide light" id="inbox" data-steps="2" data-section="1 · Keeping the GPUs busy" data-time="1.1" data-title="A private inbox per worker">
+  <div class="hd">
+    <div class="eyebrow">The fix</div>
+    <h2>Give every worker its own inbox</h2>
+    <div class="sub">One dispatcher is the only reader of the shared queue. Each worker reads only its own inbox.</div>
+  </div>
+  <svg class="abs sh3" viewBox="0 0 1680 600" style="left:120px;top:300px;width:1680px;height:600px">
+    <defs><marker id="ib3h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5B6785"/></marker></defs>
+    <text x="150" y="40" class="t" text-anchor="middle">Shared queue</text>
+    <rect x="40" y="62" width="220" height="440" rx="18" class="qf"/>
+    <g class="qi"><rect x="70" y="88" width="160" height="50" rx="10"/><rect x="70" y="154" width="160" height="50" rx="10"/><rect x="70" y="220" width="160" height="50" rx="10"/><rect x="70" y="286" width="160" height="50" rx="10"/><rect x="70" y="352" width="160" height="50" rx="10"/><rect x="70" y="418" width="160" height="50" rx="10"/></g>
+    <g class="ar ib"><path d="M262 282 H326"/><path d="M590 282 C650 282 650 120 706 120"/><path d="M590 282 C650 282 650 480 706 480"/><path d="M850 120 H906"/><path d="M850 480 H906"/></g>
+    <g data-h="1" class="ar ib"><path d="M590 282 C650 282 650 300 706 300"/><path d="M850 300 H906"/></g>
+    <rect x="330" y="212" width="260" height="140" rx="18" class="dsp"/>
+    <text x="460" y="268" class="wn" text-anchor="middle">Dispatcher</text><text x="460" y="304" class="sm2" text-anchor="middle">one thread</text>
+    <g class="ibx"><rect x="710" y="70" width="140" height="100" rx="14"/><rect x="710" y="250" width="140" height="100" rx="14"/><rect x="710" y="430" width="140" height="100" rx="14"/></g>
+    <g class="ibl"><text x="780" y="62" text-anchor="middle">inbox 1</text><text x="780" y="242" text-anchor="middle">inbox 2</text><text x="780" y="422" text-anchor="middle">inbox 3</text></g>
+    <g class="qi sm"><rect x="728" y="92" width="104" height="22" rx="6"/><rect x="728" y="124" width="104" height="22" rx="6"/><rect x="728" y="452" width="104" height="22" rx="6"/><rect x="728" y="484" width="104" height="22" rx="6"/></g>
+    <g class="qi sm" data-h="1"><rect x="728" y="272" width="104" height="22" rx="6"/><rect x="728" y="304" width="104" height="22" rx="6"/></g>
+    <g class="wk"><rect x="910" y="60" width="360" height="120" rx="18"/><rect x="910" y="420" width="360" height="120" rx="18"/></g>
+    <rect x="910" y="240" width="360" height="120" rx="18" class="w2"/>
+    <g class="wn"><text x="940" y="110">Worker 1</text><text x="940" y="470">Worker 3</text></g>
+    <text x="940" y="290" class="wn" data-h="1">Worker 2</text>
+    <g class="ok"><text x="940" y="148">working</text><text x="940" y="508">working</text><text x="940" y="328" data-h="1">working</text></g>
+    <g data-s="1" data-h="2">
+      <rect x="910" y="240" width="360" height="120" rx="18" class="dead"/>
+      <text x="940" y="290" class="dn">Worker 2  ✕</text><text x="940" y="328" class="dx">killed</text>
+      <rect x="710" y="250" width="140" height="100" rx="14" class="gone"/><text x="780" y="308" class="gx" text-anchor="middle">thrown away</text>
+    </g>
+    <g data-s="2">
+      <path d="M590 282 C650 282 650 300 706 300" class="arn"/><path d="M850 300 H906" class="arn"/>
+      <rect x="910" y="240" width="360" height="120" rx="18" class="new"/>
+      <text x="940" y="290" class="wn">new Worker 2</text><text x="940" y="328" class="nw">fresh, empty inbox</text>
+      <rect x="710" y="250" width="140" height="100" rx="14" class="ibn"/><text x="780" y="308" class="nw" text-anchor="middle">new</text>
+    </g>
+  </svg>
+  <div class="abs sh3p" data-h="1" style="left:1420px;top:300px;width:380px">
+    <h3>No shared lock</h3>
+    <p>Only the dispatcher touches the shared queue, and it is a thread that does not get killed on its own.</p>
+  </div>
+  <div class="abs sh3p bad" data-s="1" data-h="2" style="left:1420px;top:300px;width:380px">
+    <h3>A worker dies</h3>
+    <p>It can only block its own inbox, which is thrown away. The dispatcher stops sending to it. <b>The others keep working.</b></p>
+  </div>
+  <div class="abs sh3p good" data-s="2" style="left:1420px;top:300px;width:380px">
+    <h3>It comes back clean</h3>
+    <p>The supervisor starts a new worker with a fresh inbox. Its unfinished requests are sent again.</p>
+  </div>
+  <div class="abs v4cap2" data-s="2" style="left:120px;top:930px;width:1680px;font-size:34px">Never share a lock with a process that can die. <span style="color:var(--muted);font-size:26px;font-weight:500">Since this change: no hangs.</span></div>
+  <aside class="notes">
+    <p>The fix is not a safer lock. Holding a lock when you are killed is how the primitive works. The fix is to take the shared lock away from anything that can be killed. One dispatcher, a thread in the pool, is the only reader of the shared queue. It hands each request to a free worker by putting it in that worker's own inbox. Each worker reads only its own inbox.</p>
+    <p data-step="1">Now kill a worker. The worst it can do is block its own inbox, and that inbox is thrown away with it. The dispatcher sees the worker is gone and stops sending to it. The other workers never shared anything with it, so they keep working.</p>
+    <p data-step="2">The supervisor starts a new worker with a fresh, empty inbox, and the requests the dead worker owed come back as system errors and are sent again. The rule we took from this: never share a lock with a process that can die. Since the change, the same kill test has not hung once, and with one of four workers killed all 40 test images were committed. One limit we state honestly: results still travel back on shared queues, so the same kind of failure is possible there, in a much narrower window.</p>
+  </aside>
+</section>

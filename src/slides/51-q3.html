@@ -1,0 +1,26 @@
+<section class="slide light" id="q3" data-steps="2" data-section="4 · Q&amp;A" data-time="1.0" data-title="Question 1: which order is safe to replay?">
+  <div class="hd">
+    <div class="eyebrow">Question 1 · a warm-up</div>
+    <h2>Which order is safe to replay?</h2>
+  </div>
+  <div class="abs qz-sub" style="left:120px;top:232px;width:1680px">Stage 1 makes <b>two writes</b> to the DB. It crashes <b>between them</b>, then runs the page again.</div>
+  <div class="abs" style="left:120px;top:320px;width:1680px;display:grid;grid-template-columns:1fr 1fr;gap:30px">
+    <div class="card qz-ord">
+      <h4>Order A</h4>
+      <div class="qz-steps"><span>first: mark <b>Stage 1 done</b></span><u>⚡</u><span class="no">then: mark <b>Stage 2 ready</b></span></div>
+      <div class="qz-res bad" data-s="2"><b>Not safe ✕</b>Stage 1 says done, so it never runs again. Stage 2 never hears about the page.</div>
+    </div>
+    <div class="card qz-ord">
+      <h4>Order B</h4>
+      <div class="qz-steps"><span>first: mark <b>Stage 2 ready</b></span><u>⚡</u><span class="no">then: mark <b>Stage 1 done</b></span></div>
+      <div class="qz-res good" data-s="2"><b>Idempotent ✓</b>Stage 1 is not done, so it runs again and marks Stage 2 ready again. Ready twice is still just ready.</div>
+    </div>
+  </div>
+  <div class="abs qz-q" data-s="1" data-h="2" style="left:120px;top:836px;width:1680px">Which order is <b>idempotent</b>: safe to run again after a crash? <b>Hands up for A, or for B.</b></div>
+  <div class="abs v4cap2" data-s="2" style="left:120px;top:836px;width:1680px;font-size:34px">Hand it on first, <span class="hi">mark yourself done last</span>, and make every write safe to repeat.</div>
+  <aside class="notes">
+    <p>First, a small warm-up. Stage 1 finishes a page and has to make two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two, and then Stage 1 runs the page again.</p>
+    <p data-step="1">Which order is idempotent, meaning safe to run again after a crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.</p>
+    <p data-step="2">A is not safe: Stage 1 says done, so nobody runs the page again, but Stage 2 never hears about it, and the page is lost. B is idempotent: Stage 1 is not marked done, so it runs again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done in part two: hand it on first, mark yourself done last, and make every write safe to repeat.</p>
+  </aside>
+</section>
