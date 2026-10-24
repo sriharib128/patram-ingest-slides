@@ -20,7 +20,11 @@ html,body{height:100%;background:#070c1b;overflow:hidden;font-family:'IBM Plex S
 #stage-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
 #stage{position:relative;flex:none;width:1920px;height:1080px;transform-origin:center center;box-shadow:0 20px 80px rgba(0,0,0,.55);border-radius:6px;overflow:hidden;background:var(--bg-a)}
 #bar{position:absolute;left:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--blue),var(--orange));z-index:50;transition:width .5s var(--ease)}
-#counter{position:absolute;right:30px;bottom:18px;font-size:20px;color:var(--faint);z-index:50;font-family:'IBM Plex Mono',monospace;letter-spacing:1px}
+#counter{position:absolute;right:30px;bottom:18px;font-size:20px;color:var(--faint);z-index:50;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;display:flex;align-items:center;gap:4px}
+#counter .ctr-n{min-width:96px;text-align:center;cursor:text;user-select:none}
+#counter .ctr-b{font:inherit;color:inherit;background:none;border:0;padding:2px 10px;border-radius:8px;cursor:pointer;opacity:.7}
+#counter .ctr-b:hover{opacity:1;background:rgba(91,103,133,.14)}
+#counter .ctr-in{font:inherit;letter-spacing:inherit;color:inherit;width:3.2ch;text-align:center;background:transparent;border:0;border-bottom:2px solid currentColor;outline:none;padding:0}
 .dark-ui #counter{color:#7F8CA8}
 #hud{position:absolute;left:30px;top:22px;z-index:60;font-family:'IBM Plex Mono',monospace;font-size:26px;color:#fff;background:rgba(14,26,58,.88);padding:8px 18px;border-radius:12px;display:none;letter-spacing:1px}
 #hud.show{display:block}
@@ -3143,9 +3147,30 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
   /* ── chrome: counter, progress, step dots, presenter panel ── */
   const counter = $('#counter'), bar = $('#bar'), hud = $('#hud');
+  /* slide number with < > buttons; double-click the number to type a slide to jump to */
+  counter.innerHTML = '<button type="button" class="ctr-b" data-d="-1" aria-label="Previous slide">&lt;</button><span class="ctr-n" title="Double-click to jump to a slide"></span><button type="button" class="ctr-b" data-d="1" aria-label="Next slide">&gt;</button>';
+  const ctrN = counter.querySelector('.ctr-n');
+  counter.addEventListener('click', e => {
+    const b = e.target.closest('.ctr-b'); if (!b) return;
+    e.stopPropagation(); go(Math.max(0, Math.min(N - 1, state.i + +b.dataset.d)), 0); b.blur();
+  });
+  ctrN.addEventListener('dblclick', e => {
+    e.stopPropagation(); if (ctrN.querySelector('input')) return;
+    ctrN.innerHTML = '<input class="ctr-in" type="text" inputmode="numeric" aria-label="Go to slide"> / ' + N;
+    const inp = ctrN.querySelector('input'); inp.value = state.i + 1; inp.focus(); inp.select();
+    let done = false;
+    const close = jump => {
+      if (done) return; done = true; counter.__closed = Date.now();
+      const n = parseInt(inp.value, 10);
+      if (jump && n >= 1 && n <= N) go(n - 1, 0);
+      chrome();
+    };
+    inp.addEventListener('keydown', k => { if (k.key === 'Enter') { k.preventDefault(); close(true); } else if (k.key === 'Escape') { k.preventDefault(); close(false); } });
+    inp.addEventListener('blur', () => close(false));
+  });
   function chrome() {
     const el = slides[state.i];
-    counter.textContent = (state.i + 1) + ' / ' + N;
+    ctrN.textContent = (state.i + 1) + ' / ' + N;
     bar.style.width = ((state.i + 1) / N * 100) + '%';
     stage.classList.toggle('dark-ui', el.classList.contains('dark'));
     const acts = $('#acts');
@@ -3223,6 +3248,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   let black = null;
   document.addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.closest && e.target.closest('input,textarea')) return;
     const k = e.key;
     if (['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(k)) { e.preventDefault(); prev(); }
@@ -3247,7 +3273,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     if (i >= 0) go(i, 0);
   });
   stage.addEventListener('click', e => {
-    if (e.target.closest('input,button,a,[data-noclick],#acts')) return;
+    if (e.target.closest('input,button,a,[data-noclick],#acts,#counter')) return;
+    if (Date.now() - (counter.__closed || 0) < 400) return;   // the click that dismissed the jump box is not a navigation
     const r = stage.getBoundingClientRect();
     (e.clientX - r.left) < r.width * 0.28 ? prev() : next();
   });

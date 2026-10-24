@@ -16,7 +16,11 @@ html,body{height:100%;background:#070c1b;overflow:hidden;font-family:'IBM Plex S
 #stage-wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
 #stage{position:relative;flex:none;width:1920px;height:1080px;transform-origin:center center;box-shadow:0 20px 80px rgba(0,0,0,.55);border-radius:6px;overflow:hidden;background:var(--bg-a)}
 #bar{position:absolute;left:0;bottom:0;height:5px;background:linear-gradient(90deg,var(--blue),var(--orange));z-index:50;transition:width .5s var(--ease)}
-#counter{position:absolute;right:30px;bottom:18px;font-size:20px;color:var(--faint);z-index:50;font-family:'IBM Plex Mono',monospace;letter-spacing:1px}
+#counter{position:absolute;right:30px;bottom:18px;font-size:20px;color:var(--faint);z-index:50;font-family:'IBM Plex Mono',monospace;letter-spacing:1px;display:flex;align-items:center;gap:4px}
+#counter .ctr-n{min-width:96px;text-align:center;cursor:text;user-select:none}
+#counter .ctr-b{font:inherit;color:inherit;background:none;border:0;padding:2px 10px;border-radius:8px;cursor:pointer;opacity:.7}
+#counter .ctr-b:hover{opacity:1;background:rgba(91,103,133,.14)}
+#counter .ctr-in{font:inherit;letter-spacing:inherit;color:inherit;width:3.2ch;text-align:center;background:transparent;border:0;border-bottom:2px solid currentColor;outline:none;padding:0}
 .dark-ui #counter{color:#7F8CA8}
 #hud{position:absolute;left:30px;top:22px;z-index:60;font-family:'IBM Plex Mono',monospace;font-size:26px;color:#fff;background:rgba(14,26,58,.88);padding:8px 18px;border-radius:12px;display:none;letter-spacing:1px}
 #hud.show{display:block}

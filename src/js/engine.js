@@ -107,9 +107,30 @@
 
   /* ── chrome: counter, progress, step dots, presenter panel ── */
   const counter = $('#counter'), bar = $('#bar'), hud = $('#hud');
+  /* slide number with < > buttons; double-click the number to type a slide to jump to */
+  counter.innerHTML = '<button type="button" class="ctr-b" data-d="-1" aria-label="Previous slide">&lt;</button><span class="ctr-n" title="Double-click to jump to a slide"></span><button type="button" class="ctr-b" data-d="1" aria-label="Next slide">&gt;</button>';
+  const ctrN = counter.querySelector('.ctr-n');
+  counter.addEventListener('click', e => {
+    const b = e.target.closest('.ctr-b'); if (!b) return;
+    e.stopPropagation(); go(Math.max(0, Math.min(N - 1, state.i + +b.dataset.d)), 0); b.blur();
+  });
+  ctrN.addEventListener('dblclick', e => {
+    e.stopPropagation(); if (ctrN.querySelector('input')) return;
+    ctrN.innerHTML = '<input class="ctr-in" type="text" inputmode="numeric" aria-label="Go to slide"> / ' + N;
+    const inp = ctrN.querySelector('input'); inp.value = state.i + 1; inp.focus(); inp.select();
+    let done = false;
+    const close = jump => {
+      if (done) return; done = true; counter.__closed = Date.now();
+      const n = parseInt(inp.value, 10);
+      if (jump && n >= 1 && n <= N) go(n - 1, 0);
+      chrome();
+    };
+    inp.addEventListener('keydown', k => { if (k.key === 'Enter') { k.preventDefault(); close(true); } else if (k.key === 'Escape') { k.preventDefault(); close(false); } });
+    inp.addEventListener('blur', () => close(false));
+  });
   function chrome() {
     const el = slides[state.i];
-    counter.textContent = (state.i + 1) + ' / ' + N;
+    ctrN.textContent = (state.i + 1) + ' / ' + N;
     bar.style.width = ((state.i + 1) / N * 100) + '%';
     stage.classList.toggle('dark-ui', el.classList.contains('dark'));
     const acts = $('#acts');
@@ -187,6 +208,7 @@
   let black = null;
   document.addEventListener('keydown', e => {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.closest && e.target.closest('input,textarea')) return;
     const k = e.key;
     if (['ArrowRight', 'ArrowDown', ' ', 'PageDown', 'Enter'].includes(k)) { e.preventDefault(); next(); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(k)) { e.preventDefault(); prev(); }
@@ -211,7 +233,8 @@
     if (i >= 0) go(i, 0);
   });
   stage.addEventListener('click', e => {
-    if (e.target.closest('input,button,a,[data-noclick],#acts')) return;
+    if (e.target.closest('input,button,a,[data-noclick],#acts,#counter')) return;
+    if (Date.now() - (counter.__closed || 0) < 400) return;   // the click that dismissed the jump box is not a navigation
     const r = stage.getBoundingClientRect();
     (e.clientX - r.left) < r.width * 0.28 ? prev() : next();
   });
