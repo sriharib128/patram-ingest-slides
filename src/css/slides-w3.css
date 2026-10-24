@@ -670,3 +670,6 @@
 #brand.hide{opacity:0}
 #brand img{display:block;height:34px;width:auto;opacity:.9}
 .dark-ui #brand img{background:#fff;border-radius:10px;padding:4px 10px;height:42px;box-sizing:border-box;opacity:.95}
+#brandtl{position:absolute;left:56px;top:24px;z-index:40;pointer-events:none;transition:opacity .3s}
+#brandtl.hide{opacity:0}
+#brandtl img{display:block;width:56px;height:56px;border-radius:12px;background:#fff;padding:5px;box-sizing:border-box;box-shadow:0 0 0 1px rgba(14,26,58,.1)}

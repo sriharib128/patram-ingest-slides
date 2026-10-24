@@ -169,13 +169,14 @@
           Deck.go(Deck.state.i, open[which][st]);
         }));
         ctx.qa('.fl6-steps button').forEach(b => b.addEventListener('click', e => {      // the three scaling steps, clickable
-          e.stopPropagation(); Deck.go(Deck.state.i, +b.dataset.k); b.blur();
+          e.stopPropagation(); +b.dataset.k === Deck.state.step ? ctx.el.__fl6replay() : Deck.go(Deck.state.i, +b.dataset.k); b.blur();   // a step always plays from its start
         }));
         ctx.qa('.fl5-rows > div').forEach((row, k) => row.addEventListener('click', e => {   // each case plays its own example
           if (Deck.state.step === 0) return;
           e.stopPropagation(); Deck.go(Deck.state.i, k + 2);
         }));
       }
+      ctx.el.__fl6replay = () => ctx.__pl && ctx.__pl.replay();
       ctx.__render = build(ctx);
     },
     step(ctx, s, p) {

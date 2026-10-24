@@ -1,4 +1,4 @@
-<section class="slide light" id="queue2" data-steps="4" data-section="2 · Never losing work" data-time="1.6" data-title="Nodes take work from one table">
+<section class="slide light" id="queue2" data-steps="4" data-section="2 · Crash safe" data-time="1.6" data-title="Nodes take work from one table">
   <div class="hd">
     <div class="eyebrow">Many nodes</div>
     <h2>Coordinating across nodes, with minimal overhead</h2>
@@ -13,6 +13,6 @@
     <p data-step="1">Nodes A and B each ask the queue for a batch of images. Each batch takes its node's colour, and the node works on it.</p>
     <p data-step="2">Now node B crashes in the middle of its batch. Its images are marked as claimed by a node that no longer exists. Recovery hands them back to waiting, so nothing is lost.</p>
     <p data-step="3">Node C arrives and claims exactly those images, and the run carries on as if nothing happened.</p>
-    <p data-step="4">Node D joins later. One image that cannot be read is marked failed without stopping the rest, and the table finishes with every image done once. To grow a run you start the same program on more nodes; to shrink it you stop some. The DB is deliberately one plain database on one machine, because every extra component is another way to fail. The next slide shows why a node that crashes is safe to retry.</p>
+    <p data-step="4">Node D joins later. One image that cannot be read is marked failed without stopping the rest, and the table finishes with every image done once. To grow a run you start the same program on more nodes; to shrink it you stop some. The DB is deliberately one plain database on one machine, because every extra component is another way to fail.</p>
   </aside>
 </section>

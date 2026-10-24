@@ -107,7 +107,7 @@
   let QSIM = null;
   function simQueue() {
     if (QSIM) return QSIM;
-    const N = 128, TAKE = 8, DT = 50, PK = 550, WORK = { A: 2600, B: 2800, C: 2000, D: 1800 };
+    const N = 128, TAKE = 8, DT = 50, PK = 550, WORK = { A: 1400, B: 2800, C: 2000, D: 1800 };
     const cells = Array.from({ length: N }, () => ({ s: 0, m: null, only: null }));
     const ms = [], frames = [], rings = [], logs = [];
     let t = 0, finished = false;
@@ -165,9 +165,9 @@
     let tail = 0;
     for (let k = 0; k < 2400; k++) {
       t = k * DT;
-      if (t === 2800) B.crashed = true;
-      if (t === 6100) C = mk('C');
-      if (t === 10900) { say('join', `${who('D')} joins too. Each image still has exactly one owner.`); D = mk('D'); }
+      if (t === 3100) B.crashed = true;
+      if (t === 6400) C = mk('C');
+      if (t === 11200) { say('join', `${who('D')} joins too. Each image still has exactly one owner.`); D = mk('D'); }
       ms.forEach(tick);
       frames.push({
         log: logs.length - 1,
@@ -259,11 +259,14 @@
       };
       /* four clickable steps, each one slice of the story: [sim start, sim end, speed]; the crash and the take-over play slowest */
       ctx.__qr = render;
-      ctx.__qseg = { 1: [0, 2800, 1.3], 2: [2800, 6100, 0.8], 3: [6100, 10800, 1.2], 4: [10800, sim.dur, 1.7] };
+      ctx.__qseg = { 1: [0, 3000, 1.3], 2: [3000, 6400, 0.8], 3: [6400, 11200, 1.2], 4: [11200, sim.dur, 1.7] };
       if (!ctx.el.__q2wired) {
         ctx.el.__q2wired = true;
-        ctx.qa('.q2-steps button').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); Deck.go(Deck.state.i, +b.dataset.k); b.blur(); }));
+        ctx.qa('.q2-steps button').forEach(b => b.addEventListener('click', e => {      // a step always plays from its start, wherever the bar is
+          e.stopPropagation(); +b.dataset.k === Deck.state.step ? ctx.el.__q2replay() : Deck.go(Deck.state.i, +b.dataset.k); b.blur();
+        }));
       }
+      ctx.el.__q2replay = () => ctx.__pl && ctx.__pl.replay();
       render(0);
     },
     step(ctx, s) {

@@ -24,6 +24,6 @@
   <aside class="notes">
     <p>A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two writes. Remember the recovery rule from part two: after a restart, any page that is not marked done is picked up and run again.</p>
     <p data-step="1">So: which order survives the crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.</p>
-    <p data-step="2">Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done: hand the page on first, mark yourself done last, and make every write safe to repeat.</p>
+    <p data-step="2">Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. So the rule is: hand the page on first, mark yourself done last, and make every write safe to repeat.</p>
   </aside>
 </section>

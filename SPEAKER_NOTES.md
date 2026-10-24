@@ -20,38 +20,37 @@ Generated from the deck. Keys: → next · ← back · F fullscreen · O overvie
 | 14 | Sharing work through one queue | 1.1 | 11.8 |
 | 15 | A private inbox per worker | 1.1 | 12.9 |
 | 16 | A worker can run any backend | 1 | 13.9 |
-| 17 | Part two · Never losing work | 0.2 | 14.1 |
+| 17 | Part two · Crash safe | 0.2 | 14.1 |
 | 18 | Nodes take work from one table | 1.6 | 15.7 |
-| 19 | Save first, then mark it done | 1.3 | 17.0 |
-| 20 | Recovery and scaling without intervention | 3.2 | 20.2 |
-| 21 | Every error is followed through | 1 | 21.2 |
-| 22 | Part three · Graphs of stages | 0.2 | 21.4 |
-| 23 | One pipeline, a different route for every page | 1.2 | 22.6 |
-| 24 | The whole pipeline is a graph | 2 | 24.6 |
-| 25 | A dynamic DAG fits our workloads | 0.8 | 25.4 |
-| 26 | From idea to a running pipeline | 0.8 | 26.2 |
-| 27 | All stages at once | 1.2 | 27.4 |
-| 28 | What Patram-Ingest supports | 0.6 | 28.0 |
-| 29 | Scaling compared with DBOS and Temporal | 1.5 | 29.5 |
-| 30 | Key takeaways | 1 | 30.5 |
-| 31 | The DB is the single source of truth | 0.8 | 31.3 |
-| 32 | Where Patram-Ingest sits in the stack | 1.2 | 32.5 |
-| 33 | Thank you | 0.6 | 33.1 |
-| 34 | Part five · Q&amp;A *(optional)* | 0.2 | - |
-| 35 | The remaining question *(optional)* | 0.4 | - |
-| 36 | Question 1: which order survives the crash? *(optional)* | 1.2 | - |
-| 37 | Question 2: who decides that Grounded Q&amp;A can start? *(optional)* | 1.3 | - |
-| 38 | Take-home: how should the database coordinate the stages? *(optional)* | 0.6 | - |
+| 19 | Recovery and scaling without intervention | 3.2 | 18.9 |
+| 20 | Every error is followed through | 1 | 19.9 |
+| 21 | Part three · Graphs of stages | 0.2 | 20.1 |
+| 22 | One pipeline, a different route for every page | 1.2 | 21.3 |
+| 23 | The whole pipeline is a graph | 2 | 23.3 |
+| 24 | A dynamic DAG fits our workloads | 0.8 | 24.1 |
+| 25 | From idea to a running pipeline | 0.8 | 24.9 |
+| 26 | All stages at once | 1.2 | 26.1 |
+| 27 | What Patram-Ingest supports | 0.6 | 26.7 |
+| 28 | Scaling compared with DBOS and Temporal | 1.5 | 28.2 |
+| 29 | Key takeaways | 1 | 29.2 |
+| 30 | The DB is the single source of truth | 0.8 | 30.0 |
+| 31 | Where Patram-Ingest sits in the stack | 1.2 | 31.2 |
+| 32 | Thank you | 0.6 | 31.8 |
+| 33 | Part five · Q&amp;A *(optional)* | 0.2 | - |
+| 34 | The remaining question *(optional)* | 0.4 | - |
+| 35 | Question 1: which order survives the crash? *(optional)* | 1.2 | - |
+| 36 | Question 2: who decides that Grounded Q&amp;A can start? *(optional)* | 1.3 | - |
+| 37 | Take-home: how should the database coordinate the stages? *(optional)* | 0.6 | - |
 
 
-**Core path ≈ 33.1 min.** Optional slides add the remainder; press **K** to skip them all.
+**Core path ≈ 31.8 min.** Optional slides add the remainder; press **K** to skip them all.
 
 ## 1. Patram-Ingest: durable execution around vLLM
 *Context · ~0.3 min · no steps*
 
 We are from the Vision team at BharatGen. Patram is our vision-language model for Indian documents. This talk is about the system that generated its training data: Patram-Ingest, and specifically the layer around vLLM that decides whether the GPUs stay busy and whether a crash costs us any work.
 
-Structure: first the problem, then how we keep the GPUs busy, how we never lose work, how a page moves through a graph of models, and finally how it scales.
+Structure: first the problem, then how we keep the GPUs busy, how it stays crash safe, how a page moves through a graph of models, and finally how it scales.
 
 ## 2. What we do: the Patram stack
 *Context · ~0.8 min · no steps*
@@ -101,7 +100,7 @@ From those problems come three needs, and we take them in order.
 
 First, busy GPUs. The GPUs are the expensive part of the cluster, and part one is about never letting them wait for anything: not the host, not the disk, not another stage.
 
-Second, no lost work. Nodes die and GPUs come and go, and when the dust settles the output must still hold every record exactly once, without a person cleaning up. That is part two. Normally this need is expensive, because engines that survive crashes write every step to a database; part two shows how we avoid that.
+Second, crash safety. Nodes die and GPUs come and go, and when the dust settles the output must still hold every record exactly once, without a person cleaning up. That is part two. Normally this need is expensive, because engines that survive crashes write every step to a database; part two shows how we avoid that.
 
 Third, any workflow with very little code. Once someone can picture a pipeline, with stages that branch and merge on what the data contains, getting it running across every node should take a few lines of code and one command. Coordination, retries and scaling should come for free. That is part three.
 
@@ -188,13 +187,13 @@ Most of our work calls hosted vLLM servers over HTTP: shared servers that many p
 
 vLLM itself got here in steps. We started with batch generate inside the pipeline process, moved to vLLM's async engine for continuous batching, then found its outputs differed from vllm serve with the same arguments, so we now drive vllm serve over HTTP, and finally shared hosted servers. The lesson from that path: run the model the way vLLM itself serves it.
 
-## 17. Part two · Never losing work
-*2 · Never losing work · ~0.2 min · no steps*
+## 17. Part two · Crash safe
+*2 · Crash safe · ~0.2 min · no steps*
 
-Busy GPUs are only useful if the work survives. Part two is the core of the talk: how the engine loses nothing and repeats nothing, even when processes and machines die.
+Busy GPUs are only useful if the work survives. Part two is the core of the talk: how the engine stays crash safe: it loses nothing and repeats nothing, even when processes and machines die.
 
 ## 18. Nodes take work from one table
-*2 · Never losing work · ~1.6 min · no steps*
+*2 · Crash safe · ~1.6 min · no steps*
 
 Busy GPUs are only useful if the work survives, so start with how many nodes share one run, with as little overhead as possible. Nodes do not talk to each other and there is no coordinator. Each stage's queue is a table in the DB with one row per sample, drawn here as one box per image, and each row has a state: waiting, claimed, done or failed. A node that wants work sends the database one command that picks a few waiting rows, marks them as its own and writes its name on them, all in one step. A second node making the same request at the same instant skips those rows, so two nodes can never get the same image. Nothing is assigned in advance, so a fast node simply takes more work. Click the steps, or press next, to walk through one run.
 
@@ -204,21 +203,10 @@ Busy GPUs are only useful if the work survives, so start with how many nodes sha
 
 **[step 3]** Node C arrives and claims exactly those images, and the run carries on as if nothing happened.
 
-**[step 4]** Node D joins later. One image that cannot be read is marked failed without stopping the rest, and the table finishes with every image done once. To grow a run you start the same program on more nodes; to shrink it you stop some. The DB is deliberately one plain database on one machine, because every extra component is another way to fail. The next slide shows why a node that crashes is safe to retry.
+**[step 4]** Node D joins later. One image that cannot be read is marked failed without stopping the rest, and the table finishes with every image done once. To grow a run you start the same program on more nodes; to shrink it you stop some. The DB is deliberately one plain database on one machine, because every extra component is another way to fail.
 
-## 19. Save first, then mark it done
-*2 · Never losing work · ~1.3 min · no steps*
-
-That recovery is safe because of one ordering rule, and it is the idea that makes the rest work. Across the top is the whole life of one sample: prepare the prompt, run the model, parse and check the answer, save the result to disk and force it to disk, and only then mark it done in the database.
-
-The line that matters is the moment it is marked done. If anything goes wrong anywhere before that line, a crash, a kill, a lost node, the database still says not done. So the sample simply goes back in the queue and is done again, and anything half-saved for it is thrown away first. At most one small group of results is ever redone.
-
-After the line, the sample is finished. It is never redone, and its result is guaranteed to be on disk, because saving came first.
-
-Why this order: done must always mean saved. Reverse it, mark done and then save, and a crash between the two leaves a row that says done with nothing behind it. That is silent data loss. Both orders look identical on a good day; only one of them is safe on a bad day. Nothing is lost because we only mark done after saving, and nothing is written twice because anything not marked done is discarded before it is redone.
-
-## 20. Recovery and scaling without intervention
-*2 · Never losing work · ~3.2 min · reveal steps: 8*
+## 19. Recovery and scaling without intervention
+*2 · Crash safe · ~3.2 min · reveal steps: 8*
 
 Back to the first two problems from the start: nodes die, and GPUs come and go. The run handles both without anyone stepping in: it recovers, and it scales. First, recovery.
 
@@ -238,8 +226,8 @@ Back to the first two problems from the start: nodes die, and GPUs come and go. 
 
 **[step 8]** Here is what that looks like over one day, as in our blog; the shape is illustrative. One: we launched before the models were up, and work started as each server came online. Two: a colleague borrowed GPUs; the workers using them drained and waited. Three: the test finished, and those workers fetched from the database again. Four: a server crashed; its requests went back and it restarted. Five: free GPUs appeared and the run spread onto them. Nobody touched the run all day.
 
-## 21. Every error is followed through
-*2 · Never losing work · ~1 min · no steps*
+## 20. Every error is followed through
+*2 · Crash safe · ~1 min · no steps*
 
 At production scale, something fails every minute, and every error has to be followed through to the end: no error is dropped, and none is left vague. To do that, every error is sorted, where it happens, into one of two kinds.
 
@@ -251,12 +239,12 @@ When it is unclear, treat it as the system's fault, because the two mistakes do 
 
 *If asked: a fuse stops the whole run, failing nothing, after max(2b, 64) consecutive infrastructure failures with no success; and a request that fails as infrastructure more than five times while others succeed is failed as itself. Before this classification existed, a dead backend marched whole datasets into the failed state.*
 
-## 22. Part three · Graphs of stages
+## 21. Part three · Graphs of stages
 *3 · Graphs of stages · ~0.2 min · no steps*
 
 Until now we treated a stage on its own. But a good training example is never the work of one model. Part three is how a page moves through many models, each page on its own path, and how the engine runs that across machines without a coordinator.
 
-## 23. One pipeline, a different route for every page
+## 22. One pipeline, a different route for every page
 *3 · Graphs of stages · ~1.2 min · no steps*
 
 Here is the problem part three solves. A good training example is never the output of a single model. Six pages enter the same pipeline of seventeen agents. Understand reads each page and decides where it goes next, and later agents keep deciding too.
@@ -265,7 +253,7 @@ A chart is read, then re-read by a second model to catch wrong numbers. A table 
 
 All six run together, each on its own route. You can click any page to replay just its route; the line at the bottom shows the route it took, which every output records.
 
-## 24. The whole pipeline is a graph
+## 23. The whole pipeline is a graph
 *3 · Graphs of stages · ~2 min · reveal steps: 4*
 
 Put all those routes together and you get one graph. A page enters at the left. Each box is a model, a tool or a check. Three rules decide where a page goes and when a box may start, and we will zoom into each.
@@ -278,14 +266,14 @@ Put all those routes together and you get one graph. A page enters at the left. 
 
 **[step 4]** Three rules: route the page, needs every input, one input is enough. Every pipeline we run is built from these.
 
-## 25. A dynamic DAG fits our workloads
+## 24. A dynamic DAG fits our workloads
 *3 · Graphs of stages · ~0.8 min · reveal steps: 1*
 
 Look at the pipelines we build. Every one of them has three things. It is a graph, declared once in code: each stage names its inputs, and the engine works out who feeds whom. Acyclic: no loops. Verification loops are common, but a cycle makes it impossible to say when a sample is finished, so a retry is a bounded decision inside a routing function, with a counter so it cannot go on forever. And dynamic: the graph is fixed, but each sample's route through it is decided while it runs, from what earlier stages found.
 
 **[step 1]** Put the three together and you get the conclusion: a dynamic directed acyclic graph fits almost every workload we have. Straight chains, branches by content, merges and early exits are all special cases of that one shape, so the engine only has to run one thing well.
 
-## 26. From idea to a running pipeline
+## 25. From idea to a running pipeline
 *3 · Graphs of stages · ~0.8 min · reveal steps: 3*
 
 So a DAG can describe almost any workload we have. And once you define it, running it is very simple. Two parts, then one command.
@@ -296,7 +284,7 @@ So a DAG can describe almost any workload we have. And once you define it, runni
 
 **[step 3]** And you run one command on every machine. After anything goes wrong, you run the same command again. There is no step for recovery, retries, coordination or scaling, because those were designed once and every pipeline shares them. The same engine has run transcription, HTML conversion, chart reading, question answering and dozens of other pipelines. And once the DAG is defined, the engine runs all of its stages in parallel. Here is what that buys.
 
-## 27. All stages at once
+## 26. All stages at once
 *3 · Graphs of stages · ~1.2 min · no steps*
 
 Once the DAG is defined, the engine runs all of its stages at the same time, automatically. Why does that matter? The obvious way is one stage at a time: run stage one over everything, wait, check, then launch stage two. It is simple and it is how most groups start. We did too. This is the same work on the same hardware, twice. Press play, or drag the slider to stop both runs anywhere.
@@ -305,7 +293,7 @@ Watch the big number on each side. On top, stage by stage: nothing usable exists
 
 If asked for a measured number: in the paper, a four-stage pipeline over 10 to the 5 pages on 16 emulated nodes produced its first thousand usable records after 10.7 minutes, against 81 minutes stage by stage. The counters on the slide are a simulation of a million examples.
 
-## 28. What Patram-Ingest supports
+## 27. What Patram-Ingest supports
 *3 · Graphs of stages · ~0.6 min · no steps*
 
 Putting it together, this is what the graph layer of Patram-Ingest supports; the cards appear on their own. A graph is a list of stage declarations: each stage names its upstream stages, a policy for waiting on them, and optionally a routing function. Stage authors never see the graph.
@@ -318,7 +306,7 @@ Failure propagation: if a stage fails a sample, every later stage marks it upstr
 
 Validation at start-up: acyclicity, reachability, routing-target isolation and the split between the two activation paths. And every output records the stages its sample passed through, so any record can be traced through the graph. Bit positions are stored in 64-bit integers; a wider bit string would serve any number of stages. Graphs are acyclic.
 
-## 29. Scaling compared with DBOS and Temporal
+## 28. Scaling compared with DBOS and Temporal
 *3 · Graphs of stages · ~1.5 min · no steps*
 
 Very few alternatives come close to these features. Among the 13 systems in our comparison, only DBOS and Temporal do: they already survive crashes, route per sample and run across machines. So we ran the same pipeline on both, on the same DB server and the same emulated model servers. We made the servers answer in 20 milliseconds, so inference could not be the limit, and added nodes until throughput stopped growing.
@@ -329,7 +317,7 @@ Ours kept growing with every added node, to 8,571 pages per second at 32 nodes, 
 
 And the overhead stays tiny as nodes are added. Against a bare client that reads prompts from a file and writes answers to local disk, with no database at all, we reach 98.9 to 99.7 percent of its throughput at every scale from 1 to 48 nodes. Throughput grew from 3.88 requests per second on one node to 183.6 on 48, which is 98.6 percent of linear. Caveat: this is one deployment of each system, each configuration ran once, and the servers were emulated.
 
-## 30. Key takeaways
+## 29. Key takeaways
 *Wrap-up · ~1 min · no steps*
 
 If you take six things away from this talk, these are the lessons we learned the hard way.
@@ -346,14 +334,14 @@ Five: match the parallelism to the job. Processes for computing, threads for wai
 
 Six: keep the database light. It holds only state; the results go to files on each node, written in groups, off the GPU's path. That is why the system keeps scaling as nodes are added.
 
-## 31. The DB is the single source of truth
+## 30. The DB is the single source of truth
 *Wrap-up · ~0.8 min · no steps*
 
 If you remember one thing from this talk, make it this. Nowhere in the whole system, in the stage workers, the worker pools, the supervisors, the watchers, the model servers or the nodes, do we keep any state. Every one of them is stateless. The entire state of the run, what is waiting, claimed, done or failed, lives in one place: the DB. It is the single source of truth. Results go to files, and the DB says which ones count.
 
 That one decision is where the distributed-system guarantees come from. Any component can crash and restart at any moment, like the stage worker here, and we survive it, because it held nothing: it simply reads the DB and carries on. Nodes can join or leave at any time, because there is nothing to hand over. And recovery is just a query on the DB, not a procedure someone has to run.
 
-## 32. Where Patram-Ingest sits in the stack
+## 31. Where Patram-Ingest sits in the stack
 *Wrap-up · ~1.2 min · reveal steps: 2*
 
 To step back: Patram-Ingest, everything we talked about today, is just one part of the infrastructure we have.
@@ -362,33 +350,33 @@ To step back: Patram-Ingest, everything we talked about today, is just one part 
 
 **[step 2]** And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks. These are internal models as of now; we plan to release the Patram series soon, and the sign-up form is on the next slide.
 
-## 33. Thank you
+## 32. Thank you
 *4 · Thank you · ~0.6 min · no steps*
 
 To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. There are two codes on the right: the first is the sign-up form for the Patram series, so we can let you know when it is released, and the second is our hiring form. Scan whichever is useful. If there is time, we have two questions for the room and one problem to take home, and we are happy to take yours.
 
 **Likely questions.** Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.
 
-## 34. Part five · Q&amp;A (optional)
+## 33. Part five · Q&amp;A (optional)
 *5 · Q&amp;A · ~0.2 min · no steps*
 
 Part five is over to you. We have two questions for the room, one to take home, and then we are happy to take yours.
 
-## 35. The remaining question (optional)
+## 34. The remaining question (optional)
 *5 · Q&amp;A · ~0.4 min · no steps*
 
 One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you the whole design, we work out two of the pieces with you, and leave the full design as a take-home problem.
 
-## 36. Question 1: which order survives the crash? (optional)
+## 35. Question 1: which order survives the crash? (optional)
 *5 · Q&amp;A · ~1.2 min · reveal steps: 2*
 
 A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two writes. Remember the recovery rule from part two: after a restart, any page that is not marked done is picked up and run again.
 
 **[step 1]** So: which order survives the crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.
 
-**[step 2]** Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done: hand the page on first, mark yourself done last, and make every write safe to repeat.
+**[step 2]** Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. So the rule is: hand the page on first, mark yourself done last, and make every write safe to repeat.
 
-## 37. Question 2: who decides that Grounded Q&amp;A can start? (optional)
+## 36. Question 2: who decides that Grounded Q&amp;A can start? (optional)
 *5 · Q&amp;A · ~1.3 min · reveal steps: 2*
 
 Now a design question. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?
@@ -397,7 +385,7 @@ Now a design question. One page. Its text was transcribed on machine 3 at 10:02.
 
 **[step 2]** A is the usual first answer, but that service has to keep its memory somewhere durable, and that somewhere is a database. So A is really C plus one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Same rule as before: the DB is the single source of truth, and nothing that matters lives in a process.
 
-## 38. Take-home: how should the database coordinate the stages? (optional)
+## 37. Take-home: how should the database coordinate the stages? (optional)
 *5 · Q&amp;A · ~0.6 min · reveal steps: 1*
 
 So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.
