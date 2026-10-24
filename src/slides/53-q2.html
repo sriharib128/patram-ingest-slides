@@ -1,4 +1,4 @@
-<section class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.6" data-title="Take-home: how should the database coordinate the stages?">
+<section data-optional class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.6" data-title="Take-home: how should the database coordinate the stages?">
   <div class="hd">
     <div class="eyebrow">Take-home problem</div>
     <h2>How should the database coordinate the stages?</h2>
@@ -24,9 +24,9 @@
     <div class="card qo-c"><small>What you know so far</small><p>Each machine writes what it finished into the database. Writes are ordered so they are <b>safe to repeat</b>.</p></div>
     <div class="card qo-c"><small>What the design must handle</small><p>A crash at any moment, no messages between machines, every stage <b>exactly once</b>, still fast at 32 nodes.</p></div>
   </div>
-  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> <span class="hi">Send us how you would solve it; the form is on the next slide.</span></div>
+  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> <span class="hi">Tell us how you would solve it; we are happy to talk it through afterwards.</span></div>
   <aside class="notes">
     <p>So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&amp;A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.</p>
-    <p data-step="1">So we leave it with you as a take-home problem. Send us how you would solve it; the form is on the next slide. We will compare your ideas with what we built, and we are happy to talk through it afterwards.</p>
+    <p data-step="1">So we leave it with you as a take-home problem. Tell us how you would solve it, here or afterwards. We will compare your ideas with what we built, and we are happy to talk it through.</p>
   </aside>
 </section>

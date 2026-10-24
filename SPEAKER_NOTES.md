@@ -36,15 +36,15 @@ Generated from the deck. Keys: → next · ← back · F fullscreen · O overvie
 | 30 | Key takeaways | 1 | 30.5 |
 | 31 | The DB is the single source of truth | 0.8 | 31.3 |
 | 32 | Where Patram-Ingest sits in the stack | 1.2 | 32.5 |
-| 33 | Part four · Q&amp;A | 0.2 | 32.7 |
-| 34 | The remaining question | 0.4 | 33.1 |
-| 35 | Question 1: which order survives the crash? | 1.2 | 34.3 |
-| 36 | Question 2: who decides that Grounded Q&amp;A can start? | 1.3 | 35.6 |
-| 37 | Take-home: how should the database coordinate the stages? | 0.6 | 36.2 |
-| 38 | Summary | 0.6 | 36.8 |
+| 33 | Thank you | 0.6 | 33.1 |
+| 34 | Part four · Q&amp;A *(optional)* | 0.2 | - |
+| 35 | The remaining question *(optional)* | 0.4 | - |
+| 36 | Question 1: which order survives the crash? *(optional)* | 1.2 | - |
+| 37 | Question 2: who decides that Grounded Q&amp;A can start? *(optional)* | 1.3 | - |
+| 38 | Take-home: how should the database coordinate the stages? *(optional)* | 0.6 | - |
 
 
-**Core path ≈ 36.8 min.** Optional slides add the remainder; press **K** to skip them all.
+**Core path ≈ 33.1 min.** Optional slides add the remainder; press **K** to skip them all.
 
 ## 1. Patram-Ingest: durable execution around vLLM
 *Context · ~0.3 min · no steps*
@@ -350,27 +350,32 @@ If you remember one thing from this talk, make it this. Nowhere in the whole sys
 That one decision is where the distributed-system guarantees come from. Any component can crash and restart at any moment, like the stage worker here, and we survive it, because it held nothing: it simply reads the DB and carries on. Nodes can join or leave at any time, because there is nothing to hand over. And recovery is just a query on the DB, not a procedure someone has to run.
 
 ## 32. Where Patram-Ingest sits in the stack
-*Wrap-up · ~1.2 min · reveal steps: 3*
+*Wrap-up · ~1.2 min · reveal steps: 2*
 
 To step back: Patram-Ingest, everything we talked about today, is just one part of the infrastructure we have.
 
 **[step 1]** There is a lot supporting it from below: our storage layer, Patram-FS and Patram-DB, the scraper and our synthetic documents that bring raw data in, and DarshinAI for annotation and visualization.
 
-**[step 2]** And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks.
+**[step 2]** And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks. These are internal models as of now; we plan to release the Patram series soon, and the sign-up form is on the next slide.
 
-**[step 3]** These are all internal models as of now. We are soon planning to release the Patram series. If you are interested, please sign up using this form, and we will let you know.
+## 33. Thank you
+*Close · ~0.6 min · no steps*
 
-## 33. Part four · Q&amp;A
+To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. There are two codes on the right: the first is the sign-up form for the Patram series, so we can let you know when it is released, and the second is our hiring form. Scan whichever is useful. If there is time, we have two questions for the room and one problem to take home, and we are happy to take yours.
+
+**Likely questions.** Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.
+
+## 34. Part four · Q&amp;A (optional)
 *4 · Q&amp;A · ~0.2 min · no steps*
 
 Part four is over to you. We have two questions for the room, one to take home, and then we are happy to take yours.
 
-## 34. The remaining question
+## 35. The remaining question (optional)
 *4 · Q&amp;A · ~0.4 min · no steps*
 
 One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you the whole design, we work out two of the pieces with you, and leave the full design as a take-home problem.
 
-## 35. Question 1: which order survives the crash?
+## 36. Question 1: which order survives the crash? (optional)
 *4 · Q&amp;A · ~1.2 min · reveal steps: 2*
 
 A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two writes. Remember the recovery rule from part two: after a restart, any page that is not marked done is picked up and run again.
@@ -379,7 +384,7 @@ A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mar
 
 **[step 2]** Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done: hand the page on first, mark yourself done last, and make every write safe to repeat.
 
-## 36. Question 2: who decides that Grounded Q&amp;A can start?
+## 37. Question 2: who decides that Grounded Q&amp;A can start? (optional)
 *4 · Q&amp;A · ~1.3 min · reveal steps: 2*
 
 Now a design question. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?
@@ -388,16 +393,9 @@ Now a design question. One page. Its text was transcribed on machine 3 at 10:02.
 
 **[step 2]** A is the usual first answer, but that service has to keep its memory somewhere durable, and that somewhere is a database. So A is really C plus one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Same rule as before: the DB is the single source of truth, and nothing that matters lives in a process.
 
-## 37. Take-home: how should the database coordinate the stages?
+## 38. Take-home: how should the database coordinate the stages? (optional)
 *4 · Q&amp;A · ~0.6 min · reveal steps: 1*
 
 So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.
 
-**[step 1]** So we leave it with you as a take-home problem. Send us how you would solve it; the form is on the next slide. We will compare your ideas with what we built, and we are happy to talk through it afterwards.
-
-## 38. Summary
-*Close · ~0.6 min · no steps*
-
-To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. Scan the code on the right to send us how you would coordinate stages across nodes with a database, and we are happy to take your questions now.
-
-**Likely questions.** Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.
+**[step 1]** So we leave it with you as a take-home problem. Tell us how you would solve it, here or afterwards. We will compare your ideas with what we built, and we are happy to talk it through.

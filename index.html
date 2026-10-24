@@ -1797,10 +1797,13 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .qo-form{padding:26px 34px;border-radius:20px;background:#FFF4E2;border:2px solid #F5D3A8;font-size:34px;color:var(--ink);font-family:Sora,sans-serif}
 .qo-form b{color:var(--orange-deep)}
 .qz-steps span b{color:var(--orange-deep)}
-.cl-form{display:flex;gap:26px;align-items:center;padding:24px;border-radius:22px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18)}
-.cl-qr{flex:none;width:180px;height:180px;border-radius:16px;border:3px dashed #FFC078;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:18px;color:#FFC078;padding:10px}
-.cl-form b{display:block;font-family:Sora,sans-serif;font-size:32px;color:#FFC078;margin-bottom:8px}
-.cl-form span{display:block;font-size:23px;line-height:1.4;color:#E4ECFA}
+.cl-forms{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.cl-form{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 24px 22px;border-radius:22px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18)}
+.cl-form small{font-family:'IBM Plex Mono',monospace;font-size:16px;letter-spacing:2.5px;text-transform:uppercase;font-weight:700;color:#9DB3DC;margin-bottom:6px}
+.cl-form b{display:block;font-family:Sora,sans-serif;font-size:34px;color:#FFC078;margin-bottom:16px}
+.cl-qr{width:236px;height:236px;border-radius:14px;display:block}
+.cl-form span{display:block;font-size:22px;line-height:1.4;color:#E4ECFA}
+.cl-form .cl-url{font-family:'IBM Plex Mono',monospace;font-size:18px;color:#9DB3DC;margin:12px 0 10px}
 /* what training data looks like */
 .egd-img{padding:18px;display:flex;align-items:center;justify-content:center}
 .egd-pg{position:relative;height:100%;aspect-ratio:900/1272}
@@ -2874,7 +2877,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="eco2" data-steps="3" data-section="Wrap-up" data-time="1.2" data-title="Where Patram-Ingest sits in the stack">
+<section class="slide light" id="eco2" data-steps="2" data-section="Wrap-up" data-time="1.2" data-title="Where Patram-Ingest sits in the stack">
   <div class="hd">
     <div class="eyebrow">Context</div>
     <h2>Where Patram-Ingest sits in the stack</h2>
@@ -2893,23 +2896,35 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="card eco2-c" data-s="1"><small>Below it</small><b>Storage and raw data</b><span>Patram-FS and Patram-DB hold everything. The scraper and synthetic docs feed it; DarshinAI lets us annotate and look at it.</span></div>
     <div class="card eco2-c" data-s="2"><small>Above it</small><b>From corpus to models</b><span>Patram-Core turns that data into our training corpus, and trains the Patram Suite of foundation models.</span></div>
   </div>
-  <div class="abs card eco2-rel" data-s="3" style="left:1220px;top:300px;width:580px;height:690px">
-    <small>Coming soon</small>
-    <h3>Patram series</h3>
-    <p>Our models are internal today. We plan to release the <b>Patram series</b> soon.</p>
-    <svg class="eco2-qr" viewBox="-2 -2 33 33" role="img" aria-label="QR code: Patram 1.5 sign-up form"><rect x="-2" y="-2" width="33" height="33" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h3v1h-3zM12 0h3v1h-3zM16 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h6v1h-6zM17 1h1v1h-1zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h2v1h-2zM12 2h1v1h-1zM14 2h1v1h-1zM17 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM16 3h1v1h-1zM18 3h2v1h-2zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h2v1h-2zM11 4h2v1h-2zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h1v1h-1zM17 5h4v1h-4zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h1v1h-1zM10 7h1v1h-1zM13 7h1v1h-1zM17 7h2v1h-2zM20 7h1v1h-1zM0 8h1v1h-1zM4 8h1v1h-1zM6 8h4v1h-4zM11 8h1v1h-1zM13 8h1v1h-1zM16 8h2v1h-2zM20 8h6v1h-6zM28 8h1v1h-1zM1 9h4v1h-4zM7 9h2v1h-2zM11 9h5v1h-5zM19 9h1v1h-1zM21 9h8v1h-8zM0 10h2v1h-2zM3 10h1v1h-1zM6 10h1v1h-1zM9 10h3v1h-3zM15 10h2v1h-2zM18 10h1v1h-1zM21 10h2v1h-2zM28 10h1v1h-1zM2 11h2v1h-2zM5 11h1v1h-1zM7 11h3v1h-3zM14 11h1v1h-1zM16 11h2v1h-2zM24 11h2v1h-2zM27 11h2v1h-2zM0 12h1v1h-1zM3 12h1v1h-1zM5 12h4v1h-4zM10 12h1v1h-1zM12 12h5v1h-5zM19 12h1v1h-1zM27 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM7 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM15 13h5v1h-5zM22 13h7v1h-7zM0 14h1v1h-1zM6 14h10v1h-10zM20 14h1v1h-1zM23 14h4v1h-4zM28 14h1v1h-1zM0 15h3v1h-3zM4 15h2v1h-2zM7 15h2v1h-2zM10 15h1v1h-1zM12 15h2v1h-2zM17 15h5v1h-5zM23 15h1v1h-1zM27 15h2v1h-2zM1 16h3v1h-3zM5 16h2v1h-2zM8 16h1v1h-1zM10 16h2v1h-2zM13 16h1v1h-1zM16 16h1v1h-1zM20 16h2v1h-2zM23 16h1v1h-1zM27 16h1v1h-1zM0 17h1v1h-1zM2 17h1v1h-1zM4 17h1v1h-1zM7 17h3v1h-3zM11 17h4v1h-4zM16 17h2v1h-2zM22 17h4v1h-4zM27 17h2v1h-2zM2 18h6v1h-6zM15 18h2v1h-2zM20 18h1v1h-1zM22 18h1v1h-1zM24 18h1v1h-1zM26 18h1v1h-1zM28 18h1v1h-1zM2 19h1v1h-1zM4 19h2v1h-2zM7 19h1v1h-1zM9 19h2v1h-2zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM19 19h2v1h-2zM24 19h1v1h-1zM27 19h2v1h-2zM0 20h2v1h-2zM6 20h1v1h-1zM8 20h1v1h-1zM10 20h2v1h-2zM13 20h2v1h-2zM16 20h2v1h-2zM20 20h6v1h-6zM28 20h1v1h-1zM8 21h1v1h-1zM15 21h1v1h-1zM17 21h4v1h-4zM24 21h1v1h-1zM28 21h1v1h-1zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h1v1h-1zM13 22h3v1h-3zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM28 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM13 23h1v1h-1zM17 23h2v1h-2zM20 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h1v1h-1zM10 24h4v1h-4zM15 24h1v1h-1zM19 24h7v1h-7zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM11 25h1v1h-1zM13 25h6v1h-6zM20 25h2v1h-2zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM9 26h1v1h-1zM12 26h5v1h-5zM19 26h1v1h-1zM21 26h1v1h-1zM25 26h4v1h-4zM0 27h1v1h-1zM6 27h1v1h-1zM11 27h3v1h-3zM17 27h2v1h-2zM20 27h1v1h-1zM23 27h3v1h-3zM27 27h2v1h-2zM0 28h7v1h-7zM8 28h4v1h-4zM15 28h1v1h-1zM20 28h1v1h-1zM23 28h3v1h-3zM27 28h1v1h-1z" fill="#0E1A3A"/></svg>
-    <p class="eco2-url">forms.gle/oPLKvsvKZkKNo6Wz6</p>
-    <p class="eco2-ask">Sign up to be notified when it is released.</p>
-  </div>
   <aside class="notes">
     <p>To step back: Patram-Ingest, everything we talked about today, is just one part of the infrastructure we have.</p>
     <p data-step="1">There is a lot supporting it from below: our storage layer, Patram-FS and Patram-DB, the scraper and our synthetic documents that bring raw data in, and DarshinAI for annotation and visualization.</p>
-    <p data-step="2">And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks.</p>
-    <p data-step="3">These are all internal models as of now. We are soon planning to release the Patram series. If you are interested, please sign up using this form, and we will let you know.</p>
+    <p data-step="2">And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks. These are internal models as of now; we plan to release the Patram series soon, and the sign-up form is on the next slide.</p>
   </aside>
 </section>
 
-<section class="slide dark" id="sec5" data-section="4 · Q&amp;A" data-time="0.2" data-title="Part four · Q&amp;A">
+<section class="slide dark" id="close" data-steps="0" data-section="Close" data-time="0.6" data-title="Thank you">
+  <canvas class="abs" width="1920" height="1080" style="left:0;top:0;width:1920px;height:1080px"></canvas>
+  <div class="abs" style="left:120px;top:78px;width:1680px">
+    <div class="eyebrow">In summary</div>
+    <h2 style="font-size:64px;max-width:1500px;margin-top:120px">Describe the pipeline. The engine keeps it busy, crash-safe and scalable.</h2>
+  </div>
+  <div class="abs" style="left:120px;top:520px;width:1100px"><h1 style="font-size:150px">Thank you</h1></div>
+  <div class="abs cl-forms" style="right:120px;top:400px;width:880px">
+    <div class="cl-form"><small>Coming soon</small><b>Patram series</b><svg class="cl-qr" viewBox="-2 -2 33 33" role="img" aria-label="QR code: Patram series sign-up form"><rect x="-2" y="-2" width="33" height="33" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h3v1h-3zM12 0h3v1h-3zM16 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h6v1h-6zM17 1h1v1h-1zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h2v1h-2zM12 2h1v1h-1zM14 2h1v1h-1zM17 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM10 3h1v1h-1zM16 3h1v1h-1zM18 3h2v1h-2zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h2v1h-2zM11 4h2v1h-2zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h2v1h-2zM11 5h1v1h-1zM17 5h4v1h-4zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h1v1h-1zM10 7h1v1h-1zM13 7h1v1h-1zM17 7h2v1h-2zM20 7h1v1h-1zM0 8h1v1h-1zM4 8h1v1h-1zM6 8h4v1h-4zM11 8h1v1h-1zM13 8h1v1h-1zM16 8h2v1h-2zM20 8h6v1h-6zM28 8h1v1h-1zM1 9h4v1h-4zM7 9h2v1h-2zM11 9h5v1h-5zM19 9h1v1h-1zM21 9h8v1h-8zM0 10h2v1h-2zM3 10h1v1h-1zM6 10h1v1h-1zM9 10h3v1h-3zM15 10h2v1h-2zM18 10h1v1h-1zM21 10h2v1h-2zM28 10h1v1h-1zM2 11h2v1h-2zM5 11h1v1h-1zM7 11h3v1h-3zM14 11h1v1h-1zM16 11h2v1h-2zM24 11h2v1h-2zM27 11h2v1h-2zM0 12h1v1h-1zM3 12h1v1h-1zM5 12h4v1h-4zM10 12h1v1h-1zM12 12h5v1h-5zM19 12h1v1h-1zM27 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM7 13h1v1h-1zM10 13h1v1h-1zM12 13h1v1h-1zM15 13h5v1h-5zM22 13h7v1h-7zM0 14h1v1h-1zM6 14h10v1h-10zM20 14h1v1h-1zM23 14h4v1h-4zM28 14h1v1h-1zM0 15h3v1h-3zM4 15h2v1h-2zM7 15h2v1h-2zM10 15h1v1h-1zM12 15h2v1h-2zM17 15h5v1h-5zM23 15h1v1h-1zM27 15h2v1h-2zM1 16h3v1h-3zM5 16h2v1h-2zM8 16h1v1h-1zM10 16h2v1h-2zM13 16h1v1h-1zM16 16h1v1h-1zM20 16h2v1h-2zM23 16h1v1h-1zM27 16h1v1h-1zM0 17h1v1h-1zM2 17h1v1h-1zM4 17h1v1h-1zM7 17h3v1h-3zM11 17h4v1h-4zM16 17h2v1h-2zM22 17h4v1h-4zM27 17h2v1h-2zM2 18h6v1h-6zM15 18h2v1h-2zM20 18h1v1h-1zM22 18h1v1h-1zM24 18h1v1h-1zM26 18h1v1h-1zM28 18h1v1h-1zM2 19h1v1h-1zM4 19h2v1h-2zM7 19h1v1h-1zM9 19h2v1h-2zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM19 19h2v1h-2zM24 19h1v1h-1zM27 19h2v1h-2zM0 20h2v1h-2zM6 20h1v1h-1zM8 20h1v1h-1zM10 20h2v1h-2zM13 20h2v1h-2zM16 20h2v1h-2zM20 20h6v1h-6zM28 20h1v1h-1zM8 21h1v1h-1zM15 21h1v1h-1zM17 21h4v1h-4zM24 21h1v1h-1zM28 21h1v1h-1zM0 22h7v1h-7zM8 22h2v1h-2zM11 22h1v1h-1zM13 22h3v1h-3zM19 22h2v1h-2zM22 22h1v1h-1zM24 22h3v1h-3zM28 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM13 23h1v1h-1zM17 23h2v1h-2zM20 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h1v1h-1zM10 24h4v1h-4zM15 24h1v1h-1zM19 24h7v1h-7zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM11 25h1v1h-1zM13 25h6v1h-6zM20 25h2v1h-2zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM9 26h1v1h-1zM12 26h5v1h-5zM19 26h1v1h-1zM21 26h1v1h-1zM25 26h4v1h-4zM0 27h1v1h-1zM6 27h1v1h-1zM11 27h3v1h-3zM17 27h2v1h-2zM20 27h1v1h-1zM23 27h3v1h-3zM27 27h2v1h-2zM0 28h7v1h-7zM8 28h4v1h-4zM15 28h1v1h-1zM20 28h1v1h-1zM23 28h3v1h-3zM27 28h1v1h-1z" fill="#0E1A3A"/></svg><span class="cl-url">forms.gle/oPLKvsvKZkKNo6Wz6</span><span>Sign up to be notified when it is released.</span></div>
+    <div class="cl-form"><small>Join us</small><b>We are hiring</b><svg class="cl-qr" viewBox="-2 -2 33 33" role="img" aria-label="QR code: hiring form"><rect x="-2" y="-2" width="33" height="33" fill="#fff"/><path d="M0 0h7v1h-7zM8 0h1v1h-1zM12 0h3v1h-3zM16 0h2v1h-2zM19 0h1v1h-1zM22 0h7v1h-7zM0 1h1v1h-1zM6 1h1v1h-1zM9 1h2v1h-2zM12 1h4v1h-4zM17 1h4v1h-4zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h3v1h-3zM6 2h1v1h-1zM9 2h1v1h-1zM14 2h1v1h-1zM17 2h1v1h-1zM19 2h1v1h-1zM22 2h1v1h-1zM24 2h3v1h-3zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h3v1h-3zM6 3h1v1h-1zM8 3h1v1h-1zM11 3h1v1h-1zM16 3h1v1h-1zM18 3h3v1h-3zM22 3h1v1h-1zM24 3h3v1h-3zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h3v1h-3zM6 4h1v1h-1zM8 4h1v1h-1zM10 4h2v1h-2zM22 4h1v1h-1zM24 4h3v1h-3zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h5v1h-5zM17 5h1v1h-1zM19 5h2v1h-2zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h7v1h-7zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h7v1h-7zM8 7h3v1h-3zM13 7h1v1h-1zM17 7h1v1h-1zM19 7h2v1h-2zM0 8h1v1h-1zM4 8h1v1h-1zM6 8h4v1h-4zM11 8h1v1h-1zM13 8h1v1h-1zM16 8h1v1h-1zM19 8h1v1h-1zM21 8h5v1h-5zM28 8h1v1h-1zM0 9h5v1h-5zM8 9h1v1h-1zM13 9h3v1h-3zM21 9h8v1h-8zM1 10h3v1h-3zM5 10h2v1h-2zM11 10h1v1h-1zM15 10h1v1h-1zM18 10h1v1h-1zM20 10h3v1h-3zM28 10h1v1h-1zM1 11h1v1h-1zM3 11h3v1h-3zM9 11h1v1h-1zM14 11h2v1h-2zM17 11h4v1h-4zM24 11h2v1h-2zM27 11h2v1h-2zM0 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM10 12h1v1h-1zM13 12h2v1h-2zM17 12h1v1h-1zM19 12h2v1h-2zM27 12h1v1h-1zM0 13h1v1h-1zM3 13h3v1h-3zM9 13h2v1h-2zM12 13h1v1h-1zM15 13h5v1h-5zM22 13h7v1h-7zM1 14h1v1h-1zM4 14h1v1h-1zM6 14h5v1h-5zM12 14h5v1h-5zM18 14h1v1h-1zM20 14h1v1h-1zM23 14h4v1h-4zM28 14h1v1h-1zM0 15h2v1h-2zM3 15h3v1h-3zM7 15h1v1h-1zM9 15h2v1h-2zM12 15h2v1h-2zM17 15h1v1h-1zM21 15h1v1h-1zM23 15h1v1h-1zM27 15h2v1h-2zM2 16h2v1h-2zM5 16h3v1h-3zM11 16h1v1h-1zM13 16h1v1h-1zM16 16h1v1h-1zM19 16h3v1h-3zM23 16h1v1h-1zM27 16h1v1h-1zM0 17h4v1h-4zM7 17h1v1h-1zM9 17h3v1h-3zM13 17h2v1h-2zM16 17h1v1h-1zM18 17h2v1h-2zM22 17h4v1h-4zM27 17h2v1h-2zM5 18h3v1h-3zM9 18h1v1h-1zM11 18h1v1h-1zM15 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM22 18h1v1h-1zM24 18h1v1h-1zM26 18h1v1h-1zM28 18h1v1h-1zM7 19h2v1h-2zM12 19h1v1h-1zM14 19h1v1h-1zM17 19h1v1h-1zM19 19h2v1h-2zM24 19h1v1h-1zM27 19h2v1h-2zM0 20h3v1h-3zM4 20h3v1h-3zM8 20h1v1h-1zM11 20h1v1h-1zM13 20h2v1h-2zM16 20h2v1h-2zM20 20h6v1h-6zM28 20h1v1h-1zM8 21h1v1h-1zM10 21h1v1h-1zM12 21h1v1h-1zM15 21h1v1h-1zM19 21h2v1h-2zM24 21h1v1h-1zM28 21h1v1h-1zM0 22h7v1h-7zM8 22h1v1h-1zM11 22h1v1h-1zM13 22h8v1h-8zM22 22h1v1h-1zM24 22h3v1h-3zM28 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM10 23h2v1h-2zM13 23h1v1h-1zM16 23h3v1h-3zM20 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM2 24h3v1h-3zM6 24h1v1h-1zM8 24h3v1h-3zM12 24h2v1h-2zM16 24h1v1h-1zM19 24h7v1h-7zM0 25h1v1h-1zM2 25h3v1h-3zM6 25h1v1h-1zM9 25h1v1h-1zM11 25h4v1h-4zM16 25h1v1h-1zM18 25h1v1h-1zM20 25h2v1h-2zM28 25h1v1h-1zM0 26h1v1h-1zM2 26h3v1h-3zM6 26h1v1h-1zM10 26h1v1h-1zM12 26h2v1h-2zM15 26h2v1h-2zM18 26h2v1h-2zM21 26h1v1h-1zM25 26h4v1h-4zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h2v1h-2zM12 27h1v1h-1zM16 27h2v1h-2zM20 27h1v1h-1zM23 27h3v1h-3zM27 27h2v1h-2zM0 28h7v1h-7zM8 28h2v1h-2zM20 28h1v1h-1zM23 28h3v1h-3zM27 28h1v1h-1z" fill="#0E1A3A"/></svg><span class="cl-url">forms.gle/AGvzZvWnFuFBR7Ve6</span><span>Interested in working on this? Fill in the form.</span></div>
+  </div>
+  <div class="abs" style="left:120px;bottom:54px;font-size:25px;color:#C7D6F3;line-height:1.5"><div class="cl-au"><b>Anirudh Srinivasan</b> · Team Lead - Vision · <svg class="cl-li" viewBox="0 0 24 24" aria-label="LinkedIn"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M5.3 9.2h2.9V19H5.3zM6.75 4.6a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10 9.2h2.8v1.35h.04c.39-.74 1.34-1.52 2.76-1.52 2.95 0 3.5 1.94 3.5 4.47V19h-2.9v-4.84c0-1.15-.02-2.64-1.6-2.64-1.61 0-1.86 1.26-1.86 2.55V19H10z"/></svg><span>linkedin.com/in/anirudh-srini</span></div><div class="cl-au"><b>Srihari Bandarupalli</b> · Generative AI Engineer - Vision · <svg class="cl-li" viewBox="0 0 24 24" aria-label="LinkedIn"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M5.3 9.2h2.9V19H5.3zM6.75 4.6a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10 9.2h2.8v1.35h.04c.39-.74 1.34-1.52 2.76-1.52 2.95 0 3.5 1.94 3.5 4.47V19h-2.9v-4.84c0-1.15-.02-2.64-1.6-2.64-1.61 0-1.86 1.26-1.86 2.55V19H10z"/></svg><span>linkedin.com/in/sriharib128</span></div></div>
+  <div class="abs" style="right:120px;bottom:50px;display:flex;gap:28px;align-items:center;background:#fff;border-radius:18px;padding:16px 30px">
+    <img src="assets/bharatgen_logo_crop.png" style="height:66px" alt="BharatGen"><span style="width:2px;height:60px;background:#DCE2EE"></span><img src="assets/vllm_text_crop.png" style="height:50px" alt="vLLM">
+  </div>
+  <aside class="notes">
+    <p>To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. There are two codes on the right: the first is the sign-up form for the Patram series, so we can let you know when it is released, and the second is our hiring form. Scan whichever is useful. If there is time, we have two questions for the room and one problem to take home, and we are happy to take yours.</p>
+    <p><b>Likely questions.</b> Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.</p>
+  </aside>
+</section>
+
+<section data-optional class="slide dark" id="sec5" data-section="4 · Q&amp;A" data-time="0.2" data-title="Part four · Q&amp;A">
   <div class="dv-num">4</div>
   <div class="dv-eb">Part four</div>
   <div class="dv-h">Q&amp;A</div>
@@ -2918,7 +2933,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <aside class="notes"><p>Part four is over to you. We have two questions for the room, one to take home, and then we are happy to take yours.</p></aside>
 </section>
 
-<section class="slide light" id="deep" data-steps="0" data-section="4 · Q&amp;A" data-time="0.4" data-title="The remaining question">
+<section data-optional class="slide light" id="deep" data-steps="0" data-section="4 · Q&amp;A" data-time="0.4" data-title="The remaining question">
   <div class="hd">
     <div class="eyebrow">What we have not covered</div>
     <h2>The remaining question</h2>
@@ -2935,7 +2950,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="q3" data-steps="2" data-section="4 · Q&amp;A" data-time="1.2" data-title="Question 1: which order survives the crash?">
+<section data-optional class="slide light" id="q3" data-steps="2" data-section="4 · Q&amp;A" data-time="1.2" data-title="Question 1: which order survives the crash?">
   <div class="hd">
     <div class="eyebrow">Question 1</div>
     <h2>Which order survives the crash?</h2>
@@ -2965,7 +2980,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="q1" data-steps="2" data-section="4 · Q&amp;A" data-time="1.3" data-title="Question 2: who decides that Grounded Q&amp;A can start?">
+<section data-optional class="slide light" id="q1" data-steps="2" data-section="4 · Q&amp;A" data-time="1.3" data-title="Question 2: who decides that Grounded Q&amp;A can start?">
   <div class="hd">
     <div class="eyebrow">Question 2</div>
     <h2>Who decides that Grounded Q&amp;A can start?</h2>
@@ -3013,7 +3028,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.6" data-title="Take-home: how should the database coordinate the stages?">
+<section data-optional class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.6" data-title="Take-home: how should the database coordinate the stages?">
   <div class="hd">
     <div class="eyebrow">Take-home problem</div>
     <h2>How should the database coordinate the stages?</h2>
@@ -3039,31 +3054,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="card qo-c"><small>What you know so far</small><p>Each machine writes what it finished into the database. Writes are ordered so they are <b>safe to repeat</b>.</p></div>
     <div class="card qo-c"><small>What the design must handle</small><p>A crash at any moment, no messages between machines, every stage <b>exactly once</b>, still fast at 32 nodes.</p></div>
   </div>
-  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> <span class="hi">Send us how you would solve it; the form is on the next slide.</span></div>
+  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> <span class="hi">Tell us how you would solve it; we are happy to talk it through afterwards.</span></div>
   <aside class="notes">
     <p>So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&amp;A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.</p>
-    <p data-step="1">So we leave it with you as a take-home problem. Send us how you would solve it; the form is on the next slide. We will compare your ideas with what we built, and we are happy to talk through it afterwards.</p>
-  </aside>
-</section>
-
-<section class="slide dark" id="close" data-steps="0" data-section="Close" data-time="0.6" data-title="Summary">
-  <canvas class="abs" width="1920" height="1080" style="left:0;top:0;width:1920px;height:1080px"></canvas>
-  <div class="abs" style="left:120px;top:78px;width:1680px">
-    <div class="eyebrow">In summary</div>
-    <h2 style="font-size:64px;max-width:1500px;margin-top:120px">Describe the pipeline. The engine keeps it busy, crash-safe and scalable.</h2>
-  </div>
-  <div class="abs" style="left:120px;top:520px;width:1100px"><h1 style="font-size:150px">Thank you</h1></div>
-  <div class="abs cl-form" style="right:120px;top:470px;width:560px">
-    <div class="cl-qr">QR · form link</div>
-    <div><b>Over to you</b><span>How would you coordinate stages across nodes with a database? Send us your idea.</span></div>
-  </div>
-  <div class="abs" style="left:120px;bottom:54px;font-size:25px;color:#C7D6F3;line-height:1.5"><div class="cl-au"><b>Anirudh Srinivasan</b> · Team Lead - Vision · <svg class="cl-li" viewBox="0 0 24 24" aria-label="LinkedIn"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M5.3 9.2h2.9V19H5.3zM6.75 4.6a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10 9.2h2.8v1.35h.04c.39-.74 1.34-1.52 2.76-1.52 2.95 0 3.5 1.94 3.5 4.47V19h-2.9v-4.84c0-1.15-.02-2.64-1.6-2.64-1.61 0-1.86 1.26-1.86 2.55V19H10z"/></svg><span>linkedin.com/in/anirudh-srini</span></div><div class="cl-au"><b>Srihari Bandarupalli</b> · Generative AI Engineer - Vision · <svg class="cl-li" viewBox="0 0 24 24" aria-label="LinkedIn"><rect width="24" height="24" rx="4" fill="#0A66C2"/><path fill="#fff" d="M5.3 9.2h2.9V19H5.3zM6.75 4.6a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zM10 9.2h2.8v1.35h.04c.39-.74 1.34-1.52 2.76-1.52 2.95 0 3.5 1.94 3.5 4.47V19h-2.9v-4.84c0-1.15-.02-2.64-1.6-2.64-1.61 0-1.86 1.26-1.86 2.55V19H10z"/></svg><span>linkedin.com/in/sriharib128</span></div></div>
-  <div class="abs" style="right:120px;bottom:50px;display:flex;gap:28px;align-items:center;background:#fff;border-radius:18px;padding:16px 30px">
-    <img src="assets/bharatgen_logo_crop.png" style="height:66px" alt="BharatGen"><span style="width:2px;height:60px;background:#DCE2EE"></span><img src="assets/vllm_text_crop.png" style="height:50px" alt="vLLM">
-  </div>
-  <aside class="notes">
-    <p>To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. Scan the code on the right to send us how you would coordinate stages across nodes with a database, and we are happy to take your questions now.</p>
-    <p><b>Likely questions.</b> Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.</p>
+    <p data-step="1">So we leave it with you as a take-home problem. Tell us how you would solve it, here or afterwards. We will compare your ideas with what we built, and we are happy to talk it through.</p>
   </aside>
 </section>
 
