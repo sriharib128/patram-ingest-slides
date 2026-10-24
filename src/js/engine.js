@@ -133,7 +133,7 @@
     ctrN.textContent = (state.i + 1) + ' / ' + N;
     bar.style.width = ((state.i + 1) / N * 100) + '%';
     stage.classList.toggle('dark-ui', el.classList.contains('dark'));
-    for (const b of [$('#brand'), $('#brandtl')]) if (b) b.classList.toggle('hide', el.hasAttribute('data-nobrand'));   // the title and thank-you slides carry the logo themselves
+    for (const b of [$('#brandtl')]) if (b) b.classList.toggle('hide', el.hasAttribute('data-nobrand'));   // the title and thank-you slides carry the logo themselves
     const acts = $('#acts');
     if (acts) {
       if (!acts.children.length) { const sp = document.createElement('span'); sp.dataset.part = 'title'; sp.className = 'ttl'; sp.title = 'Go to the title slide'; sp.innerHTML = '<b>Title</b>'; acts.appendChild(sp); } if (acts.children.length === 1) ['The problem', 'Busy GPUs', 'Crash safe', 'Graphs', 'Thank you', 'Q&A'].forEach((n, k) => { const sp = document.createElement('span'); sp.dataset.part = k; sp.title = 'Go to part ' + k + ': ' + n; sp.innerHTML = '<b>' + k + '</b><u>' + n + '</u>'; acts.appendChild(sp); });

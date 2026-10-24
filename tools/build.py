@@ -45,7 +45,7 @@ def page(inline):
 <body>
 <div id="stage-wrap"><div id="stage">
 {body}
-<div id="acts"></div><div id="brandtl"><img src="assets/bharatgen_emblem.png" alt="BharatGen"></div><div id="brand"><img src="assets/bharatgen_logo_crop.png" alt="BharatGen"></div><div id="bar"></div><div id="counter"></div><div id="hud"></div>
+<div id="acts"></div><div id="brandtl"><img src="assets/bharatgen_emblem.png" alt="BharatGen"></div><div id="bar"></div><div id="counter"></div><div id="hud"></div>
 </div></div>
 <div id="overview"></div>
 {PANEL}

@@ -1896,11 +1896,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 #q2-pl{transition:opacity .3s}
 #queue2[data-st="0"] #q2-pl{opacity:0;pointer-events:none}
 
-/* the BharatGen mark, bottom left on every slide that does not already show it */
-#brand{position:absolute;left:56px;bottom:14px;z-index:40;pointer-events:none;transition:opacity .3s}
-#brand.hide{opacity:0}
-#brand img{display:block;height:34px;width:auto;opacity:.9}
-.dark-ui #brand img{background:#fff;border-radius:10px;padding:4px 10px;height:42px;box-sizing:border-box;opacity:.95}
+/* the BharatGen emblem, top left on every slide that does not already show the logo */
 #brandtl{position:absolute;left:56px;top:24px;z-index:40;pointer-events:none;transition:opacity .3s}
 #brandtl.hide{opacity:0}
 #brandtl img{display:block;width:56px;height:56px;border-radius:12px;background:#fff;padding:5px;box-sizing:border-box;box-shadow:0 0 0 1px rgba(14,26,58,.1)}
@@ -3059,7 +3055,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<div id="acts"></div><div id="brandtl"><img src="assets/bharatgen_emblem.png" alt="BharatGen"></div><div id="brand"><img src="assets/bharatgen_logo_crop.png" alt="BharatGen"></div><div id="bar"></div><div id="counter"></div><div id="hud"></div>
+<div id="acts"></div><div id="brandtl"><img src="assets/bharatgen_emblem.png" alt="BharatGen"></div><div id="bar"></div><div id="counter"></div><div id="hud"></div>
 </div></div>
 <div id="overview"></div>
 <div id="presenter-panel">
@@ -3204,7 +3200,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     ctrN.textContent = (state.i + 1) + ' / ' + N;
     bar.style.width = ((state.i + 1) / N * 100) + '%';
     stage.classList.toggle('dark-ui', el.classList.contains('dark'));
-    for (const b of [$('#brand'), $('#brandtl')]) if (b) b.classList.toggle('hide', el.hasAttribute('data-nobrand'));   // the title and thank-you slides carry the logo themselves
+    for (const b of [$('#brandtl')]) if (b) b.classList.toggle('hide', el.hasAttribute('data-nobrand'));   // the title and thank-you slides carry the logo themselves
     const acts = $('#acts');
     if (acts) {
       if (!acts.children.length) { const sp = document.createElement('span'); sp.dataset.part = 'title'; sp.className = 'ttl'; sp.title = 'Go to the title slide'; sp.innerHTML = '<b>Title</b>'; acts.appendChild(sp); } if (acts.children.length === 1) ['The problem', 'Busy GPUs', 'Crash safe', 'Graphs', 'Thank you', 'Q&A'].forEach((n, k) => { const sp = document.createElement('span'); sp.dataset.part = k; sp.title = 'Go to part ' + k + ': ' + n; sp.innerHTML = '<b>' + k + '</b><u>' + n + '</u>'; acts.appendChild(sp); });
