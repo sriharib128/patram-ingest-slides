@@ -1,0 +1,18 @@
+<section class="slide light" id="queue2" data-steps="4" data-section="2 · Never losing work" data-time="1.6" data-title="Nodes take work from one table">
+  <div class="hd">
+    <div class="eyebrow">Many nodes</div>
+    <h2>Coordinating across nodes, with minimal overhead</h2>
+    <div class="sub">Each box is one image. A node claims a batch, and the boxes take its colour. If a node dies, its batch goes back.</div>
+  </div>
+  <div class="abs" id="q2-pl" style="left:120px;top:286px;width:800px"></div>
+  <div class="abs q2-steps"><button type="button" data-k="1"><i>1</i>Nodes claim</button><button type="button" data-k="2"><i>2</i>Node crashes</button><button type="button" data-k="3"><i>3</i>Work handed over</button><button type="button" data-k="4"><i>4</i>Node joins</button></div>
+  <div class="abs card q2c" style="left:120px;top:356px;width:1680px"><svg id="q2-svg" viewBox="0 0 960 292"></svg></div>
+  <div class="abs q2log" id="q2-log" style="left:120px;top:902px;width:1680px"></div>
+  <aside class="notes">
+    <p>Busy GPUs are only useful if the work survives, so start with how many nodes share one run, with as little overhead as possible. Nodes do not talk to each other and there is no coordinator. Each stage's queue is a table in the DB with one row per sample, drawn here as one box per image, and each row has a state: waiting, claimed, done or failed. A node that wants work sends the database one command that picks a few waiting rows, marks them as its own and writes its name on them, all in one step. A second node making the same request at the same instant skips those rows, so two nodes can never get the same image. Nothing is assigned in advance, so a fast node simply takes more work. Click the steps, or press next, to walk through one run.</p>
+    <p data-step="1">Nodes A and B each ask the queue for a batch of images. Each batch takes its node's colour, and the node works on it.</p>
+    <p data-step="2">Now node B crashes in the middle of its batch. Its images are marked as claimed by a node that no longer exists. Recovery hands them back to waiting, so nothing is lost.</p>
+    <p data-step="3">Node C arrives and claims exactly those images, and the run carries on as if nothing happened.</p>
+    <p data-step="4">Node D joins later. One image that cannot be read is marked failed without stopping the rest, and the table finishes with every image done once. To grow a run you start the same program on more nodes; to shrink it you stop some. The DB is deliberately one plain database on one machine, because every extra component is another way to fail. The next slide shows why a node that crashes is safe to retry.</p>
+  </aside>
+</section>

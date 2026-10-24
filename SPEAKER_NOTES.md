@@ -21,8 +21,8 @@ Generated from the deck. Keys: → next · ← back · F fullscreen · O overvie
 | 15 | A private inbox per worker | 1.1 | 12.9 |
 | 16 | A worker can run any backend | 1 | 13.9 |
 | 17 | Part two · Never losing work | 0.2 | 14.1 |
-| 18 | Save first, then mark it done | 1.3 | 15.4 |
-| 19 | Nodes take work from one table | 1.6 | 17.0 |
+| 18 | Nodes take work from one table | 1.6 | 15.7 |
+| 19 | Save first, then mark it done | 1.3 | 17.0 |
 | 20 | Recovery and scaling without intervention | 3.2 | 20.2 |
 | 21 | Every error is followed through | 1 | 21.2 |
 | 22 | Part three · Graphs of stages | 0.2 | 21.4 |
@@ -193,25 +193,29 @@ vLLM itself got here in steps. We started with batch generate inside the pipelin
 
 Busy GPUs are only useful if the work survives. Part two is the core of the talk: how the engine loses nothing and repeats nothing, even when processes and machines die.
 
-## 18. Save first, then mark it done
+## 18. Nodes take work from one table
+*2 · Never losing work · ~1.6 min · no steps*
+
+Busy GPUs are only useful if the work survives, so start with how many nodes share one run, with as little overhead as possible. Nodes do not talk to each other and there is no coordinator. Each stage's queue is a table in the DB with one row per sample, drawn here as one box per image, and each row has a state: waiting, claimed, done or failed. A node that wants work sends the database one command that picks a few waiting rows, marks them as its own and writes its name on them, all in one step. A second node making the same request at the same instant skips those rows, so two nodes can never get the same image. Nothing is assigned in advance, so a fast node simply takes more work. Click the steps, or press next, to walk through one run.
+
+**[step 1]** Nodes A and B each ask the queue for a batch of images. Each batch takes its node's colour, and the node works on it.
+
+**[step 2]** Now node B crashes in the middle of its batch. Its images are marked as claimed by a node that no longer exists. Recovery hands them back to waiting, so nothing is lost.
+
+**[step 3]** Node C arrives and claims exactly those images, and the run carries on as if nothing happened.
+
+**[step 4]** Node D joins later. One image that cannot be read is marked failed without stopping the rest, and the table finishes with every image done once. To grow a run you start the same program on more nodes; to shrink it you stop some. The DB is deliberately one plain database on one machine, because every extra component is another way to fail. The next slide shows why a node that crashes is safe to retry.
+
+## 19. Save first, then mark it done
 *2 · Never losing work · ~1.3 min · no steps*
 
-Here is the idea that makes the rest work. Across the top is the whole life of one sample: prepare the prompt, run the model, parse and check the answer, save the result to disk and force it to disk, and only then mark it done in the database.
+That recovery is safe because of one ordering rule, and it is the idea that makes the rest work. Across the top is the whole life of one sample: prepare the prompt, run the model, parse and check the answer, save the result to disk and force it to disk, and only then mark it done in the database.
 
 The line that matters is the moment it is marked done. If anything goes wrong anywhere before that line, a crash, a kill, a lost node, the database still says not done. So the sample simply goes back in the queue and is done again, and anything half-saved for it is thrown away first. At most one small group of results is ever redone.
 
 After the line, the sample is finished. It is never redone, and its result is guaranteed to be on disk, because saving came first.
 
 Why this order: done must always mean saved. Reverse it, mark done and then save, and a crash between the two leaves a row that says done with nothing behind it. That is silent data loss. Both orders look identical on a good day; only one of them is safe on a bad day. Nothing is lost because we only mark done after saving, and nothing is written twice because anything not marked done is discarded before it is redone.
-
-## 19. Nodes take work from one table
-*2 · Never losing work · ~1.6 min · no steps*
-
-Everything so far happens inside one node: save first, then mark done. Now: how do many nodes share one run, with as little overhead as possible? Nodes do not talk to each other and there is no coordinator. Each stage's queue is a table in the DB with one row per sample, drawn here as one box per image, and each row has a state: waiting, claimed, done or failed. A node that wants work sends the database one command that picks a few waiting rows, marks them as its own and writes its name on them, all in one step. A second node making the same request at the same instant skips those rows, so two nodes can never get the same image. Nothing is assigned in advance, so a fast node simply takes more work.
-
-The animation plays by itself; use the slider to go back to any moment. Watch for four things. Nodes A and B each claim a batch and work on it. Then node B crashes in the middle of its batch: its images were marked as claimed by a node that no longer exists. Recovery hands them back to waiting, so nothing is lost. Node C arrives and claims exactly those images. Node D joins later, and one image that cannot be read is marked failed without stopping the rest. The table finishes with every image done once.
-
-To grow a run you start the same program on more nodes; to shrink it you stop some. The DB is deliberately one plain database on one machine, because every extra component is another way to fail.
 
 ## 20. Recovery and scaling without intervention
 *2 · Never losing work · ~3.2 min · reveal steps: 8*

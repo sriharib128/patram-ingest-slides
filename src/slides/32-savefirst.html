@@ -18,7 +18,7 @@
     <div class="sv3-o ok" style="left:1360px;width:320px"><small>After “done”</small><h3>It is finished</h3><p>Never redone. Its result is already on disk.</p></div>
   </div>
   <aside class="notes">
-    <p>Here is the idea that makes the rest work. Across the top is the whole life of one sample: prepare the prompt, run the model, parse and check the answer, save the result to disk and force it to disk, and only then mark it done in the database.</p>
+    <p>That recovery is safe because of one ordering rule, and it is the idea that makes the rest work. Across the top is the whole life of one sample: prepare the prompt, run the model, parse and check the answer, save the result to disk and force it to disk, and only then mark it done in the database.</p>
     <p>The line that matters is the moment it is marked done. If anything goes wrong anywhere before that line, a crash, a kill, a lost node, the database still says not done. So the sample simply goes back in the queue and is done again, and anything half-saved for it is thrown away first. At most one small group of results is ever redone.</p>
     <p>After the line, the sample is finished. It is never redone, and its result is guaranteed to be on disk, because saving came first.</p>
     <p>Why this order: done must always mean saved. Reverse it, mark done and then save, and a crash between the two leaves a row that says done with nothing behind it. That is silent data loss. Both orders look identical on a good day; only one of them is safe on a bad day. Nothing is lost because we only mark done after saving, and nothing is written twice because anything not marked done is discarded before it is redone.</p>

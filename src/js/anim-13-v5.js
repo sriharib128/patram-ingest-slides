@@ -257,11 +257,23 @@
           r.ids.forEach(i => { const c = cellEls[i], e = el('rect', { x: +c.getAttribute('x') - 2.5, y: +c.getAttribute('y') - 2.5, width: CELL + 5, height: CELL + 5, rx: 6, class: 'q-ring', stroke: r.color, opacity: op.toFixed(2) }, ringLayer); if (r.fill) e.setAttribute('fill', r.fill); });
         });
       };
-      /* play the crash and the take-over slowly, the rest quickly: [sim start, sim end, speed] */
-      const SEG = [[0, 2600, 1.7], [2600, 8300, 0.55], [8300, sim.dur, 1.7]].map(([a, b, v]) => ({ a, b, v, len: (b - a) / v }));
-      const total = SEG.reduce((x, g) => x + g.len, 0);
-      const warp = u => { for (const g of SEG) { if (u <= g.len) return g.a + u * g.v; u -= g.len; } return sim.dur; };
-      ctx.__pl = Deck.player(ctx, ctx.q('#q2-pl'), { dur: total, label: 'Timeline', fmt: (t, d) => t >= d ? 'finished' : (t / 1000).toFixed(0) + ' s', render: u => render(warp(u)) });
+      /* four clickable steps, each one slice of the story: [sim start, sim end, speed]; the crash and the take-over play slowest */
+      ctx.__qr = render;
+      ctx.__qseg = { 1: [0, 2800, 1.3], 2: [2800, 6100, 0.8], 3: [6100, 10800, 1.2], 4: [10800, sim.dur, 1.7] };
+      if (!ctx.el.__q2wired) {
+        ctx.el.__q2wired = true;
+        ctx.qa('.q2-steps button').forEach(b => b.addEventListener('click', e => { e.stopPropagation(); Deck.go(Deck.state.i, +b.dataset.k); b.blur(); }));
+      }
+      render(0);
     },
+    step(ctx, s) {
+      if (!ctx.__qseg) return;
+      const g = ctx.__qseg[s];
+      if (!g) { if (ctx.__pl) ctx.__pl.pause(); ctx.__qr(0); return; }          // step 0: the table before anything starts
+      const [a, b, v] = g, len = (b - a) / v; ctx.__qa = a; ctx.__qv = v;
+      if (!ctx.__pl) ctx.__pl = Deck.player(ctx, ctx.q('#q2-pl'), { dur: len, label: 'Time', mini: true, fmt: (t, d) => t >= d ? 'finished' : '', render: u => ctx.__qr(ctx.__qa + u * ctx.__qv) });
+      else ctx.__pl.restart(len);
+    },
+    leave(ctx) { ctx.__pl = null; },
   });
 })();
