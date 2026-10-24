@@ -135,9 +135,9 @@
     stage.classList.toggle('dark-ui', el.classList.contains('dark'));
     const acts = $('#acts');
     if (acts) {
-      if (!acts.children.length) ['The problem', 'Busy GPUs', 'No lost work', 'Graphs', 'Thank you', 'Q&A'].forEach((n, k) => { const sp = document.createElement('span'); sp.dataset.part = k; sp.title = 'Go to part ' + k + ': ' + n; sp.innerHTML = '<b>' + k + '</b><u>' + n + '</u>'; acts.appendChild(sp); });
+      if (!acts.children.length) { const sp = document.createElement('span'); sp.dataset.part = 'title'; sp.className = 'ttl'; sp.title = 'Go to the title slide'; sp.innerHTML = '<b>Title</b>'; acts.appendChild(sp); } if (acts.children.length === 1) ['The problem', 'Busy GPUs', 'No lost work', 'Graphs', 'Thank you', 'Q&A'].forEach((n, k) => { const sp = document.createElement('span'); sp.dataset.part = k; sp.title = 'Go to part ' + k + ': ' + n; sp.innerHTML = '<b>' + k + '</b><u>' + n + '</u>'; acts.appendChild(sp); });
       const m = /^(\d) ·/.exec(el.dataset.section || ''), n = m ? +m[1] : -1;   // parts are numbered from 0
-      acts.classList.toggle('hide', state.i === 0); [...acts.children].forEach((c, k) => c.classList.toggle('on', k === n));
+      acts.classList.toggle('hide', state.i === 0); [...acts.children].forEach(c => c.classList.toggle('on', c.dataset.part === String(n)));
     }
     renderPanel();
   }
@@ -229,6 +229,7 @@
   $('#acts') && $('#acts').addEventListener('click', e => {
     const sp = e.target.closest('[data-part]'); if (!sp) return;
     e.stopPropagation();
+    if (sp.dataset.part === 'title') { go(0, 0); return; }
     const i = slides.findIndex(el => (el.dataset.section || '').startsWith(sp.dataset.part + ' ·'));
     if (i >= 0) go(i, 0);
   });
