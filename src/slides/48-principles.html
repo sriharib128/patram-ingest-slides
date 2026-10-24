@@ -1,12 +1,12 @@
-<section class="slide light" id="lessons" data-steps="0" data-section="Wrap-up" data-time="1.0" data-title="What we learned">
+<section class="slide light" id="lessons" data-steps="0" data-section="Wrap-up" data-time="1.0" data-title="Key takeaways">
   <div class="hd">
-    <div class="eyebrow">What we learned</div>
-    <h2>Six lessons from running for weeks</h2>
+    <div class="eyebrow">Wrap-up</div>
+    <h2>Key takeaways</h2>
   </div>
   <div class="abs" style="left:120px;top:250px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:320px;gap:28px">
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><g fill="#DDF1EA" stroke="#0E7C61" stroke-width="4"><rect x="8" y="14" width="44" height="40" rx="8"/><rect x="68" y="14" width="44" height="40" rx="8"/><rect x="8" y="68" width="44" height="40" rx="8"/></g><rect x="68" y="68" width="44" height="40" rx="8" fill="#FBE6E4" stroke="#C93C3C" stroke-width="4"/><path d="M80 78 L100 98 M100 78 L80 98" stroke="#C93C3C" stroke-width="5" stroke-linecap="round"/></svg>
-      <h3>Expect failure. It’s not an anomaly</h3><p>Over weeks, every step crashes midway at some point. Design for it.</p>
+      <h3>Expect failure</h3><p>Over weeks, every step crashes midway at some point. Design each step for it.</p>
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><g stroke-width="4"><rect x="8" y="10" width="104" height="28" rx="8" fill="#E4ECFA" stroke="#2A63C9"/><rect x="8" y="46" width="104" height="28" rx="8" fill="#DDF1EA" stroke="#0E7C61"/><rect x="8" y="82" width="104" height="28" rx="8" fill="#FCE6CF" stroke="#F28C28"/></g><g fill="#0E1A3A"><circle cx="26" cy="24" r="5"/><circle cx="26" cy="60" r="5"/><circle cx="26" cy="96" r="5"/></g></svg>
@@ -18,15 +18,15 @@
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><path d="M42 50 V36 A18 18 0 0 1 78 36 V50" fill="none" stroke="#C93C3C" stroke-width="6"/><rect x="28" y="48" width="64" height="52" rx="10" fill="#FBE6E4" stroke="#C93C3C" stroke-width="4"/><path d="M14 112 L106 8" stroke="#C93C3C" stroke-width="6" stroke-linecap="round"/></svg>
-      <h3>Nothing ever waits forever</h3><p>A crashed process can’t release a lock. So workers share no locks: each gets its own inbox.</p>
+      <h3>No indefinite waits</h3><p>A killed process cannot release a lock. So workers share no locks: each has its own inbox.</p>
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><rect x="4" y="20" width="34" height="80" rx="8" fill="#E4ECFA" stroke="#2A63C9" stroke-width="4"/><rect x="43" y="20" width="34" height="80" rx="8" fill="#ECE6F8" stroke="#6B4BB8" stroke-width="4"/><circle cx="99" cy="60" r="17" fill="#FFF4E2" stroke="#F28C28" stroke-width="4"/><g fill="#F28C28"><circle cx="99" cy="35" r="5"/><circle cx="99" cy="85" r="5"/></g></svg>
-      <h3>The right parallelism for each job</h3><p>Processes compute, threads wait, event loops juggle calls.</p>
+      <h3>Match the parallelism to the job</h3><p>Processes compute, threads wait, event loops juggle calls.</p>
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><ellipse cx="30" cy="40" rx="22" ry="8" fill="#CBDAF3" stroke="#1F4FA8" stroke-width="3"/><path d="M8 40 V64 A22 8 0 0 0 52 64 V40" fill="#E4ECFA" stroke="#1F4FA8" stroke-width="3"/><g fill="#DDF1EA" stroke="#0E7C61" stroke-width="3"><rect x="66" y="14" width="48" height="26" rx="6"/><rect x="66" y="46" width="48" height="26" rx="6"/><rect x="66" y="78" width="48" height="26" rx="6"/></g></svg>
-      <h3>Keep the database light</h3><p>Only state in the database. Results go to files, written in groups.</p>
+      <h3>Keep the database light</h3><p>The database holds only state. Results go to files, written in groups.</p>
     </div>
   </div>
   <aside class="notes">
@@ -34,8 +34,8 @@
     <p>One: expect failure; it is not an anomaly. Over weeks on a shared cluster, every step will at some point crash in the middle, so design every step for that, instead of treating it as a rare exception.</p>
     <p>Two: single responsibility. Every component does exactly one job. A stage only transforms a sample: it does not know the graph, retry, coordinate or scale. Those live once in the engine, which is why a new pipeline is a few lines of code, and why a bug in one stage cannot break recovery.</p>
     <p>Three: follow every error through to the end. Every error lands somewhere definite: a system problem is retried, a bad sample is set aside with its reason, and if you cannot tell which, you retry, because a retry costs seconds and a good sample thrown away is gone. Nothing is left stuck in between.</p>
-    <p>Four: nothing ever waits forever. A process that is killed while holding a shared lock never releases it, and every other worker blocks on it for good. So nothing that needs a lock is shared between workers that can die: each worker gets its own private inbox, and no process can end up stuck waiting on one that is gone.</p>
-    <p>Five: use the right parallelism for each job. Processes for computing, threads for waiting, event loops for many calls at once.</p>
+    <p>Four: no indefinite waits. A process that is killed while holding a shared lock never releases it, and every other worker blocks on it for good. So nothing that needs a lock is shared between workers that can die: each worker gets its own private inbox, and no process can end up stuck waiting on one that is gone.</p>
+    <p>Five: match the parallelism to the job. Processes for computing, threads for waiting, event loops for many calls at once.</p>
     <p>Six: keep the database light. It holds only state; the results go to files on each node, written in groups, off the GPU's path. That is why the system keeps scaling as nodes are added.</p>
   </aside>
 </section>

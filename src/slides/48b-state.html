@@ -1,6 +1,6 @@
 <section class="slide light" id="state1" data-steps="0" data-section="Wrap-up" data-time="0.8" data-title="The DB is the single source of truth">
   <div class="hd">
-    <div class="eyebrow">The key takeaway · everything else is stateless</div>
+    <div class="eyebrow">Above all</div>
     <h2>The DB is the single source of truth</h2>
   </div>
   <div class="abs card st1" style="left:120px;top:246px;width:1680px;height:420px">
@@ -29,9 +29,9 @@
     </svg>
   </div>
   <div class="abs st1-row" style="left:120px;top:704px;width:1680px">
-    <div class="card st1-c"><b>Survive any restart</b><span>Any component can crash and restart. It held nothing, so it lost nothing.</span></div>
-    <div class="card st1-c"><b>Add or remove nodes freely</b><span>No handover, nothing to move. A new node just asks the DB for work.</span></div>
-    <div class="card st1-c"><b>Recovery is a query</b><span>Where everything stands is always in the DB. No procedure to run.</span></div>
+    <div class="card st1-c"><b>Any component can restart</b><span>Any component can crash and restart. It held nothing, so it lost nothing.</span></div>
+    <div class="card st1-c"><b>Nodes can be added or removed</b><span>No handover, nothing to move. A new node just asks the DB for work.</span></div>
+    <div class="card st1-c"><b>Recovery is a DB query</b><span>The state of the run is always in the DB. There is no recovery procedure to run.</span></div>
   </div>
   <aside class="notes">
     <p>If you remember one thing from this talk, make it this. Nowhere in the whole system, in the stage workers, the worker pools, the supervisors, the watchers, the model servers or the nodes, do we keep any state. Every one of them is stateless. The entire state of the run, what is waiting, claimed, done or failed, lives in one place: the DB. It is the single source of truth. Results go to files, and the DB says which ones count.</p>

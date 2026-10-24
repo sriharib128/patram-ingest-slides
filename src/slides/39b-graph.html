@@ -1,6 +1,6 @@
 <section class="slide light" id="gph" data-steps="4" data-section="3 · Graphs of stages" data-time="2.0" data-title="The whole pipeline is a graph">
   <div class="hd">
-    <div class="eyebrow">Put together</div>
+    <div class="eyebrow">The full pipeline</div>
     <h2>The whole pipeline is one graph</h2>
   </div>
   <div class="abs card gp4" style="left:120px;top:220px;width:1680px;height:660px"><div id="gp4-svg"></div></div>
@@ -9,7 +9,7 @@
   <div class="abs gp4-cap r" data-s="1" data-h="2" style="left:120px;top:910px;width:1680px"><b>1 · Routing</b> After Understand, a small function looks at the page and picks the next box. A text page goes to two boxes at once.</div>
   <div class="abs gp4-cap l" data-s="2" data-h="3" style="left:120px;top:910px;width:1680px"><b>2 · Needs both</b> <span class="ln-all"></span> Grounded Q&amp;A needs the text <b>and</b> the layout of the same page. It starts only when both have arrived.</div>
   <div class="abs gp4-cap a" data-s="3" data-h="4" style="left:120px;top:910px;width:1680px"><b>3 · Either one is enough</b> <span class="ln-any"></span> A page is a table <b>or</b> a chart, never both. So “Write a question” starts as soon as one arrives.</div>
-  <div class="abs gp4-cap" data-s="4" style="left:120px;top:910px;width:1680px"><b>Three rules.</b> Every pipeline we run is built from them. <span class="ln-all"></span> needs every input &nbsp; <span class="ln-any"></span> one input is enough</div>
+  <div class="abs gp4-cap" data-s="4" style="left:120px;top:910px;width:1680px">Every pipeline we run is built from <b>these three rules</b>. <span class="ln-all"></span> needs every input &nbsp; <span class="ln-any"></span> one input is enough</div>
   <aside class="notes">
     <p>Put all those routes together and you get one graph. A page enters at the left. Each box is a model, a tool or a check. Three rules decide where a page goes and when a box may start, and we will zoom into each.</p>
     <p data-step="1">One: routing. After Understand finishes a page, a small function written by the pipeline author looks at what it found and picks the next box for that page. A chart goes to the chart reader, a table to the table reader, a formula to the LaTeX writer. A text page goes to two boxes at once, transcription and layout. It can also pick none: a blank page simply stops.</p>

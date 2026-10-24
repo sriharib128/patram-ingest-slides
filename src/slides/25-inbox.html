@@ -1,7 +1,7 @@
 <section class="slide light" id="inbox" data-steps="2" data-section="1 · Keeping the GPUs busy" data-time="1.1" data-title="A private inbox per worker">
   <div class="hd">
-    <div class="eyebrow">The fix</div>
-    <h2>Give every worker its own inbox</h2>
+    <div class="eyebrow">What we changed</div>
+    <h2>One inbox per worker</h2>
     <div class="sub">One dispatcher is the only reader of the shared queue. Each worker reads only its own inbox.</div>
   </div>
   <svg class="abs sh3" viewBox="0 0 1680 600" style="left:120px;top:300px;width:1680px;height:600px">
@@ -43,10 +43,10 @@
     <p>It can only block its own inbox, which is thrown away. The dispatcher stops sending to it. <b>The others keep working.</b></p>
   </div>
   <div class="abs sh3p good" data-s="2" style="left:1420px;top:300px;width:380px">
-    <h3>It comes back clean</h3>
+    <h3>A replacement starts</h3>
     <p>The supervisor starts a new worker with a fresh inbox. Its unfinished requests are sent again.</p>
   </div>
-  <div class="abs v4cap2" data-s="2" style="left:120px;top:930px;width:1680px;font-size:34px">Never share a lock with a process that can die. <span style="color:var(--muted);font-size:26px;font-weight:500">Since this change: no hangs.</span></div>
+  <div class="abs v4cap2" data-s="2" style="left:120px;top:930px;width:1680px;font-size:34px">No shared lock between processes that can be killed. <span style="color:var(--muted);font-size:26px;font-weight:500">Since this change, the pool has not hung.</span></div>
   <aside class="notes">
     <p>The fix is not a safer lock. Holding a lock when you are killed is how the primitive works. The fix is to take the shared lock away from anything that can be killed. One dispatcher, a thread in the pool, is the only reader of the shared queue. It hands each request to a free worker by putting it in that worker's own inbox. Each worker reads only its own inbox.</p>
     <p data-step="1">Now kill a worker. The worst it can do is block its own inbox, and that inbox is thrown away with it. The dispatcher sees the worker is gone and stops sending to it. The other workers never shared anything with it, so they keep working.</p>

@@ -1,16 +1,16 @@
-<section class="slide light" id="fleet" data-steps="6" data-section="2 · Never losing work" data-time="3.2" data-title="The run heals itself and scales by itself">
+<section class="slide light" id="fleet" data-steps="6" data-section="2 · Never losing work" data-time="3.2" data-title="Recovery and scaling without intervention">
   <div class="hd">
-    <div class="eyebrow">Back to the first two problems</div>
-    <h2>The run heals itself and scales by itself</h2>
+    <div class="eyebrow">Problems 1 and 2, revisited</div>
+    <h2>Recovery and scaling without intervention</h2>
   </div>
 
   <div class="abs card fl5 heal" data-noclick>
     <div class="fl5-o">
       <svg viewBox="0 0 120 120" class="fl5-i"><path d="M60 18a42 42 0 1 1-38 24" fill="none" stroke="#0E7C61" stroke-width="10" stroke-linecap="round"/><path d="M8 30 L24 46 L36 24Z" fill="#0E7C61"/><path d="M60 46v28M46 60h28" stroke="#0E7C61" stroke-width="10" stroke-linecap="round"/></svg>
-      <small>1</small><h3>Heals itself</h3><p>Something dies. It comes back by itself, and its work is not lost.</p>
+      <small>1</small><h3>Recovery</h3><p>A process or node dies. It is restarted, and its work is not lost.</p>
     </div>
     <div class="fl5-d">
-      <div class="fl5-h"><small>1 · Heals itself</small><h3>Every layer is looked after by the one around it</h3></div>
+      <div class="fl5-h"><small>1 · Recovery</small><h3>Each layer is restarted by the layer around it</h3></div>
       <svg class="fl5-dia" viewBox="0 0 1000 430">
         <g font-family="IBM Plex Sans" font-weight="600">
           <rect x="2" y="2" width="996" height="426" rx="22" fill="#F7F9FC" stroke="#C3CEE5" stroke-width="2"/>
@@ -59,10 +59,10 @@
   <div class="abs card fl5 scale" data-noclick>
     <div class="fl5-o">
       <svg viewBox="0 0 120 120" class="fl5-i"><g fill="#F28C28"><rect x="10" y="62" width="22" height="44" rx="5"/><rect x="40" y="44" width="22" height="62" rx="5"/><rect x="70" y="26" width="22" height="80" rx="5" opacity=".45"/></g><path d="M86 18 L106 18 L106 38" fill="none" stroke="#F28C28" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <small>2</small><h3>Scales by itself</h3><p>GPUs come and go. The run follows them, without a restart.</p>
+      <small>2</small><h3>Scaling</h3><p>GPUs come and go. The run adjusts without a restart.</p>
     </div>
     <div class="fl5-d">
-      <div class="fl5-h"><small class="or">2 · Scales by itself</small><h3>Pipelines don’t own models</h3></div>
+      <div class="fl5-h"><small class="or">2 · Scaling</small><h3>Pipelines do not own model servers</h3></div>
       <svg class="fl6-svg" id="fl6-svg" viewBox="0 0 1600 500"></svg>
       <div class="fl6-log" id="fl6-log"></div>
       <div class="fl6-pl" id="fl6-pl"></div>
@@ -93,15 +93,15 @@
     <div class="fl4-ev">
       <div><i>1</i><b>Launched before the models were up</b><span>work starts as each server comes online</span></div>
       <div><i>2</i><b>A colleague borrows GPUs</b><span>workers there drain and wait</span></div>
-      <div><i>3</i><b>The test is done</b><span>workers fetch from the database again</span></div>
+      <div><i>3</i><b>The GPUs are returned</b><span>workers fetch from the database again</span></div>
       <div><i>4</i><b>A server crashes</b><span>its requests go back; it restarts</span></div>
-      <div><i>5</i><b>Free GPUs appear</b><span>new servers; the run spreads onto them</span></div>
+      <div><i>5</i><b>More GPUs become free</b><span>new servers; the run spreads onto them</span></div>
     </div>
   </div>
 
   <aside class="notes">
-    <p>Back to the first two problems from the start: nodes die, and GPUs come and go. The run handles both by itself: it heals itself, and it scales by itself. First, healing.</p>
-    <p data-step="1">The idea is simple: every layer is looked after by the one around it. Click any of the three cases on the right to play it. Inside one node, workers live inside a supervisor, the supervisor lives inside the program, and a small watcher script sits around the program. The vLLM server has its own watcher too.</p>
+    <p>Back to the first two problems from the start: nodes die, and GPUs come and go. The run handles both without anyone stepping in: it recovers, and it scales. First, recovery.</p>
+    <p data-step="1">The idea is simple: each layer is restarted by the layer around it. Click any of the three cases on the right to play it. Inside one node, workers live inside a supervisor, the supervisor lives inside the program, and a small watcher script sits around the program. The vLLM server has its own watcher too.</p>
     <p data-step="2">A worker dies. The supervisor notices and starts a new one in its place, and the requests that worker had are sent again.</p>
     <p data-step="3">The whole program stops, or the node reboots. The watcher starts the program again. Whatever samples it had claimed and not finished go back to the table, and any node can pick them up.</p>
     <p data-step="4">A vLLM server crashes. Its own watcher restarts it, and the requests that were waiting on it go back to the queue. In every case nobody is paged and no work is lost.</p>

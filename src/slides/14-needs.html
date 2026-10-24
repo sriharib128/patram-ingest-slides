@@ -1,10 +1,10 @@
-<section class="slide light" id="needs" data-steps="0" data-section="0 · The problem" data-time="0.8" data-title="So the engine needs three things">
+<section class="slide light" id="needs" data-steps="0" data-section="0 · The problem" data-time="0.8" data-title="Three requirements for the engine">
   <div class="hd">
-    <div class="eyebrow">What the engine must do</div>
-    <h2>So the engine needs three things</h2>
+    <div class="eyebrow">Requirements</div>
+    <h2>Three requirements for the engine</h2>
   </div>
   <div class="abs" style="left:120px;top:262px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
-    <div class="card nd"><i>1</i><h3>Busy GPUs</h3><p>The GPUs are the expensive part. They should never wait for anything.</p>
+    <div class="card nd"><i>1</i><h3>Keep the GPUs busy</h3><p>The GPUs are the expensive part. They should never wait for anything.</p>
       <div class="nv"><svg viewBox="0 0 580 130">
         <g>
           <rect x="0" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="32.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
@@ -25,7 +25,7 @@
           <text x="0" y="112" fill="#0E7C61" opacity="0">GPU always busy<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.55;.95;1" dur="6s" repeatCount="indefinite"/></text>
         </g>
       </svg></div></div>
-    <div class="card nd"><i>2</i><h3>No lost work</h3><p>Nodes die, GPUs come and go. Every record is still written exactly once.</p>
+    <div class="card nd"><i>2</i><h3>Lose no work</h3><p>Nodes die, GPUs come and go. Every record is still written exactly once.</p>
       <div class="nv"><svg viewBox="0 0 580 130">
         <g fill="#0E7C61">
           <circle cx="18" cy="26" r="15"/><circle cx="88" cy="26" r="15"/><circle cx="158" cy="26" r="15"/><circle cx="228" cy="26" r="15"/><circle cx="298" cy="26" r="15"/><circle cx="368" cy="26" r="15"/><circle cx="438" cy="26" r="15"/><circle cx="508" cy="26" r="15"/>
@@ -38,7 +38,7 @@
           <text x="0" y="112" fill="#C93C3C" opacity="0">a process dies… the record is redone<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.3;.33;.6;.63;1" dur="6s" repeatCount="indefinite"/></text>
         </g>
       </svg></div></div>
-    <div class="card nd"><i>3</i><h3>Any workflow, little code</h3><p>Picture a pipeline, and have it running across every node with a few lines of code.</p>
+    <div class="card nd"><i>3</i><h3>Any workflow, in little code</h3><p>A new pipeline should take a few lines of code to define, and one command to run on every node.</p>
       <div class="nv"><svg viewBox="0 0 580 130">
         <g fill="none" stroke-width="6" stroke-linecap="round">
           <path d="M30 65 C110 65 110 25 200 25" stroke="#2A63C9" stroke-dasharray="200" stroke-dashoffset="200"><animate attributeName="stroke-dashoffset" values="200;200;0;0;200" keyTimes="0;.1;.25;.9;1" dur="6s" repeatCount="indefinite"/></path>

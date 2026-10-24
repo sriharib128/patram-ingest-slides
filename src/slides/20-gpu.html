@@ -1,7 +1,7 @@
-<section class="slide light" id="gpu2" data-steps="1" data-section="1 · Keeping the GPUs busy" data-time="1.0" data-title="The GPU is one step in a longer job">
+<section class="slide light" id="gpu2" data-steps="1" data-section="1 · Keeping the GPUs busy" data-time="1.0" data-title="The model run is one of three steps">
   <div class="hd">
-    <div class="eyebrow">The first problem</div>
-    <h2>The GPU is only one step in the job</h2>
+    <div class="eyebrow">Where the time goes</div>
+    <h2>The model run is one of three steps</h2>
   </div>
   <div class="abs" style="left:120px;top:236px;width:1680px;display:flex;align-items:stretch;gap:22px">
     <div class="card gst pre"><small>CPU · before</small><h3>Prepare</h3><p>build the prompt<br>read and check the image</p></div>
@@ -21,7 +21,7 @@
     <div class="grow"><label>GPU</label><div class="ln5 idle" id="gl-o-g"></div></div>
   </div>
   <div class="abs" id="gl-pl" data-s="1" style="left:120px;top:872px;width:1680px"></div>
-  <div class="abs v4cap2" data-s="1" style="left:120px;top:950px;width:1680px;font-size:32px">The host work is not removed. It is <span class="hi">hidden behind GPU time</span>.</div>
+  <div class="abs v4cap2" data-s="1" style="left:120px;top:950px;width:1680px;font-size:32px">The host work is unchanged. It now <span class="hi">overlaps with GPU time</span>.</div>
   <aside class="notes">
     <p>Start with what the GPU actually does. For every batch of pages, the model run is one step. Before it, the host has to build prompts and read and check images. After it, the host has to parse and validate the answers, write them to disk and record that they are done. The GPU does only the middle part.</p>
     <p data-step="1">Two ways to run the same four batches, on one clock. Press play, or drag the slider. Top: one batch at a time. The host prepares, then the GPU runs, then the host finishes, and the GPU sits idle while the host works. Bottom: overlapped. The host prepares the next batch and finishes the last one while the GPU runs this one. The same host work is still done, but none of it is on the GPU's critical path, so the whole run ends sooner and the GPU lane is continuous. So the question is not how to make the host faster; it is how to make sure the host is always one batch ahead. That means many pieces of host code running at the same time as the GPU. Next: what those pieces are.</p>

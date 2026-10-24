@@ -1,12 +1,12 @@
-<section class="slide light" id="probs" data-steps="0" data-section="0 · The problem" data-time="1.2" data-title="Three things stop a weeks-long run">
+<section class="slide light" id="probs" data-steps="0" data-section="0 · The problem" data-time="1.2" data-title="Three things that interrupt a weeks-long run">
   <div class="hd">
-    <div class="eyebrow">What gets in the way</div>
-    <h2>Weeks without stopping, on a changing cluster</h2>
+    <div class="eyebrow">On a shared cluster</div>
+    <h2>Three things that interrupt a weeks-long run</h2>
   </div>
   <div class="abs" style="left:120px;top:262px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
     <div class="card pb3">
       <i>1</i><h3>Nodes die and restart</h3>
-      <p>The run must <b>heal itself</b>: notice, respawn what died and carry on, with nobody watching.</p>
+      <p>The run has to <b>recover on its own</b>: notice, restart what died and continue, with nobody watching.</p>
       <svg class="pb3v" viewBox="0 0 480 200">
         <g font-family="IBM Plex Sans" font-size="19" font-weight="600" text-anchor="middle">
           <rect x="10" y="10" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
@@ -32,7 +32,7 @@
     </div>
     <div class="card pb3">
       <i>2</i><h3>GPUs are lent out</h3>
-      <p>We lend GPUs to other jobs for a while. When they come back, the run must <b>scale up by itself</b>.</p>
+      <p>GPUs are lent to other jobs for a while. When they return, the run has to <b>use them again</b> without a restart.</p>
       <svg class="pb3v" viewBox="0 0 480 200">
         <g>
           <rect x="10" y="40" width="48" height="90" rx="9" fill="#F28C28"/>
@@ -83,7 +83,7 @@
   </div>
   <aside class="notes">
     <p>We just said a run must keep going for weeks. On a real cluster, three things get in the way, and the engine has to handle all three by itself.</p>
-    <p>One: nodes die and restart. Over weeks, nodes crash, reboot, run out of memory or are taken back. The run has to heal itself: notice what died, respawn it, and carry on, without a person watching.</p>
+    <p>One: nodes die and restart. Over weeks, nodes crash, reboot, run out of memory or are taken back. The run has to recover on its own: notice what died, restart it, and carry on, without a person watching.</p>
     <p>Two: GPUs are lent out. The cluster is shared, so we sometimes lend GPUs to another team for a while. The run should carry on with fewer, and when the GPUs come back it should scale up and use them again on its own, without a restart.</p>
     <p>Three: complex workloads need pipeline parallelism. A page goes through several model stages, and we want every stage running at the same time, with stages spread over different nodes.</p>
     <p>If asked whether this really happens: in one run, nine of 24 nodes stopped working, and nobody noticed for six hours, because nothing was in place to notice.</p>

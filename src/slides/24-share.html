@@ -1,8 +1,8 @@
 <section class="slide light" id="share" data-steps="1" data-section="1 · Keeping the GPUs busy" data-time="1.1" data-title="Sharing work through one queue">
   <div class="hd">
     <div class="eyebrow">Load balancing</div>
-    <h2>How do the workers share the work?</h2>
-    <div class="sub">The easy way: one shared queue, and every worker pulls from it.</div>
+    <h2>Sharing requests between workers</h2>
+    <div class="sub">The simplest design: one shared queue that every worker pulls from.</div>
   </div>
   <svg class="abs sh3" viewBox="0 0 1680 600" style="left:120px;top:300px;width:1680px;height:600px">
     <defs><marker id="sh3h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5B6785"/></marker>
@@ -26,13 +26,13 @@
   <div class="abs sh3p" data-h="1" style="left:1300px;top:300px;width:500px">
     <h3>Inside every pull</h3>
     <ol><li><i>1</i>Take the lock</li><li><i>2</i>Pull one request</li><li><i>3</i>Release the lock</li></ol>
-    <p>Simple, and it balances itself: a fast worker just pulls more often.</p>
+    <p>Simple, and self-balancing: a fast worker pulls more often.</p>
   </div>
   <div class="abs sh3p bad" data-s="1" style="left:1300px;top:300px;width:500px">
     <h3>The lock is never released</h3>
     <p>A killed process runs no cleanup, so it never lets go. Every other worker waits forever.</p>
     <div class="st"><span>pool status</span><b class="g">healthy ✓</b><span>throughput</span><b class="r">0</b></div>
-    <p class="fin3">No error and no timeout. The run just stops.</p>
+    <p class="fin3">No error and no timeout. Throughput is zero.</p>
   </div>
   <aside class="notes">
     <p>We now have several workers, and requests to hand out. How do we balance the load between them? The easiest way is one shared queue: put every request in it, and let each worker pull the next one when it is free. A fast worker simply pulls more often, so the load balances itself.</p>

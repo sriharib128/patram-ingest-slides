@@ -1,13 +1,13 @@
-<section class="slide light" id="scale2" data-steps="3" data-section="3 · Graphs of stages" data-time="1.5" data-title="Only one keeps scaling as nodes are added">
+<section class="slide light" id="scale2" data-steps="3" data-section="3 · Graphs of stages" data-time="1.5" data-title="Scaling compared with DBOS and Temporal">
   <div class="hd">
-    <div class="eyebrow">Few alternatives come close · same database, same model servers</div>
-    <h2>Only one keeps scaling as nodes are added</h2>
+    <div class="eyebrow">Evaluation · same DB, same model servers</div>
+    <h2>Scaling compared with DBOS and Temporal</h2>
   </div>
   <div class="abs card" style="left:120px;top:270px;width:1060px;height:680px;padding:26px 34px"><div class="v4cap">Throughput against number of nodes (pages per second)</div><div id="sc2-chart"></div></div>
   <div class="abs" style="left:1220px;top:270px;width:580px;display:flex;flex-direction:column;gap:16px">
-    <div class="card sc2c" data-s="1"><h3>DBOS and Temporal</h3><p>Also survive crashes. But past a few nodes, the database becomes the limit.</p></div>
+    <div class="card sc2c" data-s="1"><h3>DBOS and Temporal</h3><p>Also survive crashes. Past a few nodes, the database becomes the limit.</p></div>
     <div class="card sc2c good" data-s="2"><h3>Patram-Ingest</h3><p>Keeps growing with every node. The database stays mostly idle.</p><p class="sc2why"><b>Why:</b> the database holds only small state rows. Results go to files on each node.</p></div>
-    <div class="card sc2c" data-s="3"><div class="sc2s"><b>~99%</b><span>of perfectly linear scaling, from 1 to 48 nodes</span></div></div>
+    <div class="card sc2c" data-s="3"><div class="sc2s"><b>~99%</b><span>of linear scaling, from 1 to 48 nodes</span></div></div>
   </div>
   <aside class="notes">
     <p>Very few alternatives come close to these features. Among the 13 systems in our comparison, only DBOS and Temporal do: they already survive crashes, route per sample and run across machines. So we ran the same pipeline on both, on the same DB server and the same emulated model servers. We made the servers answer in 20 milliseconds, so inference could not be the limit, and added nodes until throughput stopped growing.</p>

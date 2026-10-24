@@ -1,6 +1,6 @@
 <section class="slide light" id="author2" data-steps="3" data-section="3 · Graphs of stages" data-time="0.8" data-title="From idea to a running pipeline">
   <div class="hd">
-    <div class="eyebrow">Once the graph is defined</div>
+    <div class="eyebrow">Writing a pipeline</div>
     <h2>Define it, then run any workload</h2>
   </div>
   <div class="abs" style="left:120px;top:320px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
@@ -8,7 +8,7 @@
     <div class="card au2" data-s="2"><i>2</i><h3>Define each stage</h3><p>The prompt, and what a good answer looks like.</p><div class="auc">get_image_specific_prompt(…)<br>validate_output(…)</div></div>
     <div class="card au2 go" data-s="3"><i>3</i><h3>Run it on every node</h3><p>The same command on every machine. After any failure, run it again.</p><div class="auc">python main.py</div></div>
   </div>
-  <div class="abs v4cap2" data-s="3" style="left:120px;top:830px;width:1680px;font-size:36px">Crash safety, retries, recovery and scaling <span class="hi">come with the engine</span>.</div>
+  <div class="abs v4cap2" data-s="3" style="left:120px;top:830px;width:1680px;font-size:36px">Recovery, retries and scaling are <span class="hi">handled by the engine</span>, not by the pipeline.</div>
   <aside class="notes">
     <p>So a DAG can describe almost any workload we have. And once you define it, running it is very simple. Two parts, then one command.</p>
     <p data-step="1">Part one: you define the DAG. What the stages are, and which ones feed which.</p>

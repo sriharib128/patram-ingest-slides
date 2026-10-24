@@ -1,6 +1,6 @@
 <section class="slide light" id="q3" data-steps="2" data-section="4 · Q&amp;A" data-time="1.0" data-title="Question 1: which order is safe to replay?">
   <div class="hd">
-    <div class="eyebrow">Question 1 · a warm-up</div>
+    <div class="eyebrow">Question 1</div>
     <h2>Which order is safe to replay?</h2>
   </div>
   <div class="abs qz-sub" style="left:120px;top:232px;width:1680px">Stage 1 makes <b>two writes</b> to the DB. It crashes <b>between them</b>, then runs the page again.</div>
@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="abs qz-q" data-s="1" data-h="2" style="left:120px;top:836px;width:1680px">Which order is <b>idempotent</b>: safe to run again after a crash? <b>Hands up for A, or for B.</b></div>
-  <div class="abs v4cap2" data-s="2" style="left:120px;top:836px;width:1680px;font-size:34px">Hand it on first, <span class="hi">mark yourself done last</span>, and make every write safe to repeat.</div>
+  <div class="abs v4cap2" data-s="2" style="left:120px;top:836px;width:1680px;font-size:34px">Mark the next stage ready first and <span class="hi">yourself done last</span>; every write must be safe to repeat.</div>
   <aside class="notes">
     <p>First, a small warm-up. Stage 1 finishes a page and has to make two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two, and then Stage 1 runs the page again.</p>
     <p data-step="1">Which order is idempotent, meaning safe to run again after a crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.</p>

@@ -1898,7 +1898,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="weeks" data-steps="0" data-section="Context" data-time="0.6" data-title="The scale a foundation model needs">
   <div class="hd">
-    <div class="eyebrow">The scale we work at</div>
+    <div class="eyebrow">Scale</div>
     <h2>A foundation model needs data at this scale</h2>
   </div>
   <div class="abs" style="left:120px;top:290px;width:1680px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px">
@@ -1910,7 +1910,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="abs card wk-tl" style="left:120px;top:590px;width:1680px">
     <div class="wk-ticks"><span>Day 1</span><span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span></div>
     <div class="wk-bar"><i></i><b>one data-generation run</b></div>
-    <p>So a run is a <span class="hi">workflow that must keep going, uninterrupted, for weeks</span>.</p>
+    <p>One data-generation run takes <span class="hi">weeks, and must not stop</span>.</p>
   </div>
   <aside class="notes">
     <p>This is the scale a foundation model needs, and the scale we work at: more than 100 terabytes of image data, more than 100 million training examples, more than 100 billion tokens of model output, generated on more than 500 GPUs. For Patram 1.5 alone it was more than 50 million examples and 41 billion tokens, and every release needs more.</p>
@@ -1918,11 +1918,11 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="egdata" data-steps="0" data-section="Context" data-time="1.2" data-title="What training data looks like">
+<section class="slide light" id="egdata" data-steps="0" data-section="Context" data-time="1.2" data-title="What one training example looks like">
   <div class="hd">
-    <div class="eyebrow">The data</div>
-    <h2>What does a model actually learn from?</h2>
-    <div class="sub">Examples. Millions of them. Here is one.</div>
+    <div class="eyebrow">Training data</div>
+    <h2>What one training example looks like</h2>
+    <div class="sub">The model learns from millions of examples like this one.</div>
   </div>
   <div class="abs card egd-img" style="left:120px;top:292px;width:500px;height:690px">
     <div class="egd-pg"><img src="assets/electricity_bill.jpg" alt="Scanned electricity bill"><i class="egd-box"></i></div>
@@ -1938,7 +1938,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="egd-ch"><span>Understand<em>an electricity bill</em></span><u>›</u><span>Ask<em>write a question</em></span><u>›</u><span>Answer<em>from the page</em></span><u>›</u><span>Verify<em>matches the page ✓</em></span></div>
   </div>
   <div class="abs egd-more" style="left:690px;top:892px;width:1110px">
-    <div class="egd-x">× <b>100 million+</b> pages, in 22+ languages. That is the workload.</div>
+    <div class="egd-x">× <b>100 million+</b> pages, in 22+ languages.</div>
   </div>
   <aside class="notes">
     <p>Before the problems, what does a model actually learn from? Examples, millions of them. Here is one. The input is the image of a page, here an electricity bill. The example pairs it with a question, "What is the payment due date?", the answer, "15 July 2015", and where on the page the answer is: the orange box. A model that sees millions of these learns to read documents and to point at its evidence.</p>
@@ -1956,15 +1956,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <aside class="notes"><p>So far: we build foundation models, and the data for them comes from runs that must keep going for weeks. Part zero is what makes that hard on a real, shared cluster, and what the engine therefore has to do.</p></aside>
 </section>
 
-<section class="slide light" id="probs" data-steps="0" data-section="0 · The problem" data-time="1.2" data-title="Three things stop a weeks-long run">
+<section class="slide light" id="probs" data-steps="0" data-section="0 · The problem" data-time="1.2" data-title="Three things that interrupt a weeks-long run">
   <div class="hd">
-    <div class="eyebrow">What gets in the way</div>
-    <h2>Weeks without stopping, on a changing cluster</h2>
+    <div class="eyebrow">On a shared cluster</div>
+    <h2>Three things that interrupt a weeks-long run</h2>
   </div>
   <div class="abs" style="left:120px;top:262px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
     <div class="card pb3">
       <i>1</i><h3>Nodes die and restart</h3>
-      <p>The run must <b>heal itself</b>: notice, respawn what died and carry on, with nobody watching.</p>
+      <p>The run has to <b>recover on its own</b>: notice, restart what died and continue, with nobody watching.</p>
       <svg class="pb3v" viewBox="0 0 480 200">
         <g font-family="IBM Plex Sans" font-size="19" font-weight="600" text-anchor="middle">
           <rect x="10" y="10" width="100" height="60" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2"/>
@@ -1990,7 +1990,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     </div>
     <div class="card pb3">
       <i>2</i><h3>GPUs are lent out</h3>
-      <p>We lend GPUs to other jobs for a while. When they come back, the run must <b>scale up by itself</b>.</p>
+      <p>GPUs are lent to other jobs for a while. When they return, the run has to <b>use them again</b> without a restart.</p>
       <svg class="pb3v" viewBox="0 0 480 200">
         <g>
           <rect x="10" y="40" width="48" height="90" rx="9" fill="#F28C28"/>
@@ -2041,20 +2041,20 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </div>
   <aside class="notes">
     <p>We just said a run must keep going for weeks. On a real cluster, three things get in the way, and the engine has to handle all three by itself.</p>
-    <p>One: nodes die and restart. Over weeks, nodes crash, reboot, run out of memory or are taken back. The run has to heal itself: notice what died, respawn it, and carry on, without a person watching.</p>
+    <p>One: nodes die and restart. Over weeks, nodes crash, reboot, run out of memory or are taken back. The run has to recover on its own: notice what died, restart it, and carry on, without a person watching.</p>
     <p>Two: GPUs are lent out. The cluster is shared, so we sometimes lend GPUs to another team for a while. The run should carry on with fewer, and when the GPUs come back it should scale up and use them again on its own, without a restart.</p>
     <p>Three: complex workloads need pipeline parallelism. A page goes through several model stages, and we want every stage running at the same time, with stages spread over different nodes.</p>
     <p>If asked whether this really happens: in one run, nine of 24 nodes stopped working, and nobody noticed for six hours, because nothing was in place to notice.</p>
   </aside>
 </section>
 
-<section class="slide light" id="needs" data-steps="0" data-section="0 · The problem" data-time="0.8" data-title="So the engine needs three things">
+<section class="slide light" id="needs" data-steps="0" data-section="0 · The problem" data-time="0.8" data-title="Three requirements for the engine">
   <div class="hd">
-    <div class="eyebrow">What the engine must do</div>
-    <h2>So the engine needs three things</h2>
+    <div class="eyebrow">Requirements</div>
+    <h2>Three requirements for the engine</h2>
   </div>
   <div class="abs" style="left:120px;top:262px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
-    <div class="card nd"><i>1</i><h3>Busy GPUs</h3><p>The GPUs are the expensive part. They should never wait for anything.</p>
+    <div class="card nd"><i>1</i><h3>Keep the GPUs busy</h3><p>The GPUs are the expensive part. They should never wait for anything.</p>
       <div class="nv"><svg viewBox="0 0 580 130">
         <g>
           <rect x="0" y="20" width="28" height="52" rx="7" fill="#F28C28"/><rect x="32.5" y="20" width="28" height="52" rx="7" fill="#F28C28"/>
@@ -2075,7 +2075,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
           <text x="0" y="112" fill="#0E7C61" opacity="0">GPU always busy<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.5;.55;.95;1" dur="6s" repeatCount="indefinite"/></text>
         </g>
       </svg></div></div>
-    <div class="card nd"><i>2</i><h3>No lost work</h3><p>Nodes die, GPUs come and go. Every record is still written exactly once.</p>
+    <div class="card nd"><i>2</i><h3>Lose no work</h3><p>Nodes die, GPUs come and go. Every record is still written exactly once.</p>
       <div class="nv"><svg viewBox="0 0 580 130">
         <g fill="#0E7C61">
           <circle cx="18" cy="26" r="15"/><circle cx="88" cy="26" r="15"/><circle cx="158" cy="26" r="15"/><circle cx="228" cy="26" r="15"/><circle cx="298" cy="26" r="15"/><circle cx="368" cy="26" r="15"/><circle cx="438" cy="26" r="15"/><circle cx="508" cy="26" r="15"/>
@@ -2088,7 +2088,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
           <text x="0" y="112" fill="#C93C3C" opacity="0">a process dies… the record is redone<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.3;.33;.6;.63;1" dur="6s" repeatCount="indefinite"/></text>
         </g>
       </svg></div></div>
-    <div class="card nd"><i>3</i><h3>Any workflow, little code</h3><p>Picture a pipeline, and have it running across every node with a few lines of code.</p>
+    <div class="card nd"><i>3</i><h3>Any workflow, in little code</h3><p>A new pipeline should take a few lines of code to define, and one command to run on every node.</p>
       <div class="nv"><svg viewBox="0 0 580 130">
         <g fill="none" stroke-width="6" stroke-linecap="round">
           <path d="M30 65 C110 65 110 25 200 25" stroke="#2A63C9" stroke-dasharray="200" stroke-dashoffset="200"><animate attributeName="stroke-dashoffset" values="200;200;0;0;200" keyTimes="0;.1;.25;.9;1" dur="6s" repeatCount="indefinite"/></path>
@@ -2114,14 +2114,14 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="dv-eb">Part one</div>
   <div class="dv-h">Keeping the GPUs busy</div>
   <div class="dv-line"></div>
-  <div class="dv-q">The GPU is the expensive part. How do we never make it wait?</div>
+  <div class="dv-q">The GPU is the expensive part. How do we keep it from waiting?</div>
   <aside class="notes"><p>We have the problem and the three needs. We take the first one first: how to keep the GPUs busy. This is the part where we build up from first principles: what a GPU is waiting for, and how a program should wait.</p></aside>
 </section>
 
-<section class="slide light" id="gpu2" data-steps="1" data-section="1 · Keeping the GPUs busy" data-time="1.0" data-title="The GPU is one step in a longer job">
+<section class="slide light" id="gpu2" data-steps="1" data-section="1 · Keeping the GPUs busy" data-time="1.0" data-title="The model run is one of three steps">
   <div class="hd">
-    <div class="eyebrow">The first problem</div>
-    <h2>The GPU is only one step in the job</h2>
+    <div class="eyebrow">Where the time goes</div>
+    <h2>The model run is one of three steps</h2>
   </div>
   <div class="abs" style="left:120px;top:236px;width:1680px;display:flex;align-items:stretch;gap:22px">
     <div class="card gst pre"><small>CPU · before</small><h3>Prepare</h3><p>build the prompt<br>read and check the image</p></div>
@@ -2141,7 +2141,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="grow"><label>GPU</label><div class="ln5 idle" id="gl-o-g"></div></div>
   </div>
   <div class="abs" id="gl-pl" data-s="1" style="left:120px;top:872px;width:1680px"></div>
-  <div class="abs v4cap2" data-s="1" style="left:120px;top:950px;width:1680px;font-size:32px">The host work is not removed. It is <span class="hi">hidden behind GPU time</span>.</div>
+  <div class="abs v4cap2" data-s="1" style="left:120px;top:950px;width:1680px;font-size:32px">The host work is unchanged. It now <span class="hi">overlaps with GPU time</span>.</div>
   <aside class="notes">
     <p>Start with what the GPU actually does. For every batch of pages, the model run is one step. Before it, the host has to build prompts and read and check images. After it, the host has to parse and validate the answers, write them to disk and record that they are done. The GPU does only the middle part.</p>
     <p data-step="1">Two ways to run the same four batches, on one clock. Press play, or drag the slider. Top: one batch at a time. The host prepares, then the GPU runs, then the host finishes, and the GPU sits idle while the host works. Bottom: overlapped. The host prepares the next batch and finishes the last one while the GPU runs this one. The same host work is still done, but none of it is on the GPU's critical path, so the whole run ends sooner and the GPU lane is continuous. So the question is not how to make the host faster; it is how to make sure the host is always one batch ahead. That means many pieces of host code running at the same time as the GPU. Next: what those pieces are.</p>
@@ -2154,7 +2154,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <h2>Inside one node</h2>
   </div>
   <div class="abs" id="ar3-a" style="left:120px;top:228px;width:1680px;height:640px"></div>
-  <div class="abs v4cap2" style="left:120px;top:906px;width:1680px;font-size:34px">All of these run <span class="hi">at the same time</span>. Each one needs the right kind of parallelism.</div>
+  <div class="abs v4cap2" style="left:120px;top:906px;width:1680px;font-size:34px">All of these run <span class="hi">at the same time</span>. Each needs the right kind of parallelism.</div>
   <aside class="notes">
     <p>Here is what runs on every node, before we talk about how. Every node runs the same program; there is no master node.</p>
     <p>On the left, a stage worker, one per stage of the pipeline. It has four jobs. Prepare claims samples and builds the model requests. Collect gathers the results as they come back. Write saves them to disk and then marks them done. Upload moves finished files to the object store.</p>
@@ -2166,8 +2166,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="kinds" data-steps="0" data-section="1 · Keeping the GPUs busy" data-time="1.5" data-title="Processes, threads and event loops">
   <div class="hd">
-    <div class="eyebrow">First principles</div>
-    <h2>Three ways to do many things at once</h2>
+    <div class="eyebrow">Background</div>
+    <h2>Three kinds of concurrency in Python</h2>
   </div>
   <div class="abs" style="left:120px;top:228px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
     <div class="card kd3 p">
@@ -2241,7 +2241,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="askpar" data-steps="0" data-section="1 · Keeping the GPUs busy" data-time="0.8" data-title="Your turn: which parallelism where?">
   <div class="hd">
-    <div class="eyebrow">Your turn · all of these run at once</div>
+    <div class="eyebrow">Your turn</div>
     <h2>Which kind of parallelism for each piece?</h2>
   </div>
   <div class="abs" id="ar3-q" style="left:120px;top:228px;width:1680px;height:640px"></div>
@@ -2255,10 +2255,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="where" data-steps="0" data-section="1 · Keeping the GPUs busy" data-time="1.0" data-title="Where each piece runs">
+<section class="slide light" id="where" data-steps="0" data-section="1 · Keeping the GPUs busy" data-time="1.0" data-title="What we chose for each piece">
   <div class="hd">
-    <div class="eyebrow">Applying the rule</div>
-    <h2>Which piece runs where</h2>
+    <div class="eyebrow">Our choice</div>
+    <h2>What we chose for each piece</h2>
   </div>
   <div class="abs" id="ar3-k" style="left:120px;top:228px;width:1680px;height:640px"></div>
   <div class="abs wh3" style="left:120px;top:900px;width:1680px">
@@ -2277,8 +2277,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 <section class="slide light" id="share" data-steps="1" data-section="1 · Keeping the GPUs busy" data-time="1.1" data-title="Sharing work through one queue">
   <div class="hd">
     <div class="eyebrow">Load balancing</div>
-    <h2>How do the workers share the work?</h2>
-    <div class="sub">The easy way: one shared queue, and every worker pulls from it.</div>
+    <h2>Sharing requests between workers</h2>
+    <div class="sub">The simplest design: one shared queue that every worker pulls from.</div>
   </div>
   <svg class="abs sh3" viewBox="0 0 1680 600" style="left:120px;top:300px;width:1680px;height:600px">
     <defs><marker id="sh3h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5B6785"/></marker>
@@ -2302,13 +2302,13 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="abs sh3p" data-h="1" style="left:1300px;top:300px;width:500px">
     <h3>Inside every pull</h3>
     <ol><li><i>1</i>Take the lock</li><li><i>2</i>Pull one request</li><li><i>3</i>Release the lock</li></ol>
-    <p>Simple, and it balances itself: a fast worker just pulls more often.</p>
+    <p>Simple, and self-balancing: a fast worker pulls more often.</p>
   </div>
   <div class="abs sh3p bad" data-s="1" style="left:1300px;top:300px;width:500px">
     <h3>The lock is never released</h3>
     <p>A killed process runs no cleanup, so it never lets go. Every other worker waits forever.</p>
     <div class="st"><span>pool status</span><b class="g">healthy ✓</b><span>throughput</span><b class="r">0</b></div>
-    <p class="fin3">No error and no timeout. The run just stops.</p>
+    <p class="fin3">No error and no timeout. Throughput is zero.</p>
   </div>
   <aside class="notes">
     <p>We now have several workers, and requests to hand out. How do we balance the load between them? The easiest way is one shared queue: put every request in it, and let each worker pull the next one when it is free. A fast worker simply pulls more often, so the load balances itself.</p>
@@ -2319,8 +2319,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="inbox" data-steps="2" data-section="1 · Keeping the GPUs busy" data-time="1.1" data-title="A private inbox per worker">
   <div class="hd">
-    <div class="eyebrow">The fix</div>
-    <h2>Give every worker its own inbox</h2>
+    <div class="eyebrow">What we changed</div>
+    <h2>One inbox per worker</h2>
     <div class="sub">One dispatcher is the only reader of the shared queue. Each worker reads only its own inbox.</div>
   </div>
   <svg class="abs sh3" viewBox="0 0 1680 600" style="left:120px;top:300px;width:1680px;height:600px">
@@ -2362,10 +2362,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <p>It can only block its own inbox, which is thrown away. The dispatcher stops sending to it. <b>The others keep working.</b></p>
   </div>
   <div class="abs sh3p good" data-s="2" style="left:1420px;top:300px;width:380px">
-    <h3>It comes back clean</h3>
+    <h3>A replacement starts</h3>
     <p>The supervisor starts a new worker with a fresh inbox. Its unfinished requests are sent again.</p>
   </div>
-  <div class="abs v4cap2" data-s="2" style="left:120px;top:930px;width:1680px;font-size:34px">Never share a lock with a process that can die. <span style="color:var(--muted);font-size:26px;font-weight:500">Since this change: no hangs.</span></div>
+  <div class="abs v4cap2" data-s="2" style="left:120px;top:930px;width:1680px;font-size:34px">No shared lock between processes that can be killed. <span style="color:var(--muted);font-size:26px;font-weight:500">Since this change, the pool has not hung.</span></div>
   <aside class="notes">
     <p>The fix is not a safer lock. Holding a lock when you are killed is how the primitive works. The fix is to take the shared lock away from anything that can be killed. One dispatcher, a thread in the pool, is the only reader of the shared queue. It hands each request to a free worker by putting it in that worker's own inbox. Each worker reads only its own inbox.</p>
     <p data-step="1">Now kill a worker. The worst it can do is block its own inbox, and that inbox is thrown away with it. The dispatcher sees the worker is gone and stops sending to it. The other workers never shared anything with it, so they keep working.</p>
@@ -2419,7 +2419,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="save3" data-steps="0" data-section="2 · Never losing work" data-time="1.3" data-title="Save first, then mark it done">
   <div class="hd">
-    <div class="eyebrow">The one rule</div>
+    <div class="eyebrow">The ordering rule</div>
     <h2>Save the result first, then mark it done</h2>
   </div>
   <div class="abs sv3" style="left:120px;top:390px;width:1680px;height:560px">
@@ -2446,7 +2446,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="queue2" data-steps="0" data-section="2 · Never losing work" data-time="1.6" data-title="Nodes take work from one table">
   <div class="hd">
-    <div class="eyebrow">So far, one node. Now many</div>
+    <div class="eyebrow">Many nodes</div>
     <h2>Coordinating across nodes, with minimal overhead</h2>
     <div class="sub">Each box is one image. A node claims a batch, and the boxes take its colour. If a node dies, its batch goes back.</div>
   </div>
@@ -2460,19 +2460,19 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="fleet" data-steps="6" data-section="2 · Never losing work" data-time="3.2" data-title="The run heals itself and scales by itself">
+<section class="slide light" id="fleet" data-steps="6" data-section="2 · Never losing work" data-time="3.2" data-title="Recovery and scaling without intervention">
   <div class="hd">
-    <div class="eyebrow">Back to the first two problems</div>
-    <h2>The run heals itself and scales by itself</h2>
+    <div class="eyebrow">Problems 1 and 2, revisited</div>
+    <h2>Recovery and scaling without intervention</h2>
   </div>
 
   <div class="abs card fl5 heal" data-noclick>
     <div class="fl5-o">
       <svg viewBox="0 0 120 120" class="fl5-i"><path d="M60 18a42 42 0 1 1-38 24" fill="none" stroke="#0E7C61" stroke-width="10" stroke-linecap="round"/><path d="M8 30 L24 46 L36 24Z" fill="#0E7C61"/><path d="M60 46v28M46 60h28" stroke="#0E7C61" stroke-width="10" stroke-linecap="round"/></svg>
-      <small>1</small><h3>Heals itself</h3><p>Something dies. It comes back by itself, and its work is not lost.</p>
+      <small>1</small><h3>Recovery</h3><p>A process or node dies. It is restarted, and its work is not lost.</p>
     </div>
     <div class="fl5-d">
-      <div class="fl5-h"><small>1 · Heals itself</small><h3>Every layer is looked after by the one around it</h3></div>
+      <div class="fl5-h"><small>1 · Recovery</small><h3>Each layer is restarted by the layer around it</h3></div>
       <svg class="fl5-dia" viewBox="0 0 1000 430">
         <g font-family="IBM Plex Sans" font-weight="600">
           <rect x="2" y="2" width="996" height="426" rx="22" fill="#F7F9FC" stroke="#C3CEE5" stroke-width="2"/>
@@ -2521,10 +2521,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="abs card fl5 scale" data-noclick>
     <div class="fl5-o">
       <svg viewBox="0 0 120 120" class="fl5-i"><g fill="#F28C28"><rect x="10" y="62" width="22" height="44" rx="5"/><rect x="40" y="44" width="22" height="62" rx="5"/><rect x="70" y="26" width="22" height="80" rx="5" opacity=".45"/></g><path d="M86 18 L106 18 L106 38" fill="none" stroke="#F28C28" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <small>2</small><h3>Scales by itself</h3><p>GPUs come and go. The run follows them, without a restart.</p>
+      <small>2</small><h3>Scaling</h3><p>GPUs come and go. The run adjusts without a restart.</p>
     </div>
     <div class="fl5-d">
-      <div class="fl5-h"><small class="or">2 · Scales by itself</small><h3>Pipelines don’t own models</h3></div>
+      <div class="fl5-h"><small class="or">2 · Scaling</small><h3>Pipelines do not own model servers</h3></div>
       <svg class="fl6-svg" id="fl6-svg" viewBox="0 0 1600 500"></svg>
       <div class="fl6-log" id="fl6-log"></div>
       <div class="fl6-pl" id="fl6-pl"></div>
@@ -2555,15 +2555,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="fl4-ev">
       <div><i>1</i><b>Launched before the models were up</b><span>work starts as each server comes online</span></div>
       <div><i>2</i><b>A colleague borrows GPUs</b><span>workers there drain and wait</span></div>
-      <div><i>3</i><b>The test is done</b><span>workers fetch from the database again</span></div>
+      <div><i>3</i><b>The GPUs are returned</b><span>workers fetch from the database again</span></div>
       <div><i>4</i><b>A server crashes</b><span>its requests go back; it restarts</span></div>
-      <div><i>5</i><b>Free GPUs appear</b><span>new servers; the run spreads onto them</span></div>
+      <div><i>5</i><b>More GPUs become free</b><span>new servers; the run spreads onto them</span></div>
     </div>
   </div>
 
   <aside class="notes">
-    <p>Back to the first two problems from the start: nodes die, and GPUs come and go. The run handles both by itself: it heals itself, and it scales by itself. First, healing.</p>
-    <p data-step="1">The idea is simple: every layer is looked after by the one around it. Click any of the three cases on the right to play it. Inside one node, workers live inside a supervisor, the supervisor lives inside the program, and a small watcher script sits around the program. The vLLM server has its own watcher too.</p>
+    <p>Back to the first two problems from the start: nodes die, and GPUs come and go. The run handles both without anyone stepping in: it recovers, and it scales. First, recovery.</p>
+    <p data-step="1">The idea is simple: each layer is restarted by the layer around it. Click any of the three cases on the right to play it. Inside one node, workers live inside a supervisor, the supervisor lives inside the program, and a small watcher script sits around the program. The vLLM server has its own watcher too.</p>
     <p data-step="2">A worker dies. The supervisor notices and starts a new one in its place, and the requests that worker had are sent again.</p>
     <p data-step="3">The whole program stops, or the node reboots. The watcher starts the program again. Whatever samples it had claimed and not finished go back to the table, and any node can pick them up.</p>
     <p data-step="4">A vLLM server crashes. Its own watcher restarts it, and the requests that were waiting on it go back to the queue. In every case nobody is paged and no work is lost.</p>
@@ -2572,11 +2572,11 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="err3" data-steps="0" data-section="2 · Never losing work" data-time="1.0" data-title="Every error is followed to the end">
+<section class="slide light" id="err3" data-steps="0" data-section="2 · Never losing work" data-time="1.0" data-title="Every error is followed through">
   <div class="hd">
-    <div class="eyebrow">When something goes wrong</div>
-    <h2>Every error is followed to the end</h2>
-    <div class="sub">At production scale, something fails every minute. Each error is sorted into one of two kinds.</div>
+    <div class="eyebrow">Errors</div>
+    <h2>Every error is followed through</h2>
+    <div class="sub">At this scale, something fails every minute. Each error is sorted into one of two kinds.</div>
   </div>
   <div class="abs er3-q" style="left:810px;top:332px;width:300px">An error</div>
   <svg class="abs" viewBox="0 0 1680 90" style="left:120px;top:400px;width:1680px;height:90px"><g fill="none" stroke="#5B6785" stroke-width="4" stroke-linecap="round"><path d="M840 4 V30 Q840 46 824 46 H436 Q420 46 420 62 V84"/><path d="M840 30 Q840 46 856 46 H1244 Q1260 46 1260 62 V84"/></g></svg>
@@ -2606,13 +2606,13 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="dv-eb">Part three</div>
   <div class="dv-h">Graphs of stages</div>
   <div class="dv-line"></div>
-  <div class="dv-q">Every page takes its own path through many models. How do we describe any workflow like that, and run it across nodes?</div>
+  <div class="dv-q">Each page takes its own path through many models. How do we describe such a workflow, and run it across nodes?</div>
   <aside class="notes"><p>Until now we treated a stage on its own. But a good training example is never the work of one model. Part three is how a page moves through many models, each page on its own path, and how the engine runs that across machines without a coordinator.</p></aside>
 </section>
 
 <section class="slide light" id="route4" data-steps="0" data-section="3 · Graphs of stages" data-time="1.2" data-title="One pipeline, a different route for every page">
   <div class="hd">
-    <div class="eyebrow">The problem: one example needs many models</div>
+    <div class="eyebrow">One example needs many models</div>
     <h2>One pipeline, a different route for every page</h2>
   </div>
   <div class="abs card rt4" id="route-demo" data-noclick style="left:120px;top:222px;width:1680px;height:820px">
@@ -2628,7 +2628,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="gph" data-steps="4" data-section="3 · Graphs of stages" data-time="2.0" data-title="The whole pipeline is a graph">
   <div class="hd">
-    <div class="eyebrow">Put together</div>
+    <div class="eyebrow">The full pipeline</div>
     <h2>The whole pipeline is one graph</h2>
   </div>
   <div class="abs card gp4" style="left:120px;top:220px;width:1680px;height:660px"><div id="gp4-svg"></div></div>
@@ -2637,7 +2637,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="abs gp4-cap r" data-s="1" data-h="2" style="left:120px;top:910px;width:1680px"><b>1 · Routing</b> After Understand, a small function looks at the page and picks the next box. A text page goes to two boxes at once.</div>
   <div class="abs gp4-cap l" data-s="2" data-h="3" style="left:120px;top:910px;width:1680px"><b>2 · Needs both</b> <span class="ln-all"></span> Grounded Q&amp;A needs the text <b>and</b> the layout of the same page. It starts only when both have arrived.</div>
   <div class="abs gp4-cap a" data-s="3" data-h="4" style="left:120px;top:910px;width:1680px"><b>3 · Either one is enough</b> <span class="ln-any"></span> A page is a table <b>or</b> a chart, never both. So “Write a question” starts as soon as one arrives.</div>
-  <div class="abs gp4-cap" data-s="4" style="left:120px;top:910px;width:1680px"><b>Three rules.</b> Every pipeline we run is built from them. <span class="ln-all"></span> needs every input &nbsp; <span class="ln-any"></span> one input is enough</div>
+  <div class="abs gp4-cap" data-s="4" style="left:120px;top:910px;width:1680px">Every pipeline we run is built from <b>these three rules</b>. <span class="ln-all"></span> needs every input &nbsp; <span class="ln-any"></span> one input is enough</div>
   <aside class="notes">
     <p>Put all those routes together and you get one graph. A page enters at the left. Each box is a model, a tool or a check. Three rules decide where a page goes and when a box may start, and we will zoom into each.</p>
     <p data-step="1">One: routing. After Understand finishes a page, a small function written by the pipeline author looks at what it found and picks the next box for that page. A chart goes to the chart reader, a table to the table reader, a formula to the LaTeX writer. A text page goes to two boxes at once, transcription and layout. It can also pick none: a blank page simply stops.</p>
@@ -2649,8 +2649,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="dag" data-steps="1" data-section="3 · Graphs of stages" data-time="0.8" data-title="A dynamic DAG fits our workloads">
   <div class="hd">
-    <div class="eyebrow">Three things every one of our pipelines has</div>
-    <h2 class="h2sw"><span data-h="1">Every pipeline we build has these three things</span><span data-s="1" class="fade">So a dynamic DAG fits almost all our workloads</span></h2>
+    <div class="eyebrow">What our pipelines have in common</div>
+    <h2 class="h2sw"><span data-h="1">Three properties shared by all our pipelines</span><span data-s="1" class="fade">A dynamic DAG covers almost all our workloads</span></h2>
   </div>
   <div class="abs" style="left:120px;top:290px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
     <div class="card dg4">
@@ -2675,7 +2675,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="author2" data-steps="3" data-section="3 · Graphs of stages" data-time="0.8" data-title="From idea to a running pipeline">
   <div class="hd">
-    <div class="eyebrow">Once the graph is defined</div>
+    <div class="eyebrow">Writing a pipeline</div>
     <h2>Define it, then run any workload</h2>
   </div>
   <div class="abs" style="left:120px;top:320px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px">
@@ -2683,7 +2683,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="card au2" data-s="2"><i>2</i><h3>Define each stage</h3><p>The prompt, and what a good answer looks like.</p><div class="auc">get_image_specific_prompt(…)<br>validate_output(…)</div></div>
     <div class="card au2 go" data-s="3"><i>3</i><h3>Run it on every node</h3><p>The same command on every machine. After any failure, run it again.</p><div class="auc">python main.py</div></div>
   </div>
-  <div class="abs v4cap2" data-s="3" style="left:120px;top:830px;width:1680px;font-size:36px">Crash safety, retries, recovery and scaling <span class="hi">come with the engine</span>.</div>
+  <div class="abs v4cap2" data-s="3" style="left:120px;top:830px;width:1680px;font-size:36px">Recovery, retries and scaling are <span class="hi">handled by the engine</span>, not by the pipeline.</div>
   <aside class="notes">
     <p>So a DAG can describe almost any workload we have. And once you define it, running it is very simple. Two parts, then one command.</p>
     <p data-step="1">Part one: you define the DAG. What the stages are, and which ones feed which.</p>
@@ -2692,10 +2692,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="pp2" data-steps="0" data-section="3 · Graphs of stages" data-time="1.2" data-title="Run every stage at once">
+<section class="slide light" id="pp2" data-steps="0" data-section="3 · Graphs of stages" data-time="1.2" data-title="All stages at once">
   <div class="hd">
-    <div class="eyebrow">The engine runs the stages in parallel</div>
-    <h2>Run every stage at once, not one after another</h2>
+    <div class="eyebrow">Pipeline parallelism</div>
+    <h2>All stages at once, or one stage at a time</h2>
   </div>
   <div class="abs" id="pp2-pl" style="left:120px;top:956px;width:560px"></div>
   <div class="abs card bp" id="pp2-staged" style="left:120px;top:236px;width:1680px">
@@ -2715,9 +2715,9 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="swcap" data-steps="0" data-section="3 · Graphs of stages" data-time="0.6" data-title="What Patram-Ingest supports">
   <div class="hd">
-    <div class="eyebrow">Everything you get from one DAG</div>
+    <div class="eyebrow">Summary</div>
     <h2>What Patram-Ingest supports</h2>
-    <div class="sub">A graph of stages declared in code. Coordination lives in the database, never in a process.</div>
+    <div class="sub">A graph of stages declared in code. Coordination lives in the DB, not in any process.</div>
   </div>
   <div class="abs" id="sw-kinds" style="left:120px;top:370px;width:700px;height:540px"></div>
   <div class="abs" style="left:870px;top:370px;width:930px;display:grid;grid-template-columns:1fr 1fr;gap:16px">
@@ -2737,16 +2737,16 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="scale2" data-steps="3" data-section="3 · Graphs of stages" data-time="1.5" data-title="Only one keeps scaling as nodes are added">
+<section class="slide light" id="scale2" data-steps="3" data-section="3 · Graphs of stages" data-time="1.5" data-title="Scaling compared with DBOS and Temporal">
   <div class="hd">
-    <div class="eyebrow">Few alternatives come close · same database, same model servers</div>
-    <h2>Only one keeps scaling as nodes are added</h2>
+    <div class="eyebrow">Evaluation · same DB, same model servers</div>
+    <h2>Scaling compared with DBOS and Temporal</h2>
   </div>
   <div class="abs card" style="left:120px;top:270px;width:1060px;height:680px;padding:26px 34px"><div class="v4cap">Throughput against number of nodes (pages per second)</div><div id="sc2-chart"></div></div>
   <div class="abs" style="left:1220px;top:270px;width:580px;display:flex;flex-direction:column;gap:16px">
-    <div class="card sc2c" data-s="1"><h3>DBOS and Temporal</h3><p>Also survive crashes. But past a few nodes, the database becomes the limit.</p></div>
+    <div class="card sc2c" data-s="1"><h3>DBOS and Temporal</h3><p>Also survive crashes. Past a few nodes, the database becomes the limit.</p></div>
     <div class="card sc2c good" data-s="2"><h3>Patram-Ingest</h3><p>Keeps growing with every node. The database stays mostly idle.</p><p class="sc2why"><b>Why:</b> the database holds only small state rows. Results go to files on each node.</p></div>
-    <div class="card sc2c" data-s="3"><div class="sc2s"><b>~99%</b><span>of perfectly linear scaling, from 1 to 48 nodes</span></div></div>
+    <div class="card sc2c" data-s="3"><div class="sc2s"><b>~99%</b><span>of linear scaling, from 1 to 48 nodes</span></div></div>
   </div>
   <aside class="notes">
     <p>Very few alternatives come close to these features. Among the 13 systems in our comparison, only DBOS and Temporal do: they already survive crashes, route per sample and run across machines. So we ran the same pipeline on both, on the same DB server and the same emulated model servers. We made the servers answer in 20 milliseconds, so inference could not be the limit, and added nodes until throughput stopped growing.</p>
@@ -2756,15 +2756,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="lessons" data-steps="0" data-section="Wrap-up" data-time="1.0" data-title="What we learned">
+<section class="slide light" id="lessons" data-steps="0" data-section="Wrap-up" data-time="1.0" data-title="Key takeaways">
   <div class="hd">
-    <div class="eyebrow">What we learned</div>
-    <h2>Six lessons from running for weeks</h2>
+    <div class="eyebrow">Wrap-up</div>
+    <h2>Key takeaways</h2>
   </div>
   <div class="abs" style="left:120px;top:250px;width:1680px;display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:320px;gap:28px">
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><g fill="#DDF1EA" stroke="#0E7C61" stroke-width="4"><rect x="8" y="14" width="44" height="40" rx="8"/><rect x="68" y="14" width="44" height="40" rx="8"/><rect x="8" y="68" width="44" height="40" rx="8"/></g><rect x="68" y="68" width="44" height="40" rx="8" fill="#FBE6E4" stroke="#C93C3C" stroke-width="4"/><path d="M80 78 L100 98 M100 78 L80 98" stroke="#C93C3C" stroke-width="5" stroke-linecap="round"/></svg>
-      <h3>Expect failure. It’s not an anomaly</h3><p>Over weeks, every step crashes midway at some point. Design for it.</p>
+      <h3>Expect failure</h3><p>Over weeks, every step crashes midway at some point. Design each step for it.</p>
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><g stroke-width="4"><rect x="8" y="10" width="104" height="28" rx="8" fill="#E4ECFA" stroke="#2A63C9"/><rect x="8" y="46" width="104" height="28" rx="8" fill="#DDF1EA" stroke="#0E7C61"/><rect x="8" y="82" width="104" height="28" rx="8" fill="#FCE6CF" stroke="#F28C28"/></g><g fill="#0E1A3A"><circle cx="26" cy="24" r="5"/><circle cx="26" cy="60" r="5"/><circle cx="26" cy="96" r="5"/></g></svg>
@@ -2776,15 +2776,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><path d="M42 50 V36 A18 18 0 0 1 78 36 V50" fill="none" stroke="#C93C3C" stroke-width="6"/><rect x="28" y="48" width="64" height="52" rx="10" fill="#FBE6E4" stroke="#C93C3C" stroke-width="4"/><path d="M14 112 L106 8" stroke="#C93C3C" stroke-width="6" stroke-linecap="round"/></svg>
-      <h3>Nothing ever waits forever</h3><p>A crashed process can’t release a lock. So workers share no locks: each gets its own inbox.</p>
+      <h3>No indefinite waits</h3><p>A killed process cannot release a lock. So workers share no locks: each has its own inbox.</p>
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><rect x="4" y="20" width="34" height="80" rx="8" fill="#E4ECFA" stroke="#2A63C9" stroke-width="4"/><rect x="43" y="20" width="34" height="80" rx="8" fill="#ECE6F8" stroke="#6B4BB8" stroke-width="4"/><circle cx="99" cy="60" r="17" fill="#FFF4E2" stroke="#F28C28" stroke-width="4"/><g fill="#F28C28"><circle cx="99" cy="35" r="5"/><circle cx="99" cy="85" r="5"/></g></svg>
-      <h3>The right parallelism for each job</h3><p>Processes compute, threads wait, event loops juggle calls.</p>
+      <h3>Match the parallelism to the job</h3><p>Processes compute, threads wait, event loops juggle calls.</p>
     </div>
     <div class="card ls3">
       <svg viewBox="0 0 120 120"><ellipse cx="30" cy="40" rx="22" ry="8" fill="#CBDAF3" stroke="#1F4FA8" stroke-width="3"/><path d="M8 40 V64 A22 8 0 0 0 52 64 V40" fill="#E4ECFA" stroke="#1F4FA8" stroke-width="3"/><g fill="#DDF1EA" stroke="#0E7C61" stroke-width="3"><rect x="66" y="14" width="48" height="26" rx="6"/><rect x="66" y="46" width="48" height="26" rx="6"/><rect x="66" y="78" width="48" height="26" rx="6"/></g></svg>
-      <h3>Keep the database light</h3><p>Only state in the database. Results go to files, written in groups.</p>
+      <h3>Keep the database light</h3><p>The database holds only state. Results go to files, written in groups.</p>
     </div>
   </div>
   <aside class="notes">
@@ -2792,15 +2792,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <p>One: expect failure; it is not an anomaly. Over weeks on a shared cluster, every step will at some point crash in the middle, so design every step for that, instead of treating it as a rare exception.</p>
     <p>Two: single responsibility. Every component does exactly one job. A stage only transforms a sample: it does not know the graph, retry, coordinate or scale. Those live once in the engine, which is why a new pipeline is a few lines of code, and why a bug in one stage cannot break recovery.</p>
     <p>Three: follow every error through to the end. Every error lands somewhere definite: a system problem is retried, a bad sample is set aside with its reason, and if you cannot tell which, you retry, because a retry costs seconds and a good sample thrown away is gone. Nothing is left stuck in between.</p>
-    <p>Four: nothing ever waits forever. A process that is killed while holding a shared lock never releases it, and every other worker blocks on it for good. So nothing that needs a lock is shared between workers that can die: each worker gets its own private inbox, and no process can end up stuck waiting on one that is gone.</p>
-    <p>Five: use the right parallelism for each job. Processes for computing, threads for waiting, event loops for many calls at once.</p>
+    <p>Four: no indefinite waits. A process that is killed while holding a shared lock never releases it, and every other worker blocks on it for good. So nothing that needs a lock is shared between workers that can die: each worker gets its own private inbox, and no process can end up stuck waiting on one that is gone.</p>
+    <p>Five: match the parallelism to the job. Processes for computing, threads for waiting, event loops for many calls at once.</p>
     <p>Six: keep the database light. It holds only state; the results go to files on each node, written in groups, off the GPU's path. That is why the system keeps scaling as nodes are added.</p>
   </aside>
 </section>
 
 <section class="slide light" id="state1" data-steps="0" data-section="Wrap-up" data-time="0.8" data-title="The DB is the single source of truth">
   <div class="hd">
-    <div class="eyebrow">The key takeaway · everything else is stateless</div>
+    <div class="eyebrow">Above all</div>
     <h2>The DB is the single source of truth</h2>
   </div>
   <div class="abs card st1" style="left:120px;top:246px;width:1680px;height:420px">
@@ -2829,9 +2829,9 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     </svg>
   </div>
   <div class="abs st1-row" style="left:120px;top:704px;width:1680px">
-    <div class="card st1-c"><b>Survive any restart</b><span>Any component can crash and restart. It held nothing, so it lost nothing.</span></div>
-    <div class="card st1-c"><b>Add or remove nodes freely</b><span>No handover, nothing to move. A new node just asks the DB for work.</span></div>
-    <div class="card st1-c"><b>Recovery is a query</b><span>Where everything stands is always in the DB. No procedure to run.</span></div>
+    <div class="card st1-c"><b>Any component can restart</b><span>Any component can crash and restart. It held nothing, so it lost nothing.</span></div>
+    <div class="card st1-c"><b>Nodes can be added or removed</b><span>No handover, nothing to move. A new node just asks the DB for work.</span></div>
+    <div class="card st1-c"><b>Recovery is a DB query</b><span>The state of the run is always in the DB. There is no recovery procedure to run.</span></div>
   </div>
   <aside class="notes">
     <p>If you remember one thing from this talk, make it this. Nowhere in the whole system, in the stage workers, the worker pools, the supervisors, the watchers, the model servers or the nodes, do we keep any state. Every one of them is stateless. The entire state of the run, what is waiting, claimed, done or failed, lives in one place: the DB. It is the single source of truth. Results go to files, and the DB says which ones count.</p>
@@ -2839,10 +2839,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="eco2" data-steps="3" data-section="Wrap-up" data-time="1.2" data-title="The bigger picture">
+<section class="slide light" id="eco2" data-steps="3" data-section="Wrap-up" data-time="1.2" data-title="Where Patram-Ingest sits in the stack">
   <div class="hd">
-    <div class="eyebrow">The bigger picture</div>
-    <h2>Patram-Ingest is one part of a bigger stack</h2>
+    <div class="eyebrow">Context</div>
+    <h2>Where Patram-Ingest sits in the stack</h2>
   </div>
   <div class="abs py" style="left:120px;top:300px;width:1000px;height:690px">
     <div class="py-t ev" style="top:0px;left:305px;width:390px;clip-path:polygon(55px 0,335px 0,100% 100%,0 100%)"><h3>Evaluation</h3><p>PatramBench · Patram-Eval</p></div>
@@ -2854,7 +2854,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="py-t st" style="top:585px;left:0px;width:1000px;clip-path:polygon(55px 0,945px 0,100% 100%,0 100%)"><h3>Storage</h3><p>Patram-FS · Patram-DB</p></div>
   </div>
   <div class="abs eco2-col" style="left:1220px;top:300px;width:580px">
-    <div class="card eco2-c me"><small>This talk</small><b>Patram-Ingest</b><span>turns raw pages into training data, for weeks, on a cluster that never stops changing.</span></div>
+    <div class="card eco2-c me"><small>This talk</small><b>Patram-Ingest</b><span>turns raw pages into training data, on a shared cluster, for weeks at a time.</span></div>
     <div class="card eco2-c" data-s="1"><small>Below it</small><b>Storage and raw data</b><span>Patram-FS and Patram-DB hold everything. The scraper and synthetic docs feed it; DarshinAI lets us annotate and look at it.</span></div>
     <div class="card eco2-c" data-s="2"><small>Above it</small><b>From corpus to models</b><span>Patram-Core turns that data into our training corpus, and trains the Patram Suite of foundation models.</span></div>
   </div>
@@ -2863,7 +2863,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <h3>Patram 1.5</h3>
     <p>Our models are internal today. We plan to release <b>Patram 1.5</b> soon.</p>
     <div class="eco2-qr">QR · sign-up form</div>
-    <p class="eco2-ask">Interested? Sign up and we will let you know.</p>
+    <p class="eco2-ask">Sign up to be notified when it is released.</p>
   </div>
   <aside class="notes">
     <p>To step back: Patram-Ingest, everything we talked about today, is just one part of the infrastructure we have.</p>
@@ -2878,14 +2878,14 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="dv-eb">Part four</div>
   <div class="dv-h">Q&amp;A</div>
   <div class="dv-line"></div>
-  <div class="dv-q">Three questions for you first. Then yours.</div>
+  <div class="dv-q">Three questions for the room, then yours.</div>
   <aside class="notes"><p>Part four is over to you. We have three questions for the room, and then we are happy to take yours.</p></aside>
 </section>
 
-<section class="slide light" id="deep" data-steps="0" data-section="4 · Q&amp;A" data-time="0.4" data-title="Now, the actual details">
+<section class="slide light" id="deep" data-steps="0" data-section="4 · Q&amp;A" data-time="0.4" data-title="The remaining question">
   <div class="hd">
-    <div class="eyebrow">Under the hood</div>
-    <h2>Shall we get into the actual details?</h2>
+    <div class="eyebrow">What we have not covered</div>
+    <h2>The remaining question</h2>
   </div>
   <div class="abs dp-q" style="left:120px;top:300px;width:1500px">How do we run <b>graphs across nodes</b>, with <b>every stage at once</b>, and still never lose or repeat a page?</div>
   <div class="abs dp-row" style="left:120px;top:560px;width:1680px">
@@ -2893,15 +2893,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="card dp-c"><i>2</i><b>Pipeline parallelism</b><span>every stage running at the same time</span></div>
     <div class="card dp-c"><i>3</i><b>Distributed guarantees</b><span>exactly once, through any crash</span></div>
   </div>
-  <div class="abs v4cap2" style="left:120px;top:850px;width:1680px;font-size:34px">Let’s work it out together, <span class="hi">in three questions</span>.</div>
+  <div class="abs v4cap2" style="left:120px;top:850px;width:1680px;font-size:34px">We take it <span class="hi">in three questions</span>.</div>
   <aside class="notes">
-    <p>Can we now get into the actual details? How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you, let us work it out together, in three questions.</p>
+    <p>One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you, let us work it out together, in three questions.</p>
   </aside>
 </section>
 
 <section class="slide light" id="q3" data-steps="2" data-section="4 · Q&amp;A" data-time="1.0" data-title="Question 1: which order is safe to replay?">
   <div class="hd">
-    <div class="eyebrow">Question 1 · a warm-up</div>
+    <div class="eyebrow">Question 1</div>
     <h2>Which order is safe to replay?</h2>
   </div>
   <div class="abs qz-sub" style="left:120px;top:232px;width:1680px">Stage 1 makes <b>two writes</b> to the DB. It crashes <b>between them</b>, then runs the page again.</div>
@@ -2918,7 +2918,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     </div>
   </div>
   <div class="abs qz-q" data-s="1" data-h="2" style="left:120px;top:836px;width:1680px">Which order is <b>idempotent</b>: safe to run again after a crash? <b>Hands up for A, or for B.</b></div>
-  <div class="abs v4cap2" data-s="2" style="left:120px;top:836px;width:1680px;font-size:34px">Hand it on first, <span class="hi">mark yourself done last</span>, and make every write safe to repeat.</div>
+  <div class="abs v4cap2" data-s="2" style="left:120px;top:836px;width:1680px;font-size:34px">Mark the next stage ready first and <span class="hi">yourself done last</span>; every write must be safe to repeat.</div>
   <aside class="notes">
     <p>First, a small warm-up. Stage 1 finishes a page and has to make two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two, and then Stage 1 runs the page again.</p>
     <p data-step="1">Which order is idempotent, meaning safe to run again after a crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.</p>
@@ -2928,7 +2928,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="q1" data-steps="2" data-section="4 · Q&amp;A" data-time="1.3" data-title="Question 2: who starts the next box?">
   <div class="hd">
-    <div class="eyebrow">Question 2 · let’s think it through</div>
+    <div class="eyebrow">Question 2</div>
     <h2>Who decides that Grounded Q&amp;A can start?</h2>
   </div>
   <div class="abs card qz-ctx" style="left:120px;top:236px;width:1680px;height:330px">
@@ -2970,7 +2970,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
 <section class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.8" data-title="Question 3: over to you">
   <div class="hd">
-    <div class="eyebrow">Question 3 · over to you</div>
+    <div class="eyebrow">Question 3</div>
     <h2>How should the database coordinate the stages?</h2>
   </div>
   <div class="abs card qo-where" style="left:120px;top:250px;width:1680px">
@@ -2994,18 +2994,18 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="card qo-c"><small>Where we landed</small><p>Use the database for coordination <b>across nodes and across stages</b>.</p></div>
     <div class="card qo-c"><small>The hard part</small><p>Crashes at any moment, no messages between machines, every stage <b>exactly once</b>, still fast at 32 nodes.</p></div>
   </div>
-  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> The details are a talk of their own. <span class="hi">Send us how you would solve it.</span></div>
+  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> The full design is a talk of its own. <span class="hi">Send us how you would solve it.</span></div>
   <aside class="notes">
     <p>So that is where we landed: the database we already have does the coordination, across nodes and across stages. Machine 3 and machine 7 each write down what they finished, and from that the database has to make Grounded Q&amp;A start exactly once. How exactly to do that, so it survives a crash at any moment, needs no messages between machines, and stays fast at 32 nodes, is a talk of its own.</p>
     <p data-step="1">So instead of going into it, we will hand it to you: the form is on the next slide. Send us how you would solve it. We will compare your ideas with what we built, and we are happy to talk through it afterwards.</p>
   </aside>
 </section>
 
-<section class="slide dark" id="close" data-steps="0" data-section="Close" data-time="0.6" data-title="Putting it together">
+<section class="slide dark" id="close" data-steps="0" data-section="Close" data-time="0.6" data-title="Summary">
   <canvas class="abs" width="1920" height="1080" style="left:0;top:0;width:1920px;height:1080px"></canvas>
   <div class="abs" style="left:120px;top:78px;width:1680px">
-    <div class="eyebrow">Putting it together</div>
-    <h2 style="font-size:64px;max-width:1500px;margin-top:120px">Describe the pipeline. The engine keeps it busy, safe and scalable.</h2>
+    <div class="eyebrow">In summary</div>
+    <h2 style="font-size:64px;max-width:1500px;margin-top:120px">Describe the pipeline. The engine keeps it busy, crash-safe and scalable.</h2>
   </div>
   <div class="abs" style="left:120px;top:520px;width:1100px"><h1 style="font-size:150px">Thank you</h1></div>
   <div class="abs cl-form" style="right:120px;top:470px;width:560px">
@@ -3017,7 +3017,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <img src="assets/bharatgen_logo_crop.png" style="height:66px" alt="BharatGen"><span style="width:2px;height:60px;background:#DCE2EE"></span><img src="assets/vllm_text_crop.png" style="height:50px" alt="vLLM">
   </div>
   <aside class="notes">
-    <p>To bring it together: you describe the pipeline, and the engine keeps it busy, safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. Scan the code on the right to send us how you would coordinate stages across nodes with a database, and we are happy to take your questions now.</p>
+    <p>To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. Scan the code on the right to send us how you would coordinate stages across nodes with a database, and we are happy to take your questions now.</p>
     <p><b>Likely questions.</b> Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.</p>
   </aside>
 </section>
@@ -5401,7 +5401,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     [LENT[0], 'Servers 3 and 4 are <b>lent out</b>. Their workers <b>drain</b>: samples go back.'],
     [LENT[0] + 1500, 'Workers 3 and 4 <b>wait</b>. Everyone else carries on.'],
     [LENT[1], 'The servers are back. Workers 3 and 4 <b>fetch again</b>.'],
-    [LENT[1] + 2200, 'Nothing was lost, and <b>nobody restarted anything</b>.']];
+    [LENT[1] + 2200, 'No samples were lost, and <b>the run was not restarted</b>.']];
   const STATUS = { work: 'working', drain: 'draining', wait: 'waiting', fetch: 'fetching', none: '' };
 
   function build(ctx) {

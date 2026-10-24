@@ -90,7 +90,7 @@
     [LENT[0], 'Servers 3 and 4 are <b>lent out</b>. Their workers <b>drain</b>: samples go back.'],
     [LENT[0] + 1500, 'Workers 3 and 4 <b>wait</b>. Everyone else carries on.'],
     [LENT[1], 'The servers are back. Workers 3 and 4 <b>fetch again</b>.'],
-    [LENT[1] + 2200, 'Nothing was lost, and <b>nobody restarted anything</b>.']];
+    [LENT[1] + 2200, 'No samples were lost, and <b>the run was not restarted</b>.']];
   const STATUS = { work: 'working', drain: 'draining', wait: 'waiting', fetch: 'fetching', none: '' };
 
   function build(ctx) {
