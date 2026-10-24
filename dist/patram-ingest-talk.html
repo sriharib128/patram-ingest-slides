@@ -5325,8 +5325,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
         if (m.c >= 1300) { m.lost.forEach(i => { cells[i] = { s: 0, m: null, only: 'C' }; }); ring(m.lost, '#5b6b7a', null, 1000); say('recover', `Its ${m.lost.length} images go back to waiting. <b>Nothing is lost.</b>`); m.state = 'crash2'; m.c = 0; }
         return;
       }
-      if (m.state === 'crash2') { m.c += DT; if (m.c >= 1000) { m.state = 'crash3'; m.c = 0; } return; }
-      if (m.state === 'crash3') { m.c += DT; if (m.c >= 550) m.dead = true; return; }
+      if (m.state === 'crash2') { m.c += DT; if (m.c >= 2000) { m.state = 'crash3'; m.c = 0; } return; }
+      if (m.state === 'crash3') { m.c += DT; if (m.c >= 500) m.dead = true; return; }
     };
     const A = mk('A'), B = mk('B'); let C = null, D = null;
     say('start', `${who('A')} and ${who('B')} each ask the queue for ${TAKE} images.`);
@@ -5427,7 +5427,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
       };
       /* four clickable steps, each one slice of the story: [sim start, sim end, speed]; the crash and the take-over play slowest */
       ctx.__qr = render;
-      ctx.__qseg = { 1: [0, 3000, 1.3], 2: [3000, 6400, 0.8], 3: [6400, 11200, 1.2], 4: [11200, sim.dur, 1.7] };
+      ctx.__qseg = { 1: [0, 3000, 1.3], 2: [3000, 6400, 0.8], 3: [6400, 11200, 1.0], 4: [11200, sim.dur, 1.7] };
       if (!ctx.el.__q2wired) {
         ctx.el.__q2wired = true;
         ctx.qa('.q2-steps button').forEach(b => b.addEventListener('click', e => {      // a step always plays from its start, wherever the bar is
