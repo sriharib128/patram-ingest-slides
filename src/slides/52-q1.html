@@ -1,4 +1,4 @@
-<section class="slide light" id="q1" data-steps="2" data-section="4 · Q&amp;A" data-time="1.3" data-title="Question 2: who starts the next box?">
+<section class="slide light" id="q1" data-steps="2" data-section="4 · Q&amp;A" data-time="1.3" data-title="Question 2: who decides that Grounded Q&amp;A can start?">
   <div class="hd">
     <div class="eyebrow">Question 2</div>
     <h2>Who decides that Grounded Q&amp;A can start?</h2>
@@ -22,20 +22,26 @@
         <circle cx="830" cy="145" r="34" fill="#F28C28"/><text x="830" y="160" font-size="42" fill="#fff" text-anchor="middle" font-family="Sora" font-weight="700">?</text>
       </g>
     </svg>
-    <ul class="qz-facts">
-      <li>The two machines <b>never talk</b> to each other.</li>
-      <li>Any machine can <b>crash</b> at any moment.</li>
-      <li>Grounded Q&amp;A must start <b>exactly once</b>: not zero times (page lost), not twice (a duplicate).</li>
-    </ul>
+    <div class="qz-side">
+      <ul class="qz-facts">
+        <li>The two machines <b>never talk</b> to each other.</li>
+        <li>Any machine can <b>crash</b> at any moment.</li>
+        <li>Grounded Q&amp;A must start <b>exactly once</b>: not zero times (page lost), not twice (a duplicate).</li>
+      </ul>
+      <div class="qz-askw">
+        <div class="qz-ask" data-s="1" data-h="2">Which would you pick? <b>Hands up for A, B or C.</b></div>
+        <div class="qz-ask ok" data-s="2">Same rule as before: <b>the DB is the single source of truth</b>.</div>
+      </div>
+    </div>
   </div>
   <div class="abs qz-opts" data-s="1" style="left:120px;top:600px;width:1680px">
-    <div class="card qz-o bad"><i>A</i><h4>A new central tracking service</h4><p>a separate service remembers every page and tells boxes when to start</p><em data-s="2">If it crashes, everything it knew is gone. And it is one more thing to keep alive.</em></div>
+    <div class="card qz-o bad"><i>A</i><h4>A new central tracking service</h4><p>a separate service remembers every page and tells machines when to start</p><em data-s="2">It must keep that memory somewhere durable, which is a database. So this is C, plus one more process to keep alive.</em></div>
     <div class="card qz-o bad"><i>B</i><h4>The machines message each other</h4><p>“I’m done with page 4812” → “so am I, start it”</p><em data-s="2">A crash loses a message, or a retry repeats it: page lost, or done twice.</em></div>
     <div class="card qz-o good"><i>C</i><h4>Write it down in the database we already have</h4><p>each machine notes what it finished there; a small check reads it</p><em data-s="2">No new service: the database already holds every sample and survives crashes. ✓ This is what we do.</em></div>
   </div>
   <aside class="notes">
-    <p>Let us think this through together. Here is the situation. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&amp;A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&amp;A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?</p>
-    <p data-step="1">Here are three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Ask the room: which would you pick?</p>
-    <p data-step="2">A is the usual answer, but if that service crashes, everything it knew is gone, and it is one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Nothing important lives in any process.</p>
+    <p>Now a design question. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&amp;A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&amp;A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?</p>
+    <p data-step="1">Three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Which would you pick? Hands up for A, B or C.</p>
+    <p data-step="2">A is the usual first answer, but that service has to keep its memory somewhere durable, and that somewhere is a database. So A is really C plus one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Same rule as before: the DB is the single source of truth, and nothing that matters lives in a process.</p>
   </aside>
 </section>

@@ -38,9 +38,9 @@ Generated from the deck. Keys: → next · ← back · F fullscreen · O overvie
 | 32 | Where Patram-Ingest sits in the stack | 1.2 | 32.5 |
 | 33 | Part four · Q&amp;A | 0.2 | 32.7 |
 | 34 | The remaining question | 0.4 | 33.1 |
-| 35 | Question 1: which order is safe to replay? | 1 | 34.1 |
-| 36 | Question 2: who starts the next box? | 1.3 | 35.4 |
-| 37 | Question 3: over to you | 0.8 | 36.2 |
+| 35 | Question 1: which order survives the crash? | 1.2 | 34.3 |
+| 36 | Question 2: who decides that Grounded Q&amp;A can start? | 1.3 | 35.6 |
+| 37 | Take-home: how should the database coordinate the stages? | 0.6 | 36.2 |
 | 38 | Summary | 0.6 | 36.8 |
 
 
@@ -363,37 +363,37 @@ To step back: Patram-Ingest, everything we talked about today, is just one part 
 ## 33. Part four · Q&amp;A
 *4 · Q&amp;A · ~0.2 min · no steps*
 
-Part four is over to you. We have three questions for the room, and then we are happy to take yours.
+Part four is over to you. We have two questions for the room, one to take home, and then we are happy to take yours.
 
 ## 34. The remaining question
 *4 · Q&amp;A · ~0.4 min · no steps*
 
-One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you, let us work it out together, in three questions.
+One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you the whole design, we work out two of the pieces with you, and leave the full design as a take-home problem.
 
-## 35. Question 1: which order is safe to replay?
-*4 · Q&amp;A · ~1 min · reveal steps: 2*
+## 35. Question 1: which order survives the crash?
+*4 · Q&amp;A · ~1.2 min · reveal steps: 2*
 
-First, a small warm-up. Stage 1 finishes a page and has to make two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two, and then Stage 1 runs the page again.
+A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two writes. Remember the recovery rule from part two: after a restart, any page that is not marked done is picked up and run again.
 
-**[step 1]** Which order is idempotent, meaning safe to run again after a crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.
+**[step 1]** So: which order survives the crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.
 
-**[step 2]** A is not safe: Stage 1 says done, so nobody runs the page again, but Stage 2 never hears about it, and the page is lost. B is idempotent: Stage 1 is not marked done, so it runs again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done in part two: hand it on first, mark yourself done last, and make every write safe to repeat.
+**[step 2]** Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done: hand the page on first, mark yourself done last, and make every write safe to repeat.
 
-## 36. Question 2: who starts the next box?
+## 36. Question 2: who decides that Grounded Q&amp;A can start?
 *4 · Q&amp;A · ~1.3 min · reveal steps: 2*
 
-Let us think this through together. Here is the situation. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?
+Now a design question. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?
 
-**[step 1]** Here are three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Ask the room: which would you pick?
+**[step 1]** Three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Which would you pick? Hands up for A, B or C.
 
-**[step 2]** A is the usual answer, but if that service crashes, everything it knew is gone, and it is one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Nothing important lives in any process.
+**[step 2]** A is the usual first answer, but that service has to keep its memory somewhere durable, and that somewhere is a database. So A is really C plus one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Same rule as before: the DB is the single source of truth, and nothing that matters lives in a process.
 
-## 37. Question 3: over to you
-*4 · Q&amp;A · ~0.8 min · reveal steps: 1*
+## 37. Take-home: how should the database coordinate the stages?
+*4 · Q&amp;A · ~0.6 min · reveal steps: 1*
 
-So that is where we landed: the database we already have does the coordination, across nodes and across stages. Machine 3 and machine 7 each write down what they finished, and from that the database has to make Grounded Q&A start exactly once. How exactly to do that, so it survives a crash at any moment, needs no messages between machines, and stays fast at 32 nodes, is a talk of its own.
+So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.
 
-**[step 1]** So instead of going into it, we will hand it to you: the form is on the next slide. Send us how you would solve it. We will compare your ideas with what we built, and we are happy to talk through it afterwards.
+**[step 1]** So we leave it with you as a take-home problem. Send us how you would solve it; the form is on the next slide. We will compare your ideas with what we built, and we are happy to talk through it afterwards.
 
 ## 38. Summary
 *Close · ~0.6 min · no steps*

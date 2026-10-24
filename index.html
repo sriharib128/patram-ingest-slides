@@ -1695,8 +1695,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 @keyframes capin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
 /* audience questions (graph part): context, then the question, then the answer */
-.qz-ctx{padding:24px 36px;display:grid;grid-template-columns:900px 1fr;gap:40px;align-items:center}
-.qz-dia{width:900px;height:auto;display:block}
+.qz-ctx{padding:24px 36px;display:grid;grid-template-columns:820px 1fr;gap:36px;align-items:center}
+.qz-dia{width:820px;height:auto;display:block}
 .qz-facts{list-style:none;display:flex;flex-direction:column;gap:16px}
 .qz-facts li{font-size:27px;line-height:1.35;color:var(--body);padding-left:30px;position:relative}
 .qz-facts li::before{content:'';position:absolute;left:0;top:13px;width:12px;height:12px;border-radius:50%;background:var(--orange)}
@@ -1730,13 +1730,29 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .qz-ticks .go{color:var(--green)}.qz-ticks .dup{color:var(--red)}.qz-ticks .skip{color:var(--muted);font-size:24px;font-weight:600}
 .qz-a{font-size:30px;color:var(--body)}.qz-a b{color:var(--ink)}
 .qz-sub{font-size:30px;line-height:1.4;color:var(--body)}.qz-sub b{color:var(--ink)}
-.qz-ord{padding:30px 36px;min-height:470px}
+.qz-remind{display:flex;align-items:center;gap:22px;padding:14px 24px;border-radius:16px;background:#F1F4FA;border-left:6px solid var(--ink);font-size:26px;color:var(--body)}
+.qz-remind small{flex:none;font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.qz-remind b{color:var(--ink)}
+.qz-steps u{position:relative}
+.qz-steps u i{position:absolute;left:50%;top:-26px;transform:translateX(-50%);font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:17px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--red)}
+.qz-db{display:flex;align-items:center;gap:14px;margin-top:26px;white-space:nowrap}
+.qz-db small{font-family:'IBM Plex Mono',monospace;font-size:18px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--muted);margin-right:8px}
+.qz-db span{padding:10px 18px;border-radius:12px;font-family:'IBM Plex Mono',monospace;font-size:21px;font-weight:600}
+.qz-db span.on{background:var(--green-pale);color:var(--green);border:2px solid var(--green)}
+.qz-db span.off{background:#F4F6FA;color:var(--muted);border:2px dashed #C3CEE5}
+.qz-side{display:flex;flex-direction:column;justify-content:space-between;align-self:stretch;padding:4px 0}
+.qz-askw{display:grid}.qz-askw>div{grid-area:1/1}
+.qz-ask{padding:12px 20px;border-radius:14px;background:#FFF4E2;border:2px solid #F5D3A8;font-family:Sora,sans-serif;font-size:25px;line-height:1.3;color:var(--ink)}
+.qz-ask b{color:var(--orange-deep)}
+.qz-ask.ok{background:var(--green-pale);border-color:var(--green);font-family:'IBM Plex Sans',sans-serif;color:var(--body)}
+.qz-ask.ok b{color:var(--green)}
+.qz-ord{padding:30px 36px;min-height:510px}
 .qz-ord h4{font-family:'IBM Plex Mono',monospace;font-size:20px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
 .qz-steps{display:flex;align-items:center;gap:18px}
 .qz-steps span{flex:1;padding:22px 20px;border-radius:16px;background:var(--blue-pale);border:2px solid var(--blue-mid);font-family:Sora,sans-serif;font-weight:600;font-size:26px;color:var(--ink);text-align:center}
 .qz-steps span.no{background:#F4F6FA;border:2px dashed #C3CEE5;color:var(--muted)}
 .qz-steps u{text-decoration:none;font-size:44px}
-.qz-res{margin-top:28px;padding:20px 24px;border-radius:16px;font-size:26px;line-height:1.4}
+.qz-res{margin-top:22px;padding:18px 24px;border-radius:16px;font-size:25px;line-height:1.4}
 .qz-res b{display:block;font-family:Sora,sans-serif;font-size:32px;margin-bottom:6px}
 .qz-res.bad{background:var(--red-pale);color:#7A2A20}.qz-res.bad b{color:var(--red)}
 .qz-res.good{background:var(--green-pale);color:#0B5A47}.qz-res.good b{color:var(--green)}
@@ -2898,8 +2914,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="dv-eb">Part four</div>
   <div class="dv-h">Q&amp;A</div>
   <div class="dv-line"></div>
-  <div class="dv-q">Three questions for the room, then yours.</div>
-  <aside class="notes"><p>Part four is over to you. We have three questions for the room, and then we are happy to take yours.</p></aside>
+  <div class="dv-q">Two questions for the room, one to take home, then yours.</div>
+  <aside class="notes"><p>Part four is over to you. We have two questions for the room, one to take home, and then we are happy to take yours.</p></aside>
 </section>
 
 <section class="slide light" id="deep" data-steps="0" data-section="4 · Q&amp;A" data-time="0.4" data-title="The remaining question">
@@ -2913,40 +2929,43 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <div class="card dp-c"><i>2</i><b>Pipeline parallelism</b><span>every stage running at the same time</span></div>
     <div class="card dp-c"><i>3</i><b>Distributed guarantees</b><span>exactly once, through any crash</span></div>
   </div>
-  <div class="abs v4cap2" style="left:120px;top:850px;width:1680px;font-size:34px">We take it <span class="hi">in three questions</span>.</div>
+  <div class="abs v4cap2" style="left:120px;top:850px;width:1680px;font-size:34px">We work out <span class="hi">two of the pieces</span> with you; the full design is a take-home problem.</div>
   <aside class="notes">
-    <p>One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you, let us work it out together, in three questions.</p>
+    <p>One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you the whole design, we work out two of the pieces with you, and leave the full design as a take-home problem.</p>
   </aside>
 </section>
 
-<section class="slide light" id="q3" data-steps="2" data-section="4 · Q&amp;A" data-time="1.0" data-title="Question 1: which order is safe to replay?">
+<section class="slide light" id="q3" data-steps="2" data-section="4 · Q&amp;A" data-time="1.2" data-title="Question 1: which order survives the crash?">
   <div class="hd">
     <div class="eyebrow">Question 1</div>
-    <h2>Which order is safe to replay?</h2>
+    <h2>Which order survives the crash?</h2>
   </div>
-  <div class="abs qz-sub" style="left:120px;top:232px;width:1680px">Stage 1 makes <b>two writes</b> to the DB. It crashes <b>between them</b>, then runs the page again.</div>
-  <div class="abs" style="left:120px;top:320px;width:1680px;display:grid;grid-template-columns:1fr 1fr;gap:30px">
+  <div class="abs qz-sub" style="left:120px;top:232px;width:1680px">When Stage 1 finishes a page it makes <b>two writes</b> to the DB. The machine can <b>crash between them</b>.</div>
+  <div class="abs qz-remind" style="left:120px;top:296px;width:1680px"><small>Recovery rule, from part 2</small><span>After a restart, any page that is <b>not marked done</b> is picked up and run again.</span></div>
+  <div class="abs" style="left:120px;top:382px;width:1680px;display:grid;grid-template-columns:1fr 1fr;gap:30px">
     <div class="card qz-ord">
       <h4>Order A</h4>
-      <div class="qz-steps"><span>first: mark <b>Stage 1 done</b></span><u>⚡</u><span class="no">then: mark <b>Stage 2 ready</b></span></div>
-      <div class="qz-res bad" data-s="2"><b>Not safe ✕</b>Stage 1 says done, so it never runs again. Stage 2 never hears about the page.</div>
+      <div class="qz-steps"><span>first: mark <b>Stage 1 done</b></span><u><i>crash</i>⚡</u><span class="no">then: mark <b>Stage 2 ready</b></span></div>
+      <div class="qz-db" data-s="2"><small>DB after crash</small><span class="on">Stage 1 · done</span><span class="off">Stage 2 · nothing</span></div>
+      <div class="qz-res bad" data-s="2"><b>Page lost ✕</b>Stage 1 says done, so nobody picks the page up again. Stage 2 never hears about it.</div>
     </div>
     <div class="card qz-ord">
       <h4>Order B</h4>
-      <div class="qz-steps"><span>first: mark <b>Stage 2 ready</b></span><u>⚡</u><span class="no">then: mark <b>Stage 1 done</b></span></div>
-      <div class="qz-res good" data-s="2"><b>Idempotent ✓</b>Stage 1 is not done, so it runs again and marks Stage 2 ready again. Ready twice is still just ready.</div>
+      <div class="qz-steps"><span>first: mark <b>Stage 2 ready</b></span><u><i>crash</i>⚡</u><span class="no">then: mark <b>Stage 1 done</b></span></div>
+      <div class="qz-db" data-s="2"><small>DB after crash</small><span class="off">Stage 1 · not done</span><span class="on">Stage 2 · ready</span></div>
+      <div class="qz-res good" data-s="2"><b>Page survives ✓</b>Stage 1 runs the page again and marks Stage 2 ready again. Ready twice is still just ready.</div>
     </div>
   </div>
-  <div class="abs qz-q" data-s="1" data-h="2" style="left:120px;top:836px;width:1680px">Which order is <b>idempotent</b>: safe to run again after a crash? <b>Hands up for A, or for B.</b></div>
-  <div class="abs v4cap2" data-s="2" style="left:120px;top:836px;width:1680px;font-size:34px">Mark the next stage ready first and <span class="hi">yourself done last</span>; every write must be safe to repeat.</div>
+  <div class="abs qz-q" data-s="1" data-h="2" style="left:120px;top:924px;width:1680px">Which order survives the crash? <b>Hands up for A, or for B.</b></div>
+  <div class="abs v4cap2" data-s="2" style="left:120px;top:924px;width:1680px;font-size:34px">Hand the page on first, mark this stage done last; <span class="hi">every write must be safe to repeat</span>.</div>
   <aside class="notes">
-    <p>First, a small warm-up. Stage 1 finishes a page and has to make two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two, and then Stage 1 runs the page again.</p>
-    <p data-step="1">Which order is idempotent, meaning safe to run again after a crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.</p>
-    <p data-step="2">A is not safe: Stage 1 says done, so nobody runs the page again, but Stage 2 never hears about it, and the page is lost. B is idempotent: Stage 1 is not marked done, so it runs again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done in part two: hand it on first, mark yourself done last, and make every write safe to repeat.</p>
+    <p>A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two writes. Remember the recovery rule from part two: after a restart, any page that is not marked done is picked up and run again.</p>
+    <p data-step="1">So: which order survives the crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.</p>
+    <p data-step="2">Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. Same rule as saving before marking done: hand the page on first, mark yourself done last, and make every write safe to repeat.</p>
   </aside>
 </section>
 
-<section class="slide light" id="q1" data-steps="2" data-section="4 · Q&amp;A" data-time="1.3" data-title="Question 2: who starts the next box?">
+<section class="slide light" id="q1" data-steps="2" data-section="4 · Q&amp;A" data-time="1.3" data-title="Question 2: who decides that Grounded Q&amp;A can start?">
   <div class="hd">
     <div class="eyebrow">Question 2</div>
     <h2>Who decides that Grounded Q&amp;A can start?</h2>
@@ -2970,27 +2989,33 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
         <circle cx="830" cy="145" r="34" fill="#F28C28"/><text x="830" y="160" font-size="42" fill="#fff" text-anchor="middle" font-family="Sora" font-weight="700">?</text>
       </g>
     </svg>
-    <ul class="qz-facts">
-      <li>The two machines <b>never talk</b> to each other.</li>
-      <li>Any machine can <b>crash</b> at any moment.</li>
-      <li>Grounded Q&amp;A must start <b>exactly once</b>: not zero times (page lost), not twice (a duplicate).</li>
-    </ul>
+    <div class="qz-side">
+      <ul class="qz-facts">
+        <li>The two machines <b>never talk</b> to each other.</li>
+        <li>Any machine can <b>crash</b> at any moment.</li>
+        <li>Grounded Q&amp;A must start <b>exactly once</b>: not zero times (page lost), not twice (a duplicate).</li>
+      </ul>
+      <div class="qz-askw">
+        <div class="qz-ask" data-s="1" data-h="2">Which would you pick? <b>Hands up for A, B or C.</b></div>
+        <div class="qz-ask ok" data-s="2">Same rule as before: <b>the DB is the single source of truth</b>.</div>
+      </div>
+    </div>
   </div>
   <div class="abs qz-opts" data-s="1" style="left:120px;top:600px;width:1680px">
-    <div class="card qz-o bad"><i>A</i><h4>A new central tracking service</h4><p>a separate service remembers every page and tells boxes when to start</p><em data-s="2">If it crashes, everything it knew is gone. And it is one more thing to keep alive.</em></div>
+    <div class="card qz-o bad"><i>A</i><h4>A new central tracking service</h4><p>a separate service remembers every page and tells machines when to start</p><em data-s="2">It must keep that memory somewhere durable, which is a database. So this is C, plus one more process to keep alive.</em></div>
     <div class="card qz-o bad"><i>B</i><h4>The machines message each other</h4><p>“I’m done with page 4812” → “so am I, start it”</p><em data-s="2">A crash loses a message, or a retry repeats it: page lost, or done twice.</em></div>
     <div class="card qz-o good"><i>C</i><h4>Write it down in the database we already have</h4><p>each machine notes what it finished there; a small check reads it</p><em data-s="2">No new service: the database already holds every sample and survives crashes. ✓ This is what we do.</em></div>
   </div>
   <aside class="notes">
-    <p>Let us think this through together. Here is the situation. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&amp;A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&amp;A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?</p>
-    <p data-step="1">Here are three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Ask the room: which would you pick?</p>
-    <p data-step="2">A is the usual answer, but if that service crashes, everything it knew is gone, and it is one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Nothing important lives in any process.</p>
+    <p>Now a design question. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&amp;A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&amp;A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?</p>
+    <p data-step="1">Three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Which would you pick? Hands up for A, B or C.</p>
+    <p data-step="2">A is the usual first answer, but that service has to keep its memory somewhere durable, and that somewhere is a database. So A is really C plus one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Same rule as before: the DB is the single source of truth, and nothing that matters lives in a process.</p>
   </aside>
 </section>
 
-<section class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.8" data-title="Question 3: over to you">
+<section class="slide light" id="q2" data-steps="1" data-section="4 · Q&amp;A" data-time="0.6" data-title="Take-home: how should the database coordinate the stages?">
   <div class="hd">
-    <div class="eyebrow">Question 3</div>
+    <div class="eyebrow">Take-home problem</div>
     <h2>How should the database coordinate the stages?</h2>
   </div>
   <div class="abs card qo-where" style="left:120px;top:250px;width:1680px">
@@ -3011,13 +3036,13 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     </svg>
   </div>
   <div class="abs qo-row" style="left:120px;top:590px;width:1680px">
-    <div class="card qo-c"><small>Where we landed</small><p>Use the database for coordination <b>across nodes and across stages</b>.</p></div>
-    <div class="card qo-c"><small>The hard part</small><p>Crashes at any moment, no messages between machines, every stage <b>exactly once</b>, still fast at 32 nodes.</p></div>
+    <div class="card qo-c"><small>What you know so far</small><p>Each machine writes what it finished into the database. Writes are ordered so they are <b>safe to repeat</b>.</p></div>
+    <div class="card qo-c"><small>What the design must handle</small><p>A crash at any moment, no messages between machines, every stage <b>exactly once</b>, still fast at 32 nodes.</p></div>
   </div>
-  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> The full design is a talk of its own. <span class="hi">Send us how you would solve it.</span></div>
+  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> <span class="hi">Send us how you would solve it; the form is on the next slide.</span></div>
   <aside class="notes">
-    <p>So that is where we landed: the database we already have does the coordination, across nodes and across stages. Machine 3 and machine 7 each write down what they finished, and from that the database has to make Grounded Q&amp;A start exactly once. How exactly to do that, so it survives a crash at any moment, needs no messages between machines, and stays fast at 32 nodes, is a talk of its own.</p>
-    <p data-step="1">So instead of going into it, we will hand it to you: the form is on the next slide. Send us how you would solve it. We will compare your ideas with what we built, and we are happy to talk through it afterwards.</p>
+    <p>So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&amp;A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.</p>
+    <p data-step="1">So we leave it with you as a take-home problem. Send us how you would solve it; the form is on the next slide. We will compare your ideas with what we built, and we are happy to talk through it afterwards.</p>
   </aside>
 </section>
 
