@@ -28,22 +28,24 @@ Generated from the deck. Keys: → next · ← back · F fullscreen · O overvie
 | 22 | One pipeline, a different route for every page | 1.2 | 21.3 |
 | 23 | The whole pipeline is a graph | 2 | 23.3 |
 | 24 | A dynamic DAG fits our workloads | 0.8 | 24.1 |
-| 25 | From idea to a running pipeline | 0.8 | 24.9 |
-| 26 | All stages at once | 1.2 | 26.1 |
-| 27 | What Patram-Ingest supports | 0.6 | 26.7 |
-| 28 | Scaling compared with DBOS and Temporal | 1.5 | 28.2 |
-| 29 | Key takeaways | 1 | 29.2 |
-| 30 | The DB is the single source of truth | 0.8 | 30.0 |
-| 31 | Where Patram-Ingest sits in the stack | 1.2 | 31.2 |
-| 32 | Thank you | 0.6 | 31.8 |
-| 33 | Part five · Q&amp;A *(optional)* | 0.2 | - |
-| 34 | The remaining question *(optional)* | 0.4 | - |
-| 35 | Question 1: which order survives the crash? *(optional)* | 1.2 | - |
-| 36 | Question 2: who decides that Grounded Q&amp;A can start? *(optional)* | 1.3 | - |
-| 37 | Take-home: how should the database coordinate the stages? *(optional)* | 0.6 | - |
+| 25 | Stages need a shared record of each page | 0.7 | 24.8 |
+| 26 | The record is one switch per stage | 0.8 | 25.6 |
+| 27 | Two rows per page: Finished and Ready | 0.8 | 26.4 |
+| 28 | Following one page through the graph | 2.2 | 28.6 |
+| 29 | When the sweep lets a stage start | 1.1 | 29.7 |
+| 30 | Ready makes a stage start exactly once | 1 | 30.7 |
+| 31 | A crash between writes never loses a page | 1.2 | 31.9 |
+| 32 | From idea to a running pipeline | 0.8 | 32.7 |
+| 33 | All stages at once | 1.2 | 33.9 |
+| 34 | What Patram-Ingest supports | 0.6 | 34.5 |
+| 35 | Scaling compared with DBOS and Temporal | 1.5 | 36.0 |
+| 36 | Key takeaways | 1 | 37.0 |
+| 37 | The DB is the single source of truth | 0.8 | 37.8 |
+| 38 | Where Patram-Ingest sits in the stack | 1.2 | 39.0 |
+| 39 | Thank you | 0.6 | 39.6 |
 
 
-**Core path ≈ 31.8 min.** Optional slides add the remainder; press **K** to skip them all.
+**Core path ≈ 39.6 min.** Optional slides add the remainder; press **K** to skip them all.
 
 ## 1. Patram-Ingest: durable execution around vLLM
 *Context · ~0.3 min · no steps*
@@ -273,7 +275,78 @@ Look at the pipelines we build. Every one of them has three things. It is a grap
 
 **[step 1]** Put the three together and you get the conclusion: a dynamic directed acyclic graph fits almost every workload we have. Straight chains, branches by content, merges and early exits are all special cases of that one shape, so the engine only has to run one thing well.
 
-## 25. From idea to a running pipeline
+## 25. Stages need a shared record of each page
+*3 · Graphs of stages · ~0.7 min · reveal steps: 2*
+
+We now go one level deeper: how does the engine actually run a graph like the one we just saw, on many machines? Here is the difficulty. Every stage is its own process, often on a different machine, and they share no memory.
+
+**[step 1]** They also never send messages to each other. That is deliberate, it is the same rule as before: no coordinator process that can crash and take the run with it. But it means that when Text finishes a page on machine 3, nobody tells Grounded Q&A.
+
+**[step 2]** So the engine keeps one small record for every page that is in flight, in the DB. Every stage reads it and writes to it. All the coordination between stages happens through this record. The next slides show what is in it. It is only two numbers.
+
+## 26. The record is one switch per stage
+*3 · Graphs of stages · ~0.8 min · reveal steps: 2*
+
+Every stage in a graph gets a position, like a seat number: Understand is seat 0, Text is seat 1, Layout seat 2, Grounded Q&A seat 3. For each page, the record has one switch per seat. A switch is a bit: it is either 0 or 1, off or on. At the start they are all off.
+
+**[step 1]** A switch that is on means yes for that stage. This row says: yes for Understand, yes for Text, no for Layout, no for Grounded Q&A. We will say what the question is on the next slide.
+
+**[step 2]** The useful trick is that a row of switches can be stored as one ordinary number. Give each seat a value: seat 0 is worth 1, seat 1 is worth 2, seat 2 is worth 4, seat 3 is worth 8. Add up the switches that are on, 1 plus 2, and this row is the number 3. That is all a bit mask is: a row of switches kept as a single integer. It is tiny, it is cheap for the DB to store, and the DB can update one switch without touching the others.
+
+## 27. Two rows per page: Finished and Ready
+*3 · Graphs of stages · ~0.8 min · reveal steps: 2*
+
+Each page gets two such rows, so two numbers. The first is Finished: which stages have finished this page. It starts empty and fills up as the page moves through the graph.
+
+**[step 1]** The second is Ready: which stages are allowed to start on this page, meaning the page is now waiting in that stage's queue. These two rows are the entire record.
+
+**[step 2]** In the DB it is one row per page: the page, the Finished number and the Ready number. A new page starts with Finished at 0, nothing done, and Ready at 1: only seat 0, Understand, may start. When a page has finished its last stage the row is deleted, so the record only ever holds pages that are in flight, not the whole dataset.
+
+## 28. Following one page through the graph
+*3 · Graphs of stages · ~2.2 min · reveal steps: 5*
+
+Let us follow one page through a small graph, with the record on the right. Understand feeds Text and Layout, and Grounded Q&A needs both of them. Text runs on node 3, Layout on node 7, different machines.
+
+One: a page arrives. Finished is 0, nothing is done. Ready is 1, only Understand.
+
+**[step 1]** Two: Understand finishes. Its routing function says this is a text page, so the page goes to both Text and Layout at once. The engine switches on Ready for those two stages, and last of all switches on Understand's own Finished. Watch the numbers: Finished becomes 1, Ready becomes 7, which is 1 plus 2 plus 4. Routing is immediate: it depends on what the page contains, and the stage hands the page straight on.
+
+**[step 2]** Three: Text finishes on node 3. Finished is now 3. Grounded Q&A needs both Text and Layout. Layout is not finished, so nothing starts. There is no message, nobody waits on a phone call. The record just says what is done.
+
+**[step 3]** Four: minutes later, Layout finishes on node 7. Finished is now 7. Both inputs of Grounded Q&A are finished, but nobody has told Grounded Q&A, because stages never talk to each other.
+
+**[step 4]** Five: that is the job of the sweep, a single background process. Every few seconds, five by default, it reads the records, asks for each waiting stage whether its inputs are finished, sees that they are, and switches on Ready for Grounded Q&A. The next slide shows exactly how it decides. Because it only reads the record, it does not matter which machine ran which input, or which finished first.
+
+**[step 5]** Six: Grounded Q&A runs and finishes. It is the last stage, so the page is complete and its row is deleted.
+
+## 29. When the sweep lets a stage start
+*3 · Graphs of stages · ~1.1 min · reveal steps: 2*
+
+Here is exactly what the sweep checks. For every stage that has several inputs, the engine keeps a row of the inputs it needs. Grounded Q&A needs Text and Layout: seats 1 and 2, which is the number 6. The sweep takes the page's Finished row and keeps only the switches that are also needed. In the code that is a bitwise AND: Finished AND Needs. Here the page has Understand and Text finished, number 3. Keeping only the needed switches leaves Text alone. The third row does not match the first, so Layout is missing and the stage waits.
+
+**[step 1]** After Layout finishes, Finished is 7. Keeping only the needed switches now leaves Text and Layout, which matches the needs row exactly. Every input is finished, so the stage may start. It does not matter which machine ran which input, or in what order.
+
+**[step 2]** The same row of switches handles the other rule, either one is enough. Write a question takes a table or a chart. A page is never both, so waiting for both would wait forever. For this kind of stage the sweep asks a weaker question: is at least one needed switch on? The chart finished, so yes, start now. Same record, same check, a slightly different question. This is why one mechanism covers every graph shape.
+
+## 30. Ready makes a stage start exactly once
+*3 · Graphs of stages · ~1 min · reveal steps: 2*
+
+The sweep does not run once, it runs again and again, every few seconds. So we need to be sure it starts a stage once, not at every pass. Sweep one: Text is finished, Layout is not, so the stage waits. Sweep two: both finished and Ready is off, so the sweep switches Ready on and the page goes into the stage's queue. Exactly once so far.
+
+**[step 1]** Sweep three, four, five: the inputs are still finished, they will always be, so the check still matches. But Ready is already on. The sweep only starts stages whose Ready switch is off, so it skips this one.
+
+**[step 2]** Without the Ready switch, every sweep would match and the stage would start again and again, producing duplicates of the same page, which we would pay for in GPU time and train on. So the two rows divide the job: Finished says what the inputs have done. Ready remembers what has already been started. That is why a stage starts exactly once, whichever order its inputs finish in.
+
+## 31. A crash between writes never loses a page
+*3 · Graphs of stages · ~1.2 min · reveal steps: 2*
+
+One more thing we need: crashes. When a stage finishes a page it makes three writes to the DB. It puts the page in the next stage's queue. It switches on Ready for that stage. And it switches on its own Finished. A machine can die between any two of them, so which order do we use? On the right is the reverse order, for comparison.
+
+**[step 1]** Suppose the machine crashes in the middle. In our order, on the left, the page has been handed on but the stage's own Finished is still off. Remember the recovery rule from part two: anything not marked finished is picked up and run again. So after the restart the page is run again and the three writes repeat. That is fine because every write is safe to repeat: the queue row already exists, the Ready switch is already on, and switching on a switch twice changes nothing. On the right, Finished is switched on first. Crash straight after, and the record says this stage is finished, so nobody runs it again, while the next stage was never given the page. The page is lost. The same ordering applies when the sweep starts a stage: queue first, then Ready, so a crash between them just means the next sweep does it again.
+
+**[step 2]** So the rule is: hand the page on first, mark yourself finished last, and make every write safe to repeat. It is the same save-first rule from part two, applied between stages.
+
+## 32. From idea to a running pipeline
 *3 · Graphs of stages · ~0.8 min · reveal steps: 3*
 
 So a DAG can describe almost any workload we have. And once you define it, running it is very simple. Two parts, then one command.
@@ -284,7 +357,7 @@ So a DAG can describe almost any workload we have. And once you define it, runni
 
 **[step 3]** And you run one command on every machine. After anything goes wrong, you run the same command again. There is no step for recovery, retries, coordination or scaling, because those were designed once and every pipeline shares them. The same engine has run transcription, HTML conversion, chart reading, question answering and dozens of other pipelines. And once the DAG is defined, the engine runs all of its stages in parallel. Here is what that buys.
 
-## 26. All stages at once
+## 33. All stages at once
 *3 · Graphs of stages · ~1.2 min · no steps*
 
 Once the DAG is defined, the engine runs all of its stages at the same time, automatically. Why does that matter? The obvious way is one stage at a time: run stage one over everything, wait, check, then launch stage two. It is simple and it is how most groups start. We did too. This is the same work on the same hardware, twice. Press play, or drag the slider to stop both runs anywhere.
@@ -293,7 +366,7 @@ Watch the big number on each side. On top, stage by stage: nothing usable exists
 
 If asked for a measured number: in the paper, a four-stage pipeline over 10 to the 5 pages on 16 emulated nodes produced its first thousand usable records after 10.7 minutes, against 81 minutes stage by stage. The counters on the slide are a simulation of a million examples.
 
-## 27. What Patram-Ingest supports
+## 34. What Patram-Ingest supports
 *3 · Graphs of stages · ~0.6 min · no steps*
 
 Putting it together, this is what the graph layer of Patram-Ingest supports; the cards appear on their own. A graph is a list of stage declarations: each stage names its upstream stages, a policy for waiting on them, and optionally a routing function. Stage authors never see the graph.
@@ -306,7 +379,7 @@ Failure propagation: if a stage fails a sample, every later stage marks it upstr
 
 Validation at start-up: acyclicity, reachability, routing-target isolation and the split between the two activation paths. And every output records the stages its sample passed through, so any record can be traced through the graph. Bit positions are stored in 64-bit integers; a wider bit string would serve any number of stages. Graphs are acyclic.
 
-## 28. Scaling compared with DBOS and Temporal
+## 35. Scaling compared with DBOS and Temporal
 *3 · Graphs of stages · ~1.5 min · no steps*
 
 Very few alternatives come close to these features. Among the 13 systems in our comparison, only DBOS and Temporal do: they already survive crashes, route per sample and run across machines. So we ran the same pipeline on both, on the same DB server and the same emulated model servers. We made the servers answer in 20 milliseconds, so inference could not be the limit, and added nodes until throughput stopped growing.
@@ -317,7 +390,7 @@ Ours kept growing with every added node, to 8,571 pages per second at 32 nodes, 
 
 And the overhead stays tiny as nodes are added. Against a bare client that reads prompts from a file and writes answers to local disk, with no database at all, we reach 98.9 to 99.7 percent of its throughput at every scale from 1 to 48 nodes. Throughput grew from 3.88 requests per second on one node to 183.6 on 48, which is 98.6 percent of linear. Caveat: this is one deployment of each system, each configuration ran once, and the servers were emulated.
 
-## 29. Key takeaways
+## 36. Key takeaways
 *Wrap-up · ~1 min · no steps*
 
 If you take six things away from this talk, these are the lessons we learned the hard way.
@@ -334,14 +407,14 @@ Five: match the parallelism to the job. Processes for computing, threads for wai
 
 Six: keep the database light. It holds only state; the results go to files on each node, written in groups, off the GPU's path. That is why the system keeps scaling as nodes are added.
 
-## 30. The DB is the single source of truth
+## 37. The DB is the single source of truth
 *Wrap-up · ~0.8 min · no steps*
 
 If you remember one thing from this talk, make it this. Nowhere in the whole system, in the stage workers, the worker pools, the supervisors, the watchers, the model servers or the nodes, do we keep any state. Every one of them is stateless. The entire state of the run, what is waiting, claimed, done or failed, lives in one place: the DB. It is the single source of truth. Results go to files, and the DB says which ones count.
 
 That one decision is where the distributed-system guarantees come from. Any component can crash and restart at any moment, like the stage worker here, and we survive it, because it held nothing: it simply reads the DB and carries on. Nodes can join or leave at any time, because there is nothing to hand over. And recovery is just a query on the DB, not a procedure someone has to run.
 
-## 31. Where Patram-Ingest sits in the stack
+## 38. Where Patram-Ingest sits in the stack
 *Wrap-up · ~1.2 min · reveal steps: 2*
 
 To step back: Patram-Ingest, everything we talked about today, is just one part of the infrastructure we have.
@@ -350,44 +423,9 @@ To step back: Patram-Ingest, everything we talked about today, is just one part 
 
 **[step 2]** And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks. These are internal models as of now; we plan to release the Patram series soon, and the sign-up form is on the next slide.
 
-## 32. Thank you
+## 39. Thank you
 *4 · Thank you · ~0.6 min · no steps*
 
-To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. There are two codes on the right: the first is the sign-up form for the Patram series, so we can let you know when it is released, and the second is our hiring form. Scan whichever is useful. If there is time, we have two questions for the room and one problem to take home, and we are happy to take yours.
+To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. There are two codes on the right: the first is the sign-up form for the Patram series, so we can let you know when it is released, and the second is our hiring form. Scan whichever is useful. We are happy to take your questions.
 
 **Likely questions.** Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.
-
-## 33. Part five · Q&amp;A (optional)
-*5 · Q&amp;A · ~0.2 min · no steps*
-
-Part five is over to you. We have two questions for the room, one to take home, and then we are happy to take yours.
-
-## 34. The remaining question (optional)
-*5 · Q&amp;A · ~0.4 min · no steps*
-
-One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you the whole design, we work out two of the pieces with you, and leave the full design as a take-home problem.
-
-## 35. Question 1: which order survives the crash? (optional)
-*5 · Q&amp;A · ~1.2 min · reveal steps: 2*
-
-A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two writes. Remember the recovery rule from part two: after a restart, any page that is not marked done is picked up and run again.
-
-**[step 1]** So: which order survives the crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.
-
-**[step 2]** Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. So the rule is: hand the page on first, mark yourself done last, and make every write safe to repeat.
-
-## 36. Question 2: who decides that Grounded Q&amp;A can start? (optional)
-*5 · Q&amp;A · ~1.3 min · reveal steps: 2*
-
-Now a design question. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?
-
-**[step 1]** Three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Which would you pick? Hands up for A, B or C.
-
-**[step 2]** A is the usual first answer, but that service has to keep its memory somewhere durable, and that somewhere is a database. So A is really C plus one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Same rule as before: the DB is the single source of truth, and nothing that matters lives in a process.
-
-## 37. Take-home: how should the database coordinate the stages? (optional)
-*5 · Q&amp;A · ~0.6 min · reveal steps: 1*
-
-So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.
-
-**[step 1]** So we leave it with you as a take-home problem. Tell us how you would solve it, here or afterwards. We will compare your ideas with what we built, and we are happy to talk it through.

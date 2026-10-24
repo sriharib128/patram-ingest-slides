@@ -1,0 +1,19 @@
+<section class="slide light" id="bmrule" data-steps="2" data-section="3 · Graphs of stages" data-time="1.1" data-title="When the sweep lets a stage start">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>When the sweep lets a stage start</h2>
+  </div>
+  <div class="abs card bm-pad" style="left:120px;top:236px;width:1680px;height:560px">
+    <div id="bmr-grid"></div>
+    <div class="bm-v wait" id="bmr-v"></div>
+    <div id="bmr-rule"></div>
+  </div>
+  <div class="abs bm-cap v" data-h="1" style="left:120px;top:830px;width:1680px"><b>The sweep’s check.</b> Each waiting stage has a row of the inputs it needs. Keep only those switches that are also on in Finished (third row). Here Layout is missing, so Grounded Q&amp;A waits.</div>
+  <div class="abs bm-cap g" data-s="1" data-h="2" style="left:120px;top:830px;width:1680px"><b>Layout has finished.</b> Every needed switch is now on in Finished, so the third row matches the first. The stage may start.</div>
+  <div class="abs bm-cap b" data-s="2" style="left:120px;top:830px;width:1680px"><b>Either one is enough.</b> Write a question takes a table or a chart, never both. One needed switch on is enough, so it starts as soon as the chart is finished.</div>
+  <aside class="notes">
+    <p>Here is exactly what the sweep checks. For every stage that has several inputs, the engine keeps a row of the inputs it needs. Grounded Q&amp;A needs Text and Layout: seats 1 and 2, which is the number 6. The sweep takes the page's Finished row and keeps only the switches that are also needed. In the code that is a bitwise AND: Finished AND Needs. Here the page has Understand and Text finished, number 3. Keeping only the needed switches leaves Text alone. The third row does not match the first, so Layout is missing and the stage waits.</p>
+    <p data-step="1">After Layout finishes, Finished is 7. Keeping only the needed switches now leaves Text and Layout, which matches the needs row exactly. Every input is finished, so the stage may start. It does not matter which machine ran which input, or in what order.</p>
+    <p data-step="2">The same row of switches handles the other rule, either one is enough. Write a question takes a table or a chart. A page is never both, so waiting for both would wait forever. For this kind of stage the sweep asks a weaker question: is at least one needed switch on? The chart finished, so yes, start now. Same record, same check, a slightly different question. This is why one mechanism covers every graph shape.</p>
+  </aside>
+</section>

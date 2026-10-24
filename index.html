@@ -1900,6 +1900,114 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 #brandtl{position:absolute;left:56px;top:24px;z-index:40;pointer-events:none;transition:opacity .3s}
 #brandtl.hide{opacity:0}
 #brandtl img{display:block;width:56px;height:56px;border-radius:12px;background:#fff;padding:5px;box-sizing:border-box;box-shadow:0 0 0 1px rgba(14,26,58,.1)}
+
+/* ── bit-mask explainer (ids bmwhy, bmbits, bmtwo, bmwalk, bmrule, bmonce, bmcrash) ── */
+.bm-cap{padding:20px 30px;border-radius:18px;background:var(--card);border:1px solid var(--line);border-left:8px solid var(--ink);font-size:30px;line-height:1.38;color:var(--body)}
+.bm-cap b{font-family:Sora,sans-serif;color:var(--ink);margin-right:8px}
+.bm-cap.o{border-left-color:var(--orange)}.bm-cap.g{border-left-color:var(--green)}.bm-cap.b{border-left-color:var(--blue-mid)}.bm-cap.v{border-left-color:var(--violet)}.bm-cap.r{border-left-color:var(--red)}
+.bm-pad{padding:30px 34px}
+.bm-pad.cc,#bmwalk #bmw-card,#bmbits .bm-pad,#bmrule .bm-pad{display:flex;flex-direction:column;justify-content:center;align-items:center}
+
+/* switch grid */
+.bm-g{display:grid;grid-template-columns:var(--bm-lab,210px) repeat(4,var(--bm-cw,108px)) var(--bm-num,120px);column-gap:12px;row-gap:14px;align-items:center;width:max-content}
+.bm-g .row{display:contents}
+.bm-g .row>*{transition:opacity .5s ease}
+.bm-g .row.off>*{opacity:0}
+.bm-g .h{text-align:center;font-family:Sora,sans-serif;font-weight:600;font-size:21px;line-height:1.15;color:var(--ink);min-height:54px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.bm-g .h small{font:600 17px 'IBM Plex Mono',monospace;color:var(--muted);margin-top:6px}
+.bm-g .l{font-family:Sora,sans-serif;font-weight:600;font-size:27px;color:var(--ink);line-height:1.1}
+.bm-g .l small{display:block;font:500 18px 'IBM Plex Sans',sans-serif;color:var(--muted);margin-top:6px;line-height:1.25}
+.bm-g i{height:92px;border-radius:16px;border:3px solid #C3CEE5;background:#fff;display:grid;place-items:center;font:700 44px 'IBM Plex Mono',monospace;font-style:normal;color:#B7C2DA;transition:background .4s,border-color .4s,color .4s}
+.bm-g .f i.on{background:var(--green-pale);border-color:var(--green);color:var(--green)}
+.bm-g .r i.on{background:#FFF1DC;border-color:var(--orange);color:var(--orange-deep)}
+.bm-g .n i.on{background:var(--blue-pale);border-color:var(--blue-mid);color:var(--blue)}
+.bm-g .m i.on{background:var(--violet-pale);border-color:var(--violet);color:var(--violet)}
+.bm-g .m i.miss{border-color:var(--red);border-style:dashed;background:var(--red-pale);color:var(--red)}
+.bm-g .wt i{height:48px;border:0;background:transparent;font-size:30px;color:var(--muted)}
+.bm-g .num{font:500 34px 'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap}
+.bm-g .num b{color:var(--ink);font-weight:700}
+.bm-g i.chg{animation:bmchg .9s ease}
+@keyframes bmchg{0%{transform:scale(1)}35%{transform:scale(1.14);box-shadow:0 0 0 8px rgba(242,140,40,.28)}100%{transform:scale(1)}}
+
+/* slide 1: separate machines */
+.bm-dia{width:100%;height:100%;display:block}
+
+/* slide 2 */
+#bmbits .bm-g{margin:0 auto;--bm-cw:150px;--bm-lab:230px;--bm-num:200px}
+#bmbits .bm-g .n i.sum{box-shadow:0 0 0 6px rgba(42,99,201,.16)}
+#bmb-add{margin-top:34px;text-align:center;font:600 34px 'IBM Plex Mono',monospace;color:var(--ink);opacity:0;transform:translateY(14px);transition:opacity .6s .15s,transform .6s .15s var(--ease)}
+#bmb-add.on{opacity:1;transform:none}
+#bmb-add span{color:var(--blue)}#bmb-add em{font-style:normal;color:var(--muted);font:500 26px 'IBM Plex Sans',sans-serif;margin-left:18px}
+
+/* slide 3 */
+.bm-rec{display:grid;grid-template-columns:auto 1fr;gap:6px 24px;margin-top:6px}
+.bm-rec h4{grid-column:1/-1;font:600 21px 'IBM Plex Sans',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.bm-rec .t{display:grid;grid-template-columns:150px 150px 150px;border:2px solid var(--line);border-radius:14px;overflow:hidden;font-family:'IBM Plex Mono',monospace}
+.bm-rec .t span{padding:10px 18px;font-size:26px;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+.bm-rec .t span:nth-child(3n){border-right:0}.bm-rec .t span:nth-last-child(-n+3){border-bottom:0}
+.bm-rec .t .th{background:#F4F6FA;font-size:19px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;font-family:'IBM Plex Sans',sans-serif;font-weight:600}
+.bm-rec .t .vf{color:var(--green);font-weight:700}.bm-rec .t .vr{color:var(--orange-deep);font-weight:700}
+
+/* slide 4: walk */
+.bm-nd rect{fill:#fff;stroke:#C3CEE5;stroke-width:3;transition:fill .5s,stroke .5s}
+.bm-nd text{font-family:Sora,sans-serif;font-weight:600;font-size:25px;fill:var(--ink);text-anchor:middle}
+.bm-nd.rdy rect{fill:#FFF1DC;stroke:var(--orange);stroke-width:5}
+.bm-nd.dn rect{fill:var(--green-pale);stroke:var(--green);stroke-width:4}
+.bm-wh{font:600 20px 'IBM Plex Mono',monospace;fill:var(--muted);text-anchor:middle}
+.bm-both{font:700 18px 'IBM Plex Mono',monospace;fill:var(--violet);text-anchor:middle;letter-spacing:1px}
+.bm-lg.rdy{fill:#FFF1DC;stroke:var(--orange);stroke-width:3}.bm-lg.dn{fill:var(--green-pale);stroke:var(--green);stroke-width:3}
+.bm-lgt{font:500 20px 'IBM Plex Sans',sans-serif;fill:var(--muted)}
+#bmw-rec{position:relative;transition:opacity .6s,filter .6s}
+#bmw-rec.gone{opacity:.25;filter:grayscale(1)}
+#bmw-gone{position:absolute;left:0;right:0;bottom:36px;text-align:center;font:600 28px Sora,sans-serif;color:var(--red);opacity:0;transition:opacity .6s .2s}
+#bmw-gone.on{opacity:1}
+#bmw-key{margin-top:26px;font-size:23px;line-height:1.4;color:var(--body)}
+#bmw-key b{font-family:Sora,sans-serif;color:var(--ink)}
+
+/* slide 5: the sweep's check */
+#bmrule .bm-g{--bm-cw:150px;--bm-lab:270px;--bm-num:150px;margin:0 auto}
+.bm-v{margin:30px auto 0;width:max-content;max-width:100%;padding:14px 34px;border-radius:999px;font:600 30px Sora,sans-serif;transition:background .4s,color .4s}
+.bm-v.wait{background:var(--red-pale);color:var(--red)}.bm-v.go{background:var(--green-pale);color:var(--green)}
+#bmr-rule{margin-top:18px;text-align:center;font-size:24px;color:var(--muted)}
+
+/* slide 6: exactly once */
+.bm-ps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.bm-p{padding:26px 26px 28px;display:flex;flex-direction:column;gap:14px;min-height:440px}
+.bm-p h4{font:600 20px 'IBM Plex Sans',sans-serif;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
+.bm-p .q{font-size:23px;color:var(--body);line-height:1.3}
+.bm-p .q b{display:block;font:600 21px Sora,sans-serif;color:var(--ink);margin-bottom:6px}
+.bm-p .in{display:flex;gap:10px}
+.bm-p .in span{flex:1;padding:10px 6px;border-radius:12px;border:2px solid var(--line);text-align:center;font:600 21px Sora,sans-serif}
+.bm-p .in span.y{background:var(--green-pale);border-color:var(--green);color:var(--green)}
+.bm-p .in span.n{background:#fff;color:#8795B4;border-style:dashed}
+.bm-p .rd{display:flex;align-items:center;gap:14px}
+.bm-p .rd i{width:64px;height:64px;border-radius:14px;border:3px solid #C3CEE5;background:#fff;display:grid;place-items:center;font:700 32px 'IBM Plex Mono',monospace;font-style:normal;color:#B7C2DA;flex:none}
+.bm-p .rd i.on{background:#FFF1DC;border-color:var(--orange);color:var(--orange-deep)}
+.bm-p .rd span{font-size:22px;color:var(--body);line-height:1.25}
+.bm-p .act{margin-top:auto;padding:12px 16px;border-radius:14px;font:600 24px Sora,sans-serif;text-align:center}
+.bm-p .act.w{background:#F0F3F9;color:var(--muted)}.bm-p .act.go{background:var(--green);color:#fff}.bm-p .act.sk{background:#F0F3F9;color:var(--muted)}
+.bm-without{margin-top:26px;display:flex;align-items:center;gap:20px;padding:18px 28px;border-radius:18px;background:var(--red-pale);border:1px solid #F0B9B4;font-size:28px;color:var(--ink)}
+.bm-without b{font-family:Sora,sans-serif;color:var(--red)}
+.bm-without .rp{display:flex;gap:10px;margin-left:auto}
+.bm-without .rp i{font:600 22px 'IBM Plex Mono',monospace;font-style:normal;padding:6px 14px;border-radius:10px;background:#fff;border:2px solid var(--red);color:var(--red)}
+
+/* slide 7: order of writes */
+.bm-ord{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.bm-o{padding:24px 30px;display:flex;flex-direction:column;gap:12px}
+.bm-o h3{font-size:30px}
+.bm-o h3 small{display:block;font:500 22px 'IBM Plex Sans',sans-serif;color:var(--muted);margin-top:4px}
+.bm-o ol{list-style:none;display:flex;flex-direction:column;gap:12px}
+.bm-o li{display:flex;align-items:center;gap:16px;padding:11px 18px;border-radius:14px;background:#F4F6FA;border:2px solid var(--line);font-size:24px;color:var(--ink);transition:opacity .5s}
+.bm-o li i{flex:none;width:40px;height:40px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:700 22px 'IBM Plex Mono',monospace;font-style:normal}
+.bm-o li.fin{border-color:var(--green);background:var(--green-pale)}
+.bm-o li.fin i{background:var(--green)}
+#bmcrash:not([data-st="0"]) .bm-o li.after{opacity:.32}
+.bm-o li.bolt{background:none;border:0;padding:0;gap:0;justify-content:center;font:700 24px 'IBM Plex Mono',monospace;color:var(--red);margin:-2px 0}
+.bm-o li.bolt::before,.bm-o li.bolt::after{content:"";flex:1;height:0;border-top:3px dashed var(--red);opacity:.6;margin:0 14px}
+.bm-o .res{padding:14px 20px;border-radius:14px;font-size:23px;line-height:1.35}
+.bm-o .res b{display:block;font:600 26px Sora,sans-serif;margin-bottom:4px}
+.bm-o .res.ok{background:var(--green-pale);border:2px solid var(--green);color:var(--ink)}.bm-o .res.ok b{color:var(--green)}
+.bm-o .res.no{background:var(--red-pale);border:2px solid var(--red);color:var(--ink)}.bm-o .res.no b{color:var(--red)}
 </style></head>
 <body>
 <div id="stage-wrap"><div id="stage">
@@ -2705,6 +2813,208 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
+<section class="slide light" id="bmwhy" data-steps="2" data-section="3 · Graphs of stages" data-time="0.7" data-title="Stages need a shared record of each page">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Stages need a shared record of each page</h2>
+  </div>
+  <div class="abs card" style="left:120px;top:236px;width:1680px;height:520px">
+    <svg class="bm-dia" viewBox="0 -40 1600 540">
+      <g font-family="IBM Plex Sans" font-weight="600">
+        <g fill="#F4F6FA" stroke="#9DB3DC" stroke-width="2.5" stroke-dasharray="8 6"><rect x="40" y="24" width="440" height="170" rx="20"/><rect x="580" y="24" width="440" height="170" rx="20"/><rect x="1120" y="24" width="440" height="170" rx="20"/></g>
+        <g font-family="IBM Plex Mono" font-size="18" fill="#5B6785" letter-spacing="1.5"><text x="64" y="58">MACHINE 3</text><text x="604" y="58">MACHINE 7</text><text x="1144" y="58">MACHINE 9</text></g>
+        <g fill="#fff" stroke="#0E1A3A" stroke-width="3"><rect x="70" y="84" width="380" height="82" rx="16"/><rect x="610" y="84" width="380" height="82" rx="16"/><rect x="1150" y="84" width="380" height="82" rx="16"/></g>
+        <g font-size="28" fill="#0E1A3A" text-anchor="middle" font-family="Sora"><text x="260" y="135">Text</text><text x="800" y="135">Layout</text><text x="1340" y="135">Grounded Q&amp;A</text></g>
+        <g data-s="1" class="fade">
+          <g stroke="#C93C3C" stroke-width="4" stroke-dasharray="9 8"><path d="M486 109H574"/><path d="M1026 109H1114"/></g>
+          <g font-size="36" fill="#C93C3C" text-anchor="middle" font-family="Sora" font-weight="700"><text x="530" y="124">✕</text><text x="1070" y="124">✕</text></g>
+          <text x="800" y="-2" font-size="26" fill="#C93C3C" text-anchor="middle">Stages send no messages to each other</text>
+        </g>
+        <g data-s="2" class="fade">
+          <g fill="none" stroke="#2A63C9" stroke-width="4"><path d="M260 194C260 280 620 250 640 330"/><path d="M800 194V300"/><path d="M1340 194C1340 280 980 250 960 330"/></g>
+          <g fill="#2A63C9"><circle cx="260" cy="194" r="8"/><circle cx="800" cy="194" r="8"/><circle cx="1340" cy="194" r="8"/></g>
+          <path d="M560 340v110a240 38 0 0 0 480 0v-110" fill="#E4ECFA" stroke="#2A63C9" stroke-width="3.5"/><ellipse cx="800" cy="340" rx="240" ry="38" fill="#CBDAF3" stroke="#2A63C9" stroke-width="3.5"/>
+          <text x="800" y="408" font-size="32" fill="#0E1A3A" text-anchor="middle" font-family="Sora">The DB</text>
+          <text x="800" y="442" font-size="21" fill="#5B6785" text-anchor="middle" font-weight="500">one small record per page in flight</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:800px;width:1680px"><b>Separate programs.</b> Each stage runs as its own process, often on its own machine, and shares no memory with the others.</div>
+  <div class="abs bm-cap r" data-s="1" data-h="2" style="left:120px;top:800px;width:1680px"><b>No messages.</b> Stages also never talk to each other, so one stage cannot tell another that it has finished a page.</div>
+  <div class="abs bm-cap b" data-s="2" style="left:120px;top:800px;width:1680px"><b>One record per page.</b> The engine keeps it in the DB. Every stage reads it and writes to it, and that is how the graph is coordinated.</div>
+  <aside class="notes">
+    <p>We now go one level deeper: how does the engine actually run a graph like the one we just saw, on many machines? Here is the difficulty. Every stage is its own process, often on a different machine, and they share no memory.</p>
+    <p data-step="1">They also never send messages to each other. That is deliberate, it is the same rule as before: no coordinator process that can crash and take the run with it. But it means that when Text finishes a page on machine 3, nobody tells Grounded Q&amp;A.</p>
+    <p data-step="2">So the engine keeps one small record for every page that is in flight, in the DB. Every stage reads it and writes to it. All the coordination between stages happens through this record. The next slides show what is in it. It is only two numbers.</p>
+  </aside>
+</section>
+
+<section class="slide light" id="bmbits" data-steps="2" data-section="3 · Graphs of stages" data-time="0.8" data-title="The record is one switch per stage">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>The record is one switch per stage</h2>
+  </div>
+  <div class="abs card bm-pad" style="left:120px;top:236px;width:1680px;height:520px">
+    <div id="bmb-grid"></div>
+    <div id="bmb-add"><span>1</span> + <span>2</span> = <b>3</b><em>stored in the DB as the single number 3</em></div>
+  </div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:800px;width:1680px"><b>A seat number per stage.</b> Every stage in the graph has a seat: its position, counted from 0. The record has one switch for each seat. They all start off.</div>
+  <div class="abs bm-cap b" data-s="1" data-h="2" style="left:120px;top:800px;width:1680px"><b>A switch on means yes.</b> Here the answer is yes for Understand and Text, and no for Layout and Grounded Q&amp;A.</div>
+  <div class="abs bm-cap b" data-s="2" style="left:120px;top:800px;width:1680px"><b>A row of switches is one number.</b> Seat 0 is worth 1, seat 1 is worth 2, seat 2 is worth 4, and so on. Add up the switches that are on. This is called a bit mask.</div>
+  <aside class="notes">
+    <p>Every stage in a graph gets a position, like a seat number: Understand is seat 0, Text is seat 1, Layout seat 2, Grounded Q&amp;A seat 3. For each page, the record has one switch per seat. A switch is a bit: it is either 0 or 1, off or on. At the start they are all off.</p>
+    <p data-step="1">A switch that is on means yes for that stage. This row says: yes for Understand, yes for Text, no for Layout, no for Grounded Q&amp;A. We will say what the question is on the next slide.</p>
+    <p data-step="2">The useful trick is that a row of switches can be stored as one ordinary number. Give each seat a value: seat 0 is worth 1, seat 1 is worth 2, seat 2 is worth 4, seat 3 is worth 8. Add up the switches that are on, 1 plus 2, and this row is the number 3. That is all a bit mask is: a row of switches kept as a single integer. It is tiny, it is cheap for the DB to store, and the DB can update one switch without touching the others.</p>
+  </aside>
+</section>
+
+<section class="slide light" id="bmtwo" data-steps="2" data-section="3 · Graphs of stages" data-time="0.8" data-title="Two rows per page: Finished and Ready">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Two rows per page: Finished and Ready</h2>
+  </div>
+  <div class="abs card bm-pad cc" style="left:120px;top:236px;width:1000px;height:520px"><div id="bmt-grid"></div></div>
+  <div class="abs card bm-pad" data-s="2" style="left:1160px;top:236px;width:640px;height:520px">
+    <div class="bm-rec">
+      <h4>In the DB</h4>
+      <div class="t"><span class="th">page</span><span class="th">finished</span><span class="th">ready</span><span>4812</span><span class="vf" id="bmt-f">0</span><span class="vr" id="bmt-r">1</span></div>
+    </div>
+    <p style="margin-top:30px;font-size:24px;line-height:1.4;color:var(--body)">One row per page that is still in flight. Two numbers, no more.<br><br>Once a page has finished its last stage, its row is deleted, so the DB never holds the whole dataset.</p>
+  </div>
+  <div class="abs bm-cap g" data-h="1" style="left:120px;top:800px;width:1680px"><b>Finished.</b> Which stages have finished this page. It fills up as the page moves through the graph.</div>
+  <div class="abs bm-cap o" data-s="1" data-h="2" style="left:120px;top:800px;width:1680px"><b>Ready.</b> Which stages may start on this page: it is now waiting in their queue.</div>
+  <div class="abs bm-cap" data-s="2" style="left:120px;top:800px;width:1680px"><b>A new page</b> starts with nothing finished (0) and only Understand ready (1), because it is the first stage.</div>
+  <aside class="notes">
+    <p>Each page gets two such rows, so two numbers. The first is Finished: which stages have finished this page. It starts empty and fills up as the page moves through the graph.</p>
+    <p data-step="1">The second is Ready: which stages are allowed to start on this page, meaning the page is now waiting in that stage's queue. These two rows are the entire record.</p>
+    <p data-step="2">In the DB it is one row per page: the page, the Finished number and the Ready number. A new page starts with Finished at 0, nothing done, and Ready at 1: only seat 0, Understand, may start. When a page has finished its last stage the row is deleted, so the record only ever holds pages that are in flight, not the whole dataset.</p>
+  </aside>
+</section>
+
+<section class="slide light" id="bmwalk" data-steps="5" data-section="3 · Graphs of stages" data-time="2.2" data-title="Following one page through the graph">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Following one page through the graph</h2>
+  </div>
+  <div class="abs card bm-pad" style="left:120px;top:236px;width:760px;height:560px;padding:24px 20px"><div id="bmw-graph"></div></div>
+  <div class="abs card bm-pad" id="bmw-card" style="left:910px;top:236px;width:890px;height:560px">
+    <div id="bmw-rec"><div id="bmw-grid"></div>
+      <div id="bmw-key">The number is the row added up, with seats worth 1, 2, 4, 8. <b>Ready</b> stays on once switched on.</div></div>
+    <div id="bmw-gone">Last stage finished: the row is deleted</div>
+  </div>
+  <div class="abs bm-cap o" data-h="1" style="left:120px;top:830px;width:1680px"><b>1 · A page arrives.</b> Only Understand may start, so only its Ready switch is on.</div>
+  <div class="abs bm-cap o" data-s="1" data-h="2" style="left:120px;top:830px;width:1680px"><b>2 · Understand finishes.</b> Its routing function says this is a text page, so it goes to Text and Layout at once. Their Ready switches go on, then Understand’s Finished.</div>
+  <div class="abs bm-cap g" data-s="2" data-h="3" style="left:120px;top:830px;width:1680px"><b>3 · Text finishes</b>, on node 3. Grounded Q&amp;A needs both Text and Layout, and Layout is not finished, so it waits.</div>
+  <div class="abs bm-cap g" data-s="3" data-h="4" style="left:120px;top:830px;width:1680px"><b>4 · Layout finishes</b>, on node 7, some minutes later. Both inputs of Grounded Q&amp;A are now finished, but nobody has told it yet.</div>
+  <div class="abs bm-cap v" data-s="4" data-h="5" style="left:120px;top:830px;width:1680px"><b>5 · The sweep notices.</b> A background process reads the records every few seconds. It sees both inputs finished and switches Ready on for Grounded Q&amp;A.</div>
+  <div class="abs bm-cap" data-s="5" style="left:120px;top:830px;width:1680px"><b>6 · Grounded Q&amp;A finishes</b>, the last stage. The page is done, and its row is deleted from the DB.</div>
+  <aside class="notes">
+    <p>Let us follow one page through a small graph, with the record on the right. Understand feeds Text and Layout, and Grounded Q&amp;A needs both of them. Text runs on node 3, Layout on node 7, different machines.</p>
+    <p>One: a page arrives. Finished is 0, nothing is done. Ready is 1, only Understand.</p>
+    <p data-step="1">Two: Understand finishes. Its routing function says this is a text page, so the page goes to both Text and Layout at once. The engine switches on Ready for those two stages, and last of all switches on Understand's own Finished. Watch the numbers: Finished becomes 1, Ready becomes 7, which is 1 plus 2 plus 4. Routing is immediate: it depends on what the page contains, and the stage hands the page straight on.</p>
+    <p data-step="2">Three: Text finishes on node 3. Finished is now 3. Grounded Q&amp;A needs both Text and Layout. Layout is not finished, so nothing starts. There is no message, nobody waits on a phone call. The record just says what is done.</p>
+    <p data-step="3">Four: minutes later, Layout finishes on node 7. Finished is now 7. Both inputs of Grounded Q&amp;A are finished, but nobody has told Grounded Q&amp;A, because stages never talk to each other.</p>
+    <p data-step="4">Five: that is the job of the sweep, a single background process. Every few seconds, five by default, it reads the records, asks for each waiting stage whether its inputs are finished, sees that they are, and switches on Ready for Grounded Q&amp;A. The next slide shows exactly how it decides. Because it only reads the record, it does not matter which machine ran which input, or which finished first.</p>
+    <p data-step="5">Six: Grounded Q&amp;A runs and finishes. It is the last stage, so the page is complete and its row is deleted.</p>
+  </aside>
+</section>
+
+<section class="slide light" id="bmrule" data-steps="2" data-section="3 · Graphs of stages" data-time="1.1" data-title="When the sweep lets a stage start">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>When the sweep lets a stage start</h2>
+  </div>
+  <div class="abs card bm-pad" style="left:120px;top:236px;width:1680px;height:560px">
+    <div id="bmr-grid"></div>
+    <div class="bm-v wait" id="bmr-v"></div>
+    <div id="bmr-rule"></div>
+  </div>
+  <div class="abs bm-cap v" data-h="1" style="left:120px;top:830px;width:1680px"><b>The sweep’s check.</b> Each waiting stage has a row of the inputs it needs. Keep only those switches that are also on in Finished (third row). Here Layout is missing, so Grounded Q&amp;A waits.</div>
+  <div class="abs bm-cap g" data-s="1" data-h="2" style="left:120px;top:830px;width:1680px"><b>Layout has finished.</b> Every needed switch is now on in Finished, so the third row matches the first. The stage may start.</div>
+  <div class="abs bm-cap b" data-s="2" style="left:120px;top:830px;width:1680px"><b>Either one is enough.</b> Write a question takes a table or a chart, never both. One needed switch on is enough, so it starts as soon as the chart is finished.</div>
+  <aside class="notes">
+    <p>Here is exactly what the sweep checks. For every stage that has several inputs, the engine keeps a row of the inputs it needs. Grounded Q&amp;A needs Text and Layout: seats 1 and 2, which is the number 6. The sweep takes the page's Finished row and keeps only the switches that are also needed. In the code that is a bitwise AND: Finished AND Needs. Here the page has Understand and Text finished, number 3. Keeping only the needed switches leaves Text alone. The third row does not match the first, so Layout is missing and the stage waits.</p>
+    <p data-step="1">After Layout finishes, Finished is 7. Keeping only the needed switches now leaves Text and Layout, which matches the needs row exactly. Every input is finished, so the stage may start. It does not matter which machine ran which input, or in what order.</p>
+    <p data-step="2">The same row of switches handles the other rule, either one is enough. Write a question takes a table or a chart. A page is never both, so waiting for both would wait forever. For this kind of stage the sweep asks a weaker question: is at least one needed switch on? The chart finished, so yes, start now. Same record, same check, a slightly different question. This is why one mechanism covers every graph shape.</p>
+  </aside>
+</section>
+
+<section class="slide light" id="bmonce" data-steps="2" data-section="3 · Graphs of stages" data-time="1.0" data-title="Ready makes a stage start exactly once">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Ready makes a stage start exactly once</h2>
+  </div>
+  <div class="abs bm-ps" style="left:120px;top:236px;width:1680px">
+    <div class="card bm-p"><h4>Sweep 1</h4>
+      <div class="q"><b>Inputs finished?</b>Not all of them.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="n">Layout</span></div>
+      <div class="rd"><i>0</i><span>Ready for Grounded Q&amp;A</span></div>
+      <div class="act w">Wait</div></div>
+    <div class="card bm-p"><h4>Sweep 2</h4>
+      <div class="q"><b>Inputs finished?</b>Yes, both.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="y">Layout ✓</span></div>
+      <div class="rd"><i class="on">1</i><span>Ready is off, so switch it on</span></div>
+      <div class="act go">Start it</div></div>
+    <div class="card bm-p" data-s="1"><h4>Sweep 3</h4>
+      <div class="q"><b>Inputs finished?</b>Yes, both.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="y">Layout ✓</span></div>
+      <div class="rd"><i class="on">1</i><span>Ready is already on</span></div>
+      <div class="act sk">Skip</div></div>
+    <div class="card bm-p" data-s="1"><h4>Sweep 4, 5, 6 …</h4>
+      <div class="q"><b>Inputs finished?</b>Yes, both. This stays true.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="y">Layout ✓</span></div>
+      <div class="rd"><i class="on">1</i><span>Ready is already on</span></div>
+      <div class="act sk">Skip</div></div>
+  </div>
+  <div class="abs bm-without" data-s="2" style="left:120px;top:704px;width:1680px"><span><b>Without the Ready switch</b>, every sweep would match again:</span><span class="rp"><i>start</i><i>start</i><i>start</i><i>…</i></span></div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:830px;width:1680px"><b>The sweep runs again and again.</b> At sweep 2 both inputs are finished, so it switches Ready on and the stage starts.</div>
+  <div class="abs bm-cap g" data-s="1" data-h="2" style="left:120px;top:830px;width:1680px"><b>The inputs stay finished</b>, so every later sweep matches too. But Ready is already on, so the sweep skips the stage.</div>
+  <div class="abs bm-cap o" data-s="2" style="left:120px;top:830px;width:1680px"><b>Finished says the inputs are there. Ready remembers that the stage was started.</b> Together they give exactly once.</div>
+  <aside class="notes">
+    <p>The sweep does not run once, it runs again and again, every few seconds. So we need to be sure it starts a stage once, not at every pass. Sweep one: Text is finished, Layout is not, so the stage waits. Sweep two: both finished and Ready is off, so the sweep switches Ready on and the page goes into the stage's queue. Exactly once so far.</p>
+    <p data-step="1">Sweep three, four, five: the inputs are still finished, they will always be, so the check still matches. But Ready is already on. The sweep only starts stages whose Ready switch is off, so it skips this one.</p>
+    <p data-step="2">Without the Ready switch, every sweep would match and the stage would start again and again, producing duplicates of the same page, which we would pay for in GPU time and train on. So the two rows divide the job: Finished says what the inputs have done. Ready remembers what has already been started. That is why a stage starts exactly once, whichever order its inputs finish in.</p>
+  </aside>
+</section>
+
+<section class="slide light" id="bmcrash" data-steps="2" data-section="3 · Graphs of stages" data-time="1.2" data-title="A crash between writes never loses a page">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>A crash between writes never loses a page</h2>
+  </div>
+  <div class="abs bm-ord" style="left:120px;top:236px;width:1680px">
+    <div class="card bm-o">
+      <h3>Our order<small>when Understand finishes a page</small></h3>
+      <ol>
+        <li><i>1</i>Put the page in the next stage’s queue</li>
+        <li><i>2</i>Switch on Ready for that stage</li>
+        <li class="bolt" data-s="1">⚡ crash</li>
+        <li class="fin after"><i>3</i>Switch on its own Finished</li>
+      </ol>
+      <div class="res ok" data-s="1"><b>The page survives ✓</b>Finished is still off, so after the restart the page is run again. Repeating a write changes nothing: the queue row and the switch are already there.</div>
+    </div>
+    <div class="card bm-o">
+      <h3>The reverse order<small>shown for comparison</small></h3>
+      <ol>
+        <li class="fin"><i>1</i>Switch on its own Finished</li>
+        <li class="bolt" data-s="1">⚡ crash</li>
+        <li class="after"><i>2</i>Put the page in the next stage’s queue</li>
+        <li class="after"><i>3</i>Switch on Ready for that stage</li>
+      </ol>
+      <div class="res no" data-s="1"><b>The page is lost ✕</b>The record says Finished, so nobody runs the page again, and the next stage was never given it.</div>
+    </div>
+  </div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:850px;width:1680px"><b>Three writes to the DB</b> hand a page on. A machine can crash between any two of them, so the order matters.</div>
+  <div class="abs bm-cap r" data-s="1" data-h="2" style="left:120px;top:850px;width:1680px"><b>Crash in the middle.</b> Left: the page is handed on, and Finished is still off. Right: Finished is on, but the page was never handed on.</div>
+  <div class="abs bm-cap g" data-s="2" style="left:120px;top:850px;width:1680px"><b>Hand the page on first, mark yourself finished last</b>, and make every write safe to repeat.</div>
+  <aside class="notes">
+    <p>One more thing we need: crashes. When a stage finishes a page it makes three writes to the DB. It puts the page in the next stage's queue. It switches on Ready for that stage. And it switches on its own Finished. A machine can die between any two of them, so which order do we use? On the right is the reverse order, for comparison.</p>
+    <p data-step="1">Suppose the machine crashes in the middle. In our order, on the left, the page has been handed on but the stage's own Finished is still off. Remember the recovery rule from part two: anything not marked finished is picked up and run again. So after the restart the page is run again and the three writes repeat. That is fine because every write is safe to repeat: the queue row already exists, the Ready switch is already on, and switching on a switch twice changes nothing. On the right, Finished is switched on first. Crash straight after, and the record says this stage is finished, so nobody runs it again, while the next stage was never given the page. The page is lost. The same ordering applies when the sweep starts a stage: queue first, then Ready, so a crash between them just means the next sweep does it again.</p>
+    <p data-step="2">So the rule is: hand the page on first, mark yourself finished last, and make every write safe to repeat. It is the same save-first rule from part two, applied between stages.</p>
+  </aside>
+</section>
+
 <section class="slide light" id="author2" data-steps="3" data-section="3 · Graphs of stages" data-time="0.8" data-title="From idea to a running pipeline">
   <div class="hd">
     <div class="eyebrow">Writing a pipeline</div>
@@ -2913,145 +3223,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <img src="assets/bharatgen_logo_crop.png" style="height:66px" alt="BharatGen"><span style="width:2px;height:60px;background:#DCE2EE"></span><img src="assets/vllm_text_crop.png" style="height:50px" alt="vLLM">
   </div>
   <aside class="notes">
-    <p>To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. There are two codes on the right: the first is the sign-up form for the Patram series, so we can let you know when it is released, and the second is our hiring form. Scan whichever is useful. If there is time, we have two questions for the room and one problem to take home, and we are happy to take yours.</p>
+    <p>To bring it together: you describe the pipeline, and the engine keeps it busy, crash-safe and scalable, for weeks at a time, on a cluster where nodes die and GPUs come and go. Thank you. There are two codes on the right: the first is the sign-up form for the Patram series, so we can let you know when it is released, and the second is our hiring form. Scan whichever is useful. We are happy to take your questions.</p>
     <p><b>Likely questions.</b> Why not Kafka or Redis? Every extra component is a new way to fail, and the database costs a small fraction of runtime. What if the DB dies? Results on disk stay safe because saving comes first; with a managed high-availability DB a failover takes about 20 seconds and workers reconnect within a 30-second budget; if the database stays down longer the run aborts and nodes reclaim their rows at next start. Why not per-sample fsync? It is slow on a network filesystem, and the commit group bounds the redo. What about step-level durability? Use DBOS or Temporal for that; our bound is the commit group. Who decides to add nodes? Today a person or a script starts the program on a node; the run then uses it without any other change. A scheduler that decides on its own is the next step.</p>
-  </aside>
-</section>
-
-<section data-optional class="slide dark" id="sec5" data-section="5 · Q&amp;A" data-time="0.2" data-title="Part five · Q&amp;A">
-  <div class="dv-num">5</div>
-  <div class="dv-eb">Part five</div>
-  <div class="dv-h">Q&amp;A</div>
-  <div class="dv-line"></div>
-  <div class="dv-q">Two questions for the room, one to take home, then yours.</div>
-  <aside class="notes"><p>Part five is over to you. We have two questions for the room, one to take home, and then we are happy to take yours.</p></aside>
-</section>
-
-<section data-optional class="slide light" id="deep" data-steps="0" data-section="5 · Q&amp;A" data-time="0.4" data-title="The remaining question">
-  <div class="hd">
-    <div class="eyebrow">What we have not covered</div>
-    <h2>The remaining question</h2>
-  </div>
-  <div class="abs dp-q" style="left:120px;top:300px;width:1500px">How do we run <b>graphs across nodes</b>, with <b>every stage at once</b>, and still never lose or repeat a page?</div>
-  <div class="abs dp-row" style="left:120px;top:560px;width:1680px">
-    <div class="card dp-c"><i>1</i><b>Graphs across nodes</b><span>stages on different machines that never talk</span></div>
-    <div class="card dp-c"><i>2</i><b>Pipeline parallelism</b><span>every stage running at the same time</span></div>
-    <div class="card dp-c"><i>3</i><b>Distributed guarantees</b><span>exactly once, through any crash</span></div>
-  </div>
-  <div class="abs v4cap2" style="left:120px;top:850px;width:1680px;font-size:34px">We work out <span class="hi">two of the pieces</span> with you; the full design is a take-home problem.</div>
-  <aside class="notes">
-    <p>One question remains. How exactly do we run graphs across nodes, with every stage running at once, and still keep the distributed guarantees: never losing a page and never doing one twice, through any crash? Rather than show you the whole design, we work out two of the pieces with you, and leave the full design as a take-home problem.</p>
-  </aside>
-</section>
-
-<section data-optional class="slide light" id="q3" data-steps="2" data-section="5 · Q&amp;A" data-time="1.2" data-title="Question 1: which order survives the crash?">
-  <div class="hd">
-    <div class="eyebrow">Question 1</div>
-    <h2>Which order survives the crash?</h2>
-  </div>
-  <div class="abs qz-sub" style="left:120px;top:232px;width:1680px">When Stage 1 finishes a page it makes <b>two writes</b> to the DB. The machine can <b>crash between them</b>.</div>
-  <div class="abs qz-remind" style="left:120px;top:296px;width:1680px"><small>Recovery rule, from part 2</small><span>After a restart, any page that is <b>not marked done</b> is picked up and run again.</span></div>
-  <div class="abs" style="left:120px;top:382px;width:1680px;display:grid;grid-template-columns:1fr 1fr;gap:30px">
-    <div class="card qz-ord">
-      <h4>Order A</h4>
-      <div class="qz-steps"><span>first: mark <b>Stage 1 done</b></span><u><i>crash</i>⚡</u><span class="no">then: mark <b>Stage 2 ready</b></span></div>
-      <div class="qz-db" data-s="2"><small>DB after crash</small><span class="on">Stage 1 · done</span><span class="off">Stage 2 · nothing</span></div>
-      <div class="qz-res bad" data-s="2"><b>Page lost ✕</b>Stage 1 says done, so nobody picks the page up again. Stage 2 never hears about it.</div>
-    </div>
-    <div class="card qz-ord">
-      <h4>Order B</h4>
-      <div class="qz-steps"><span>first: mark <b>Stage 2 ready</b></span><u><i>crash</i>⚡</u><span class="no">then: mark <b>Stage 1 done</b></span></div>
-      <div class="qz-db" data-s="2"><small>DB after crash</small><span class="off">Stage 1 · not done</span><span class="on">Stage 2 · ready</span></div>
-      <div class="qz-res good" data-s="2"><b>Page survives ✓</b>Stage 1 runs the page again and marks Stage 2 ready again. Ready twice is still just ready.</div>
-    </div>
-  </div>
-  <div class="abs qz-q" data-s="1" data-h="2" style="left:120px;top:924px;width:1680px">Which order survives the crash? <b>Hands up for A, or for B.</b></div>
-  <div class="abs v4cap2" data-s="2" style="left:120px;top:924px;width:1680px;font-size:34px">Hand the page on first, mark this stage done last; <span class="hi">every write must be safe to repeat</span>.</div>
-  <aside class="notes">
-    <p>A small warm-up. When Stage 1 finishes a page it makes two writes to the DB: mark Stage 1 done, and mark Stage 2 ready. The machine can crash between the two writes. Remember the recovery rule from part two: after a restart, any page that is not marked done is picked up and run again.</p>
-    <p data-step="1">So: which order survives the crash? Hands up for A: mark Stage 1 done first. Hands up for B: mark Stage 2 ready first.</p>
-    <p data-step="2">Look at what the DB says after the crash. In A, Stage 1 is done and Stage 2 has nothing, so nobody picks the page up again, and Stage 2 never hears about it: the page is lost. In B, Stage 1 is not done and Stage 2 is ready, so Stage 1 runs the page again and marks Stage 2 ready again, and ready twice is still just ready. So the rule is: hand the page on first, mark yourself done last, and make every write safe to repeat.</p>
-  </aside>
-</section>
-
-<section data-optional class="slide light" id="q1" data-steps="2" data-section="5 · Q&amp;A" data-time="1.3" data-title="Question 2: who decides that Grounded Q&amp;A can start?">
-  <div class="hd">
-    <div class="eyebrow">Question 2</div>
-    <h2>Who decides that Grounded Q&amp;A can start?</h2>
-  </div>
-  <div class="abs card qz-ctx" style="left:120px;top:236px;width:1680px;height:330px">
-    <svg viewBox="0 0 900 290" class="qz-dia">
-      <g font-family="IBM Plex Sans" font-weight="600">
-        <rect x="10" y="20" width="300" height="110" rx="18" fill="#F4F6FA" stroke="#9DB3DC" stroke-width="2.5" stroke-dasharray="8 6"/>
-        <text x="30" y="50" font-size="17" fill="#5B6785" font-family="IBM Plex Mono" letter-spacing="1.5">MACHINE 3</text>
-        <rect x="30" y="64" width="260" height="50" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2.5"/>
-        <text x="160" y="96" font-size="21" fill="#0E7C61" text-anchor="middle">Transcribe text ✓ 10:02</text>
-        <rect x="10" y="160" width="300" height="110" rx="18" fill="#F4F6FA" stroke="#9DB3DC" stroke-width="2.5" stroke-dasharray="8 6"/>
-        <text x="30" y="190" font-size="17" fill="#5B6785" font-family="IBM Plex Mono" letter-spacing="1.5">MACHINE 7</text>
-        <rect x="30" y="204" width="260" height="50" rx="12" fill="#DDF1EA" stroke="#0E7C61" stroke-width="2.5"/>
-        <text x="160" y="236" font-size="21" fill="#0E7C61" text-anchor="middle">Find the layout ✓ 10:05</text>
-        <path d="M310 89 C420 89 440 145 540 145 M310 229 C420 229 440 145 540 145" fill="none" stroke="#7C879F" stroke-width="4"/>
-        <path d="M536 137 L552 145 L536 153Z" fill="#7C879F"/>
-        <rect x="556" y="100" width="250" height="90" rx="18" fill="#fff" stroke="#0E1A3A" stroke-width="3"/>
-        <text x="681" y="140" font-size="24" fill="#0E1A3A" text-anchor="middle">Grounded Q&amp;A</text>
-        <text x="681" y="170" font-size="17" fill="#5B6785" text-anchor="middle" font-weight="500">needs both</text>
-        <circle cx="830" cy="145" r="34" fill="#F28C28"/><text x="830" y="160" font-size="42" fill="#fff" text-anchor="middle" font-family="Sora" font-weight="700">?</text>
-      </g>
-    </svg>
-    <div class="qz-side">
-      <ul class="qz-facts">
-        <li>The two machines <b>never talk</b> to each other.</li>
-        <li>Any machine can <b>crash</b> at any moment.</li>
-        <li>Grounded Q&amp;A must start <b>exactly once</b>: not zero times (page lost), not twice (a duplicate).</li>
-      </ul>
-      <div class="qz-askw">
-        <div class="qz-ask" data-s="1" data-h="2">Which would you pick? <b>Hands up for A, B or C.</b></div>
-        <div class="qz-ask ok" data-s="2">Same rule as before: <b>the DB is the single source of truth</b>.</div>
-      </div>
-    </div>
-  </div>
-  <div class="abs qz-opts" data-s="1" style="left:120px;top:600px;width:1680px">
-    <div class="card qz-o bad"><i>A</i><h4>A new central tracking service</h4><p>a separate service remembers every page and tells machines when to start</p><em data-s="2">It must keep that memory somewhere durable, which is a database. So this is C, plus one more process to keep alive.</em></div>
-    <div class="card qz-o bad"><i>B</i><h4>The machines message each other</h4><p>“I’m done with page 4812” → “so am I, start it”</p><em data-s="2">A crash loses a message, or a retry repeats it: page lost, or done twice.</em></div>
-    <div class="card qz-o good"><i>C</i><h4>Write it down in the database we already have</h4><p>each machine notes what it finished there; a small check reads it</p><em data-s="2">No new service: the database already holds every sample and survives crashes. ✓ This is what we do.</em></div>
-  </div>
-  <aside class="notes">
-    <p>Now a design question. One page. Its text was transcribed on machine 3 at 10:02. Its layout was found on machine 7 at 10:05. Grounded Q&amp;A needs both. Three facts: the two machines never talk to each other; any machine can crash at any moment; and Grounded Q&amp;A must start exactly once, not zero times, which loses the page, and not twice, which makes a duplicate. So: who decides that it can start?</p>
-    <p data-step="1">Three options. A: a new central tracking service, a separate program that remembers every page. B: the machines send each other messages. C: each machine writes down what it finished in the database we already have, and a small check reads it. Which would you pick? Hands up for A, B or C.</p>
-    <p data-step="2">A is the usual first answer, but that service has to keep its memory somewhere durable, and that somewhere is a database. So A is really C plus one more process to keep alive on a cluster where processes die. B breaks when a crash loses a message or a retry repeats one. C is what we do: we already have a database that holds every sample and survives crashes, so we add nothing new. Same rule as before: the DB is the single source of truth, and nothing that matters lives in a process.</p>
-  </aside>
-</section>
-
-<section data-optional class="slide light" id="q2" data-steps="1" data-section="5 · Q&amp;A" data-time="0.6" data-title="Take-home: how should the database coordinate the stages?">
-  <div class="hd">
-    <div class="eyebrow">Take-home problem</div>
-    <h2>How should the database coordinate the stages?</h2>
-  </div>
-  <div class="abs card qo-where" style="left:120px;top:250px;width:1680px">
-    <svg viewBox="0 0 1600 260" class="qo-dia">
-      <g font-family="IBM Plex Sans" font-weight="600">
-        <g fill="#F4F6FA" stroke="#9DB3DC" stroke-width="2.5" stroke-dasharray="8 6"><rect x="10" y="20" width="300" height="96" rx="16"/><rect x="10" y="144" width="300" height="96" rx="16"/></g>
-        <text x="30" y="48" font-size="17" fill="#5B6785" font-family="IBM Plex Mono" letter-spacing="1.5">MACHINE 3</text><text x="30" y="90" font-size="23" fill="#0E7C61">Text finished ✓</text>
-        <text x="30" y="172" font-size="17" fill="#5B6785" font-family="IBM Plex Mono" letter-spacing="1.5">MACHINE 7</text><text x="30" y="214" font-size="23" fill="#0E7C61">Layout finished ✓</text>
-        <path d="M310 68 C420 68 440 130 560 130 M310 192 C420 192 440 130 560 130" fill="none" stroke="#7C879F" stroke-width="4"/><path d="M556 122 L572 130 L556 138Z" fill="#7C879F"/>
-        <path d="M600 70 v120 a170 30 0 0 0 340 0 v-120" fill="#E4ECFA" stroke="#2A63C9" stroke-width="3"/><ellipse cx="770" cy="70" rx="170" ry="30" fill="#CBDAF3" stroke="#2A63C9" stroke-width="3"/>
-        <text x="770" y="150" font-size="30" fill="#0E1A3A" text-anchor="middle" font-family="Sora">The database</text>
-        <text x="770" y="186" font-size="20" fill="#5B6785" text-anchor="middle" font-weight="500">we already have</text>
-        <path d="M950 130 H1150" stroke="#7C879F" stroke-width="4" stroke-dasharray="10 8"/><path d="M1146 122 L1162 130 L1146 138Z" fill="#7C879F"/>
-        <rect x="1170" y="82" width="300" height="96" rx="18" fill="#fff" stroke="#0E1A3A" stroke-width="3"/>
-        <text x="1320" y="126" font-size="24" fill="#0E1A3A" text-anchor="middle">Grounded Q&amp;A</text><text x="1320" y="156" font-size="18" fill="#5B6785" text-anchor="middle" font-weight="500">starts exactly once</text>
-        <circle cx="1050" cy="130" r="30" fill="#F28C28"/><text x="1050" y="144" font-size="38" fill="#fff" text-anchor="middle" font-family="Sora" font-weight="700">?</text>
-      </g>
-    </svg>
-  </div>
-  <div class="abs qo-row" style="left:120px;top:590px;width:1680px">
-    <div class="card qo-c"><small>What you know so far</small><p>Each machine writes what it finished into the database. Writes are ordered so they are <b>safe to repeat</b>.</p></div>
-    <div class="card qo-c"><small>What the design must handle</small><p>A crash at any moment, no messages between machines, every stage <b>exactly once</b>, still fast at 32 nodes.</p></div>
-  </div>
-  <div class="abs qo-form" data-s="1" style="left:120px;top:830px;width:1680px"><b>Your turn.</b> <span class="hi">Tell us how you would solve it; we are happy to talk it through afterwards.</span></div>
-  <aside class="notes">
-    <p>So the two pieces are in place: each machine writes what it finished into the database, and the writes are ordered so they are safe to repeat. What remains is the full design: how the database turns those notes into Grounded Q&amp;A starting exactly once, through a crash at any moment, with no messages between machines, and still fast at 32 nodes. That is a talk of its own.</p>
-    <p data-step="1">So we leave it with you as a take-home problem. Tell us how you would solve it, here or afterwards. We will compare your ideas with what we built, and we are happy to talk it through.</p>
   </aside>
 </section>
 
@@ -3203,7 +3376,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     for (const b of [$('#brandtl')]) if (b) b.classList.toggle('hide', el.hasAttribute('data-nobrand'));   // the title and thank-you slides carry the logo themselves
     const acts = $('#acts');
     if (acts) {
-      if (!acts.children.length) { const sp = document.createElement('span'); sp.dataset.part = 'title'; sp.className = 'ttl'; sp.title = 'Go to the title slide'; sp.innerHTML = '<b>Title</b>'; acts.appendChild(sp); } if (acts.children.length === 1) ['The problem', 'Busy GPUs', 'Crash safe', 'Graphs', 'Thank you', 'Q&A'].forEach((n, k) => { const sp = document.createElement('span'); sp.dataset.part = k; sp.title = 'Go to part ' + k + ': ' + n; sp.innerHTML = '<b>' + k + '</b><u>' + n + '</u>'; acts.appendChild(sp); });
+      if (!acts.children.length) { const sp = document.createElement('span'); sp.dataset.part = 'title'; sp.className = 'ttl'; sp.title = 'Go to the title slide'; sp.innerHTML = '<b>Title</b>'; acts.appendChild(sp); } if (acts.children.length === 1) ['The problem', 'Busy GPUs', 'Crash safe', 'Graphs', 'Thank you'].forEach((n, k) => { const sp = document.createElement('span'); sp.dataset.part = k; sp.title = 'Go to part ' + k + ': ' + n; sp.innerHTML = '<b>' + k + '</b><u>' + n + '</u>'; acts.appendChild(sp); });
       const m = /^(\d) ·/.exec(el.dataset.section || ''), n = m ? +m[1] : -1;   // parts are numbered from 0
       acts.classList.toggle('hide', state.i === 0); [...acts.children].forEach(c => c.classList.toggle('on', c.dataset.part === String(n)));
     }
@@ -5877,6 +6050,139 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
       ctx.__rt = build(route); ctx.__rt.playAll();
     },
     leave(ctx) { if (ctx.__rt) ctx.__rt.halt(); },
+  });
+})();
+
+/* bit-mask explainer: how the engine tracks a page through a graph (two numbers per page: Finished, Ready) */
+(function () {
+  const U = Deck.util;
+  const NAMES = ['Understand', 'Text', 'Layout', 'Grounded Q&A'];
+
+  /** a grid of switches: header row of stage names, then one row per spec in o.rows.
+      Returns { rows: { key: { set(bits, {num}), show(on), w } } }. */
+  function grid(host, o) {
+    host.innerHTML = ''; host.classList.add('bm-g');
+    const add = (cls, html, parent) => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; (parent || host).appendChild(d); return d; };
+    add('c', '');
+    (o.names || NAMES).forEach((n, i) => add('h', n.replace('&', '&amp;') + (o.seats ? `<small>seat ${i}</small>` : '')));
+    add('c', '');
+    const rows = {};
+    o.rows.forEach(r => {
+      const w = document.createElement('div'); w.className = 'row ' + r.k; host.appendChild(w);
+      add('l', r.label + (r.sub ? `<small>${r.sub}</small>` : ''), w);
+      const cells = [0, 1, 2, 3].map(i => { const e = document.createElement('i'); e.textContent = r.fixed ? r.fixed[i] : '0'; w.appendChild(e); return e; });
+      const num = add('num', '', w);
+      let prev = [0, 0, 0, 0];
+      rows[r.k] = {
+        w, cells, num, names: null,
+        set(bits, opt) {
+          opt = opt || {};
+          bits.forEach((b, i) => {
+            b = b ? 1 : 0;
+            cells[i].classList.toggle('on', !!b); cells[i].textContent = b;
+            if (b !== prev[i] && !opt.quiet) { cells[i].classList.remove('chg'); void cells[i].offsetWidth; cells[i].classList.add('chg'); }
+          });
+          prev = bits.map(b => b ? 1 : 0);
+          const sum = prev.reduce((a, b, i) => a + b * (1 << i), 0);
+          num.innerHTML = opt.num === false ? '' : `= <b>${sum}</b>`;
+        },
+        mark(i, cls) { cells.forEach((c, j) => c.classList.toggle(cls, j === i)); },
+        show(on) { w.classList.toggle('off', !on); },
+      };
+    });
+    return { rows, heads: [...host.querySelectorAll('.h')] };
+  }
+
+  /* ── 2 · one switch per stage, read as a number ── */
+  Deck.on('bmbits', {
+    enter(ctx) {
+      ctx.__g = grid(ctx.q('#bmb-grid'), { seats: true, rows: [{ k: 'n', label: 'Switches', sub: 'one per stage' }, { k: 'wt', label: 'Worth', sub: 'of each seat', fixed: [1, 2, 4, 8] }] });
+    },
+    step(ctx, s) {
+      const R = ctx.__g.rows;
+      R.n.set([s >= 1, s >= 1, 0, 0], { num: s >= 2, quiet: false });
+      R.wt.show(s >= 2); R.wt.num.innerHTML = '';
+      R.n.cells.forEach((c, i) => c.classList.toggle('sum', s >= 2 && i < 2));
+      ctx.q('#bmb-add').classList.toggle('on', s >= 2);
+    },
+  });
+
+  /* ── 3 · two rows per page ── */
+  Deck.on('bmtwo', {
+    enter(ctx) {
+      ctx.__g = grid(ctx.q('#bmt-grid'), { rows: [{ k: 'f', label: 'Finished', sub: 'stages that have finished this page' }, { k: 'r', label: 'Ready', sub: 'stages that may start on it' }] });
+    },
+    step(ctx, s) {
+      const R = ctx.__g.rows;
+      R.f.show(s >= 0); R.r.show(s >= 1);
+      R.f.set([0, 0, 0, 0]); R.r.set([s >= 2, 0, 0, 0]);
+      ctx.q('#bmt-f').textContent = '0'; ctx.q('#bmt-r').textContent = s >= 2 ? '1' : '–';
+    },
+  });
+
+  /* ── 4 · one page walked through the graph ── */
+  const WALK = [
+    { f: [0, 0, 0, 0], r: [1, 0, 0, 0] },
+    { f: [1, 0, 0, 0], r: [1, 1, 1, 0] },
+    { f: [1, 1, 0, 0], r: [1, 1, 1, 0] },
+    { f: [1, 1, 1, 0], r: [1, 1, 1, 0] },
+    { f: [1, 1, 1, 0], r: [1, 1, 1, 1] },
+    { f: [1, 1, 1, 1], r: [1, 1, 1, 1] },
+  ];
+  Deck.on('bmwalk', {
+    enter(ctx) {
+      ctx.__g = grid(ctx.q('#bmw-grid'), { rows: [{ k: 'f', label: 'Finished', sub: 'done with this page' }, { k: 'r', label: 'Ready', sub: 'may start on it' }] });
+      const host = ctx.q('#bmw-graph'); host.innerHTML = '';
+      const svg = U.svg('svg', { viewBox: '0 0 720 480', width: 720, height: 480 }, host);
+      const defs = U.svg('defs', {}, svg);
+      [['g', '#7C879F'], ['v', '#6B4BB8']].forEach(([id, c]) => { const m = U.svg('marker', { id: 'bmah' + id, viewBox: '0 0 10 10', refX: 8, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto' }, defs); U.svg('path', { d: 'M0 0L10 5L0 10z', fill: c }, m); });
+      const P = [[0, 200], [265, 50], [265, 350], [510, 200]], W = 190, H = 80, WD = [190, 190, 190, 210];
+      const E = [[0, 1, 'g'], [0, 2, 'g'], [1, 3, 'v'], [2, 3, 'v']];
+      E.forEach(([a, b, c]) => {
+        const x1 = P[a][0] + WD[a], y1 = P[a][1] + H / 2, x2 = P[b][0] - 4, y2 = P[b][1] + H / 2;
+        U.svg('path', { d: `M${x1} ${y1} C${x1 + 50} ${y1} ${x2 - 50} ${y2} ${x2} ${y2}`, fill: 'none', stroke: c === 'v' ? '#6B4BB8' : '#7C879F', 'stroke-width': 4, 'marker-end': `url(#bmah${c})` }, svg);
+      });
+      ctx.__nd = P.map((p, i) => {
+        const g = U.svg('g', { class: 'bm-nd' }, svg);
+        U.svg('rect', { x: p[0], y: p[1], width: WD[i], height: H, rx: 16 }, g);
+        const t = U.svg('text', { x: p[0] + WD[i] / 2, y: p[1] + 50 }, g); t.textContent = NAMES[i];
+        if (i === 3) t.setAttribute('font-size', 23);
+        return g;
+      });
+      [['node 3', 265 + W / 2, 50 + H + 30], ['node 7', 265 + W / 2, 350 + H + 30]].forEach(([s, x, y]) => { const t = U.svg('text', { x, y, class: 'bm-wh' }, svg); t.textContent = s; });
+      const nb = U.svg('text', { x: 615, y: 186, class: 'bm-both' }, svg); nb.textContent = 'needs both';
+      const lg = (x, c, s) => { U.svg('rect', { x, y: 452, width: 22, height: 22, rx: 6, class: 'bm-lg ' + c }, svg); const t = U.svg('text', { x: x + 32, y: 470, class: 'bm-lgt' }, svg); t.textContent = s; };
+      lg(430, 'rdy', 'Ready'); lg(560, 'dn', 'Finished');
+    },
+    step(ctx, s, p) {
+      const st = WALK[s], R = ctx.__g.rows, quiet = p < 0;
+      R.f.set(st.f, { quiet }); R.r.set(st.r, { quiet });
+      ctx.__nd.forEach((g, i) => { g.classList.toggle('dn', !!st.f[i]); g.classList.toggle('rdy', !!st.r[i] && !st.f[i]); });
+      ctx.q('#bmw-rec').classList.toggle('gone', s >= 5);
+      ctx.q('#bmw-gone').classList.toggle('on', s >= 5);
+    },
+  });
+
+  /* ── 5 · the sweep's check ── */
+  const RULE = [
+    { names: NAMES, need: [0, 1, 1, 0], fin: [1, 1, 0, 0], v: 'wait', t: 'Not yet: Layout has not finished', rule: 'Needs both: the third row must match the first row.' },
+    { names: NAMES, need: [0, 1, 1, 0], fin: [1, 1, 1, 0], v: 'go', t: 'Match: Grounded Q&amp;A may start', rule: 'Needs both: the third row must match the first row.' },
+    { names: ['Understand', 'Table', 'Chart', 'Write a question'], need: [0, 1, 1, 0], fin: [1, 0, 1, 0], v: 'go', t: 'One is on: Write a question may start', rule: 'Either one is enough: the third row needs at least one switch on.' },
+  ];
+  Deck.on('bmrule', {
+    enter(ctx) {
+      ctx.__g = grid(ctx.q('#bmr-grid'), { rows: [{ k: 'n', label: 'Needs', sub: 'inputs this stage waits on' }, { k: 'f', label: 'Finished', sub: 'from the page’s record' }, { k: 'm', label: 'Needed and finished', sub: 'switches on in both rows above' }] });
+    },
+    step(ctx, s) {
+      const d = RULE[s], R = ctx.__g.rows;
+      ctx.__g.heads.forEach((h, i) => { h.innerHTML = d.names[i].replace('&', '&amp;'); });
+      R.n.set(d.need); R.f.set(d.fin);
+      const both = d.need.map((n, i) => n && d.fin[i] ? 1 : 0);
+      R.m.set(both);
+      R.m.cells.forEach((c, i) => c.classList.toggle('miss', !!d.need[i] && !d.fin[i]));
+      const v = ctx.q('#bmr-v'); v.className = 'bm-v ' + d.v; v.innerHTML = d.t;
+      ctx.q('#bmr-rule').innerHTML = d.rule;
+    },
   });
 })();
 

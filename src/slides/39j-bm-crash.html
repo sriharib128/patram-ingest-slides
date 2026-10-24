@@ -1,0 +1,36 @@
+<section class="slide light" id="bmcrash" data-steps="2" data-section="3 · Graphs of stages" data-time="1.2" data-title="A crash between writes never loses a page">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>A crash between writes never loses a page</h2>
+  </div>
+  <div class="abs bm-ord" style="left:120px;top:236px;width:1680px">
+    <div class="card bm-o">
+      <h3>Our order<small>when Understand finishes a page</small></h3>
+      <ol>
+        <li><i>1</i>Put the page in the next stage’s queue</li>
+        <li><i>2</i>Switch on Ready for that stage</li>
+        <li class="bolt" data-s="1">⚡ crash</li>
+        <li class="fin after"><i>3</i>Switch on its own Finished</li>
+      </ol>
+      <div class="res ok" data-s="1"><b>The page survives ✓</b>Finished is still off, so after the restart the page is run again. Repeating a write changes nothing: the queue row and the switch are already there.</div>
+    </div>
+    <div class="card bm-o">
+      <h3>The reverse order<small>shown for comparison</small></h3>
+      <ol>
+        <li class="fin"><i>1</i>Switch on its own Finished</li>
+        <li class="bolt" data-s="1">⚡ crash</li>
+        <li class="after"><i>2</i>Put the page in the next stage’s queue</li>
+        <li class="after"><i>3</i>Switch on Ready for that stage</li>
+      </ol>
+      <div class="res no" data-s="1"><b>The page is lost ✕</b>The record says Finished, so nobody runs the page again, and the next stage was never given it.</div>
+    </div>
+  </div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:850px;width:1680px"><b>Three writes to the DB</b> hand a page on. A machine can crash between any two of them, so the order matters.</div>
+  <div class="abs bm-cap r" data-s="1" data-h="2" style="left:120px;top:850px;width:1680px"><b>Crash in the middle.</b> Left: the page is handed on, and Finished is still off. Right: Finished is on, but the page was never handed on.</div>
+  <div class="abs bm-cap g" data-s="2" style="left:120px;top:850px;width:1680px"><b>Hand the page on first, mark yourself finished last</b>, and make every write safe to repeat.</div>
+  <aside class="notes">
+    <p>One more thing we need: crashes. When a stage finishes a page it makes three writes to the DB. It puts the page in the next stage's queue. It switches on Ready for that stage. And it switches on its own Finished. A machine can die between any two of them, so which order do we use? On the right is the reverse order, for comparison.</p>
+    <p data-step="1">Suppose the machine crashes in the middle. In our order, on the left, the page has been handed on but the stage's own Finished is still off. Remember the recovery rule from part two: anything not marked finished is picked up and run again. So after the restart the page is run again and the three writes repeat. That is fine because every write is safe to repeat: the queue row already exists, the Ready switch is already on, and switching on a switch twice changes nothing. On the right, Finished is switched on first. Crash straight after, and the record says this stage is finished, so nobody runs it again, while the next stage was never given the page. The page is lost. The same ordering applies when the sweep starts a stage: queue first, then Ready, so a crash between them just means the next sweep does it again.</p>
+    <p data-step="2">So the rule is: hand the page on first, mark yourself finished last, and make every write safe to repeat. It is the same save-first rule from part two, applied between stages.</p>
+  </aside>
+</section>

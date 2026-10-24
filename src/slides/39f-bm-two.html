@@ -1,0 +1,22 @@
+<section class="slide light" id="bmtwo" data-steps="2" data-section="3 · Graphs of stages" data-time="0.8" data-title="Two rows per page: Finished and Ready">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Two rows per page: Finished and Ready</h2>
+  </div>
+  <div class="abs card bm-pad cc" style="left:120px;top:236px;width:1000px;height:520px"><div id="bmt-grid"></div></div>
+  <div class="abs card bm-pad" data-s="2" style="left:1160px;top:236px;width:640px;height:520px">
+    <div class="bm-rec">
+      <h4>In the DB</h4>
+      <div class="t"><span class="th">page</span><span class="th">finished</span><span class="th">ready</span><span>4812</span><span class="vf" id="bmt-f">0</span><span class="vr" id="bmt-r">1</span></div>
+    </div>
+    <p style="margin-top:30px;font-size:24px;line-height:1.4;color:var(--body)">One row per page that is still in flight. Two numbers, no more.<br><br>Once a page has finished its last stage, its row is deleted, so the DB never holds the whole dataset.</p>
+  </div>
+  <div class="abs bm-cap g" data-h="1" style="left:120px;top:800px;width:1680px"><b>Finished.</b> Which stages have finished this page. It fills up as the page moves through the graph.</div>
+  <div class="abs bm-cap o" data-s="1" data-h="2" style="left:120px;top:800px;width:1680px"><b>Ready.</b> Which stages may start on this page: it is now waiting in their queue.</div>
+  <div class="abs bm-cap" data-s="2" style="left:120px;top:800px;width:1680px"><b>A new page</b> starts with nothing finished (0) and only Understand ready (1), because it is the first stage.</div>
+  <aside class="notes">
+    <p>Each page gets two such rows, so two numbers. The first is Finished: which stages have finished this page. It starts empty and fills up as the page moves through the graph.</p>
+    <p data-step="1">The second is Ready: which stages are allowed to start on this page, meaning the page is now waiting in that stage's queue. These two rows are the entire record.</p>
+    <p data-step="2">In the DB it is one row per page: the page, the Finished number and the Ready number. A new page starts with Finished at 0, nothing done, and Ready at 1: only seat 0, Understand, may start. When a page has finished its last stage the row is deleted, so the record only ever holds pages that are in flight, not the whole dataset.</p>
+  </aside>
+</section>

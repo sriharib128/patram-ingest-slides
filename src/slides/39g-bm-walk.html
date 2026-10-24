@@ -1,0 +1,27 @@
+<section class="slide light" id="bmwalk" data-steps="5" data-section="3 · Graphs of stages" data-time="2.2" data-title="Following one page through the graph">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Following one page through the graph</h2>
+  </div>
+  <div class="abs card bm-pad" style="left:120px;top:236px;width:760px;height:560px;padding:24px 20px"><div id="bmw-graph"></div></div>
+  <div class="abs card bm-pad" id="bmw-card" style="left:910px;top:236px;width:890px;height:560px">
+    <div id="bmw-rec"><div id="bmw-grid"></div>
+      <div id="bmw-key">The number is the row added up, with seats worth 1, 2, 4, 8. <b>Ready</b> stays on once switched on.</div></div>
+    <div id="bmw-gone">Last stage finished: the row is deleted</div>
+  </div>
+  <div class="abs bm-cap o" data-h="1" style="left:120px;top:830px;width:1680px"><b>1 · A page arrives.</b> Only Understand may start, so only its Ready switch is on.</div>
+  <div class="abs bm-cap o" data-s="1" data-h="2" style="left:120px;top:830px;width:1680px"><b>2 · Understand finishes.</b> Its routing function says this is a text page, so it goes to Text and Layout at once. Their Ready switches go on, then Understand’s Finished.</div>
+  <div class="abs bm-cap g" data-s="2" data-h="3" style="left:120px;top:830px;width:1680px"><b>3 · Text finishes</b>, on node 3. Grounded Q&amp;A needs both Text and Layout, and Layout is not finished, so it waits.</div>
+  <div class="abs bm-cap g" data-s="3" data-h="4" style="left:120px;top:830px;width:1680px"><b>4 · Layout finishes</b>, on node 7, some minutes later. Both inputs of Grounded Q&amp;A are now finished, but nobody has told it yet.</div>
+  <div class="abs bm-cap v" data-s="4" data-h="5" style="left:120px;top:830px;width:1680px"><b>5 · The sweep notices.</b> A background process reads the records every few seconds. It sees both inputs finished and switches Ready on for Grounded Q&amp;A.</div>
+  <div class="abs bm-cap" data-s="5" style="left:120px;top:830px;width:1680px"><b>6 · Grounded Q&amp;A finishes</b>, the last stage. The page is done, and its row is deleted from the DB.</div>
+  <aside class="notes">
+    <p>Let us follow one page through a small graph, with the record on the right. Understand feeds Text and Layout, and Grounded Q&amp;A needs both of them. Text runs on node 3, Layout on node 7, different machines.</p>
+    <p>One: a page arrives. Finished is 0, nothing is done. Ready is 1, only Understand.</p>
+    <p data-step="1">Two: Understand finishes. Its routing function says this is a text page, so the page goes to both Text and Layout at once. The engine switches on Ready for those two stages, and last of all switches on Understand's own Finished. Watch the numbers: Finished becomes 1, Ready becomes 7, which is 1 plus 2 plus 4. Routing is immediate: it depends on what the page contains, and the stage hands the page straight on.</p>
+    <p data-step="2">Three: Text finishes on node 3. Finished is now 3. Grounded Q&amp;A needs both Text and Layout. Layout is not finished, so nothing starts. There is no message, nobody waits on a phone call. The record just says what is done.</p>
+    <p data-step="3">Four: minutes later, Layout finishes on node 7. Finished is now 7. Both inputs of Grounded Q&amp;A are finished, but nobody has told Grounded Q&amp;A, because stages never talk to each other.</p>
+    <p data-step="4">Five: that is the job of the sweep, a single background process. Every few seconds, five by default, it reads the records, asks for each waiting stage whether its inputs are finished, sees that they are, and switches on Ready for Grounded Q&amp;A. The next slide shows exactly how it decides. Because it only reads the record, it does not matter which machine ran which input, or which finished first.</p>
+    <p data-step="5">Six: Grounded Q&amp;A runs and finishes. It is the last stage, so the page is complete and its row is deleted.</p>
+  </aside>
+</section>

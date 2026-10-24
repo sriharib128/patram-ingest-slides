@@ -1,0 +1,18 @@
+<section class="slide light" id="bmbits" data-steps="2" data-section="3 · Graphs of stages" data-time="0.8" data-title="The record is one switch per stage">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>The record is one switch per stage</h2>
+  </div>
+  <div class="abs card bm-pad" style="left:120px;top:236px;width:1680px;height:520px">
+    <div id="bmb-grid"></div>
+    <div id="bmb-add"><span>1</span> + <span>2</span> = <b>3</b><em>stored in the DB as the single number 3</em></div>
+  </div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:800px;width:1680px"><b>A seat number per stage.</b> Every stage in the graph has a seat: its position, counted from 0. The record has one switch for each seat. They all start off.</div>
+  <div class="abs bm-cap b" data-s="1" data-h="2" style="left:120px;top:800px;width:1680px"><b>A switch on means yes.</b> Here the answer is yes for Understand and Text, and no for Layout and Grounded Q&amp;A.</div>
+  <div class="abs bm-cap b" data-s="2" style="left:120px;top:800px;width:1680px"><b>A row of switches is one number.</b> Seat 0 is worth 1, seat 1 is worth 2, seat 2 is worth 4, and so on. Add up the switches that are on. This is called a bit mask.</div>
+  <aside class="notes">
+    <p>Every stage in a graph gets a position, like a seat number: Understand is seat 0, Text is seat 1, Layout seat 2, Grounded Q&amp;A seat 3. For each page, the record has one switch per seat. A switch is a bit: it is either 0 or 1, off or on. At the start they are all off.</p>
+    <p data-step="1">A switch that is on means yes for that stage. This row says: yes for Understand, yes for Text, no for Layout, no for Grounded Q&amp;A. We will say what the question is on the next slide.</p>
+    <p data-step="2">The useful trick is that a row of switches can be stored as one ordinary number. Give each seat a value: seat 0 is worth 1, seat 1 is worth 2, seat 2 is worth 4, seat 3 is worth 8. Add up the switches that are on, 1 plus 2, and this row is the number 3. That is all a bit mask is: a row of switches kept as a single integer. It is tiny, it is cheap for the DB to store, and the DB can update one switch without touching the others.</p>
+  </aside>
+</section>

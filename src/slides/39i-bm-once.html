@@ -1,0 +1,37 @@
+<section class="slide light" id="bmonce" data-steps="2" data-section="3 · Graphs of stages" data-time="1.0" data-title="Ready makes a stage start exactly once">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Ready makes a stage start exactly once</h2>
+  </div>
+  <div class="abs bm-ps" style="left:120px;top:236px;width:1680px">
+    <div class="card bm-p"><h4>Sweep 1</h4>
+      <div class="q"><b>Inputs finished?</b>Not all of them.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="n">Layout</span></div>
+      <div class="rd"><i>0</i><span>Ready for Grounded Q&amp;A</span></div>
+      <div class="act w">Wait</div></div>
+    <div class="card bm-p"><h4>Sweep 2</h4>
+      <div class="q"><b>Inputs finished?</b>Yes, both.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="y">Layout ✓</span></div>
+      <div class="rd"><i class="on">1</i><span>Ready is off, so switch it on</span></div>
+      <div class="act go">Start it</div></div>
+    <div class="card bm-p" data-s="1"><h4>Sweep 3</h4>
+      <div class="q"><b>Inputs finished?</b>Yes, both.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="y">Layout ✓</span></div>
+      <div class="rd"><i class="on">1</i><span>Ready is already on</span></div>
+      <div class="act sk">Skip</div></div>
+    <div class="card bm-p" data-s="1"><h4>Sweep 4, 5, 6 …</h4>
+      <div class="q"><b>Inputs finished?</b>Yes, both. This stays true.</div>
+      <div class="in"><span class="y">Text ✓</span><span class="y">Layout ✓</span></div>
+      <div class="rd"><i class="on">1</i><span>Ready is already on</span></div>
+      <div class="act sk">Skip</div></div>
+  </div>
+  <div class="abs bm-without" data-s="2" style="left:120px;top:704px;width:1680px"><span><b>Without the Ready switch</b>, every sweep would match again:</span><span class="rp"><i>start</i><i>start</i><i>start</i><i>…</i></span></div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:830px;width:1680px"><b>The sweep runs again and again.</b> At sweep 2 both inputs are finished, so it switches Ready on and the stage starts.</div>
+  <div class="abs bm-cap g" data-s="1" data-h="2" style="left:120px;top:830px;width:1680px"><b>The inputs stay finished</b>, so every later sweep matches too. But Ready is already on, so the sweep skips the stage.</div>
+  <div class="abs bm-cap o" data-s="2" style="left:120px;top:830px;width:1680px"><b>Finished says the inputs are there. Ready remembers that the stage was started.</b> Together they give exactly once.</div>
+  <aside class="notes">
+    <p>The sweep does not run once, it runs again and again, every few seconds. So we need to be sure it starts a stage once, not at every pass. Sweep one: Text is finished, Layout is not, so the stage waits. Sweep two: both finished and Ready is off, so the sweep switches Ready on and the page goes into the stage's queue. Exactly once so far.</p>
+    <p data-step="1">Sweep three, four, five: the inputs are still finished, they will always be, so the check still matches. But Ready is already on. The sweep only starts stages whose Ready switch is off, so it skips this one.</p>
+    <p data-step="2">Without the Ready switch, every sweep would match and the stage would start again and again, producing duplicates of the same page, which we would pay for in GPU time and train on. So the two rows divide the job: Finished says what the inputs have done. Ready remembers what has already been started. That is why a stage starts exactly once, whichever order its inputs finish in.</p>
+  </aside>
+</section>

@@ -1,0 +1,36 @@
+<section class="slide light" id="bmwhy" data-steps="2" data-section="3 · Graphs of stages" data-time="0.7" data-title="Stages need a shared record of each page">
+  <div class="hd">
+    <div class="eyebrow">How the engine runs a graph</div>
+    <h2>Stages need a shared record of each page</h2>
+  </div>
+  <div class="abs card" style="left:120px;top:236px;width:1680px;height:520px">
+    <svg class="bm-dia" viewBox="0 -40 1600 540">
+      <g font-family="IBM Plex Sans" font-weight="600">
+        <g fill="#F4F6FA" stroke="#9DB3DC" stroke-width="2.5" stroke-dasharray="8 6"><rect x="40" y="24" width="440" height="170" rx="20"/><rect x="580" y="24" width="440" height="170" rx="20"/><rect x="1120" y="24" width="440" height="170" rx="20"/></g>
+        <g font-family="IBM Plex Mono" font-size="18" fill="#5B6785" letter-spacing="1.5"><text x="64" y="58">MACHINE 3</text><text x="604" y="58">MACHINE 7</text><text x="1144" y="58">MACHINE 9</text></g>
+        <g fill="#fff" stroke="#0E1A3A" stroke-width="3"><rect x="70" y="84" width="380" height="82" rx="16"/><rect x="610" y="84" width="380" height="82" rx="16"/><rect x="1150" y="84" width="380" height="82" rx="16"/></g>
+        <g font-size="28" fill="#0E1A3A" text-anchor="middle" font-family="Sora"><text x="260" y="135">Text</text><text x="800" y="135">Layout</text><text x="1340" y="135">Grounded Q&amp;A</text></g>
+        <g data-s="1" class="fade">
+          <g stroke="#C93C3C" stroke-width="4" stroke-dasharray="9 8"><path d="M486 109H574"/><path d="M1026 109H1114"/></g>
+          <g font-size="36" fill="#C93C3C" text-anchor="middle" font-family="Sora" font-weight="700"><text x="530" y="124">✕</text><text x="1070" y="124">✕</text></g>
+          <text x="800" y="-2" font-size="26" fill="#C93C3C" text-anchor="middle">Stages send no messages to each other</text>
+        </g>
+        <g data-s="2" class="fade">
+          <g fill="none" stroke="#2A63C9" stroke-width="4"><path d="M260 194C260 280 620 250 640 330"/><path d="M800 194V300"/><path d="M1340 194C1340 280 980 250 960 330"/></g>
+          <g fill="#2A63C9"><circle cx="260" cy="194" r="8"/><circle cx="800" cy="194" r="8"/><circle cx="1340" cy="194" r="8"/></g>
+          <path d="M560 340v110a240 38 0 0 0 480 0v-110" fill="#E4ECFA" stroke="#2A63C9" stroke-width="3.5"/><ellipse cx="800" cy="340" rx="240" ry="38" fill="#CBDAF3" stroke="#2A63C9" stroke-width="3.5"/>
+          <text x="800" y="408" font-size="32" fill="#0E1A3A" text-anchor="middle" font-family="Sora">The DB</text>
+          <text x="800" y="442" font-size="21" fill="#5B6785" text-anchor="middle" font-weight="500">one small record per page in flight</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <div class="abs bm-cap" data-h="1" style="left:120px;top:800px;width:1680px"><b>Separate programs.</b> Each stage runs as its own process, often on its own machine, and shares no memory with the others.</div>
+  <div class="abs bm-cap r" data-s="1" data-h="2" style="left:120px;top:800px;width:1680px"><b>No messages.</b> Stages also never talk to each other, so one stage cannot tell another that it has finished a page.</div>
+  <div class="abs bm-cap b" data-s="2" style="left:120px;top:800px;width:1680px"><b>One record per page.</b> The engine keeps it in the DB. Every stage reads it and writes to it, and that is how the graph is coordinated.</div>
+  <aside class="notes">
+    <p>We now go one level deeper: how does the engine actually run a graph like the one we just saw, on many machines? Here is the difficulty. Every stage is its own process, often on a different machine, and they share no memory.</p>
+    <p data-step="1">They also never send messages to each other. That is deliberate, it is the same rule as before: no coordinator process that can crash and take the run with it. But it means that when Text finishes a page on machine 3, nobody tells Grounded Q&amp;A.</p>
+    <p data-step="2">So the engine keeps one small record for every page that is in flight, in the DB. Every stage reads it and writes to it. All the coordination between stages happens through this record. The next slides show what is in it. It is only two numbers.</p>
+  </aside>
+</section>
