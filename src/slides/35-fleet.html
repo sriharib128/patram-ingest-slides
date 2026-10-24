@@ -1,4 +1,4 @@
-<section class="slide light" id="fleet" data-steps="6" data-section="2 · Never losing work" data-time="3.2" data-title="Recovery and scaling without intervention">
+<section class="slide light" id="fleet" data-steps="8" data-section="2 · Never losing work" data-time="3.2" data-title="Recovery and scaling without intervention">
   <div class="hd">
     <div class="eyebrow">Problems 1 and 2, revisited</div>
     <h2>Recovery and scaling without intervention</h2>
@@ -63,13 +63,14 @@
     </div>
     <div class="fl5-d">
       <div class="fl5-h"><small class="or">2 · Scaling</small><h3>Pipelines do not own model servers</h3></div>
+      <div class="fl6-steps"><button type="button" data-k="5"><i>1</i>Servers are up</button><button type="button" data-k="6"><i>2</i>Servers are lent out</button><button type="button" data-k="7"><i>3</i>Servers come back</button></div>
       <svg class="fl6-svg" id="fl6-svg" viewBox="0 0 1600 500"></svg>
       <div class="fl6-log" id="fl6-log"></div>
       <div class="fl6-pl" id="fl6-pl"></div>
     </div>
   </div>
 
-  <div class="abs fl6-g" data-s="6" style="left:120px;top:350px;width:1680px">
+  <div class="abs fl6-g" data-s="8" style="left:120px;top:350px;width:1680px">
     <div class="card fl4c">
       <div class="v4cap">One day of a production run · samples per second · illustrative shape</div>
       <svg viewBox="0 0 1600 330" class="fl4-chart">
@@ -105,7 +106,9 @@
     <p data-step="2">A worker dies. The supervisor notices and starts a new one in its place, and the requests that worker had are sent again.</p>
     <p data-step="3">The whole program stops, or the node reboots. The watcher starts the program again. Whatever samples it had claimed and not finished go back to the table, and any node can pick them up.</p>
     <p data-step="4">A vLLM server crashes. Its own watcher restarts it, and the requests that were waiting on it go back to the queue. In every case nobody is paged and no work is lost.</p>
-    <p data-step="5">Now scaling. The key decision: pipelines don't own models. The cluster runs model servers on every machine, and the pipeline just uses whichever are serving. We even launch the run before any server is up: it just waits. Every 30 seconds the run checks which servers are serving, and starts one worker per serving server. No restart, no configuration. Every worker fetches samples from the database and sends them to its server. Now a colleague borrows servers 3 and 4. Their workers do not die: they drain, sending the samples they had not finished back to the database, and then wait. Everyone else carries on. When the servers come back, those workers fetch from the database again. Nothing was lost and nobody restarted anything. You can pause or drag the slider.</p>
-    <p data-step="6">Here is what that looks like over one day, as in our blog; the shape is illustrative. One: we launched before the models were up, and work started as each server came online. Two: a colleague borrowed GPUs; the workers using them drained and waited. Three: the test finished, and those workers fetched from the database again. Four: a server crashed; its requests went back and it restarted. Five: free GPUs appeared and the run spread onto them. Nobody touched the run all day.</p>
+    <p data-step="5">Now scaling, in three steps. Step one: all the servers are up. The key decision: pipelines don't own models. The cluster runs model servers on every machine, and the pipeline just uses whichever are serving. We even launch the run before any server is up: it just waits. Every 30 seconds the run checks which servers are serving, and starts one worker per serving server. No restart, no configuration. Every worker fetches samples from the database and sends them to its server.</p>
+    <p data-step="6">Step two: a colleague borrows servers 3 and 4. Their workers do not die: they drain, sending the samples they had not finished back to the database, and then they wait. Everyone else carries on.</p>
+    <p data-step="7">Step three: the servers come back, and those workers start again and fetch from the database. Nothing was lost and nobody restarted anything. You can click the steps, pause, or drag the slider.</p>
+    <p data-step="8">Here is what that looks like over one day, as in our blog; the shape is illustrative. One: we launched before the models were up, and work started as each server came online. Two: a colleague borrowed GPUs; the workers using them drained and waited. Three: the test finished, and those workers fetched from the database again. Four: a server crashed; its requests went back and it restarted. Five: free GPUs appeared and the run spread onto them. Nobody touched the run all day.</p>
   </aside>
 </section>

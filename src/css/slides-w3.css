@@ -418,13 +418,13 @@
 #fleet:not([data-st="0"]) .fl5 .fl5-d{opacity:1;pointer-events:auto}
 #fleet[data-st="1"] .fl5.heal,#fleet[data-st="2"] .fl5.heal,#fleet[data-st="3"] .fl5.heal,#fleet[data-st="4"] .fl5.heal{top:226px;height:620px;width:1680px}
 #fleet[data-st="1"] .fl5.scale,#fleet[data-st="2"] .fl5.scale,#fleet[data-st="3"] .fl5.scale,#fleet[data-st="4"] .fl5.scale{left:120px;top:870px;width:1680px;height:104px}
-#fleet[data-st="5"] .fl5.heal{top:226px;height:92px;width:1680px}
-#fleet[data-st="5"] .fl5.scale{left:120px;top:332px;width:1680px;height:706px}
-#fleet[data-st="6"] .fl5.heal{top:226px;height:104px;width:820px}
-#fleet[data-st="6"] .fl5.scale{left:980px;top:226px;width:820px;height:104px}
-#fleet[data-st="5"] .fl5.heal .fl5-h h3,#fleet[data-st="6"] .fl5 .fl5-h h3,#fleet[data-st="1"] .fl5.scale .fl5-h h3,#fleet[data-st="2"] .fl5.scale .fl5-h h3,#fleet[data-st="3"] .fl5.scale .fl5-h h3,#fleet[data-st="4"] .fl5.scale .fl5-h h3{font-size:28px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.heal{top:226px;height:92px;width:1680px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.scale{left:120px;top:332px;width:1680px;height:706px}
+#fleet[data-st="8"] .fl5.heal{top:226px;height:104px;width:820px}
+#fleet[data-st="8"] .fl5.scale{left:980px;top:226px;width:820px;height:104px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.heal .fl5-h h3,#fleet[data-st="8"] .fl5 .fl5-h h3,#fleet[data-st="1"] .fl5.scale .fl5-h h3,#fleet[data-st="2"] .fl5.scale .fl5-h h3,#fleet[data-st="3"] .fl5.scale .fl5-h h3,#fleet[data-st="4"] .fl5.scale .fl5-h h3{font-size:28px}
 .fl5 .fl5-h::after{content:'▾';position:absolute;right:40px;top:34px;font-size:26px;color:var(--faint);transition:transform .3s}
-#fleet[data-st="5"] .heal .fl5-h::after,#fleet[data-st="6"] .fl5-h::after,#fleet[data-st="1"] .scale .fl5-h::after,#fleet[data-st="2"] .scale .fl5-h::after,#fleet[data-st="3"] .scale .fl5-h::after,#fleet[data-st="4"] .scale .fl5-h::after{transform:rotate(-90deg)}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .heal .fl5-h::after,#fleet[data-st="8"] .fl5-h::after,#fleet[data-st="1"] .scale .fl5-h::after,#fleet[data-st="2"] .scale .fl5-h::after,#fleet[data-st="3"] .scale .fl5-h::after,#fleet[data-st="4"] .scale .fl5-h::after{transform:rotate(-90deg)}
 .fl5 .fl5-d{width:100%}
 .fl6-svg{position:absolute;left:40px;top:112px;width:1600px;height:500px}
 .fl6-log{position:absolute;left:40px;right:620px;bottom:28px;font-size:26px;color:var(--ink);font-weight:500;line-height:34px;white-space:nowrap}
@@ -539,7 +539,7 @@
 .h2sw{display:grid}.h2sw>span{grid-area:1/1}
 .fl5.scale .fl5-d{height:706px}
 .fl6-log,.fl6-pl{transition:opacity .3s}
-#fleet:not([data-st="5"]) .fl6-log,#fleet:not([data-st="5"]) .fl6-pl{opacity:0;pointer-events:none}
+#fleet:not(:is([data-st="5"],[data-st="6"],[data-st="7"])) .fl6-log,#fleet:not(:is([data-st="5"],[data-st="6"],[data-st="7"])) .fl6-pl{opacity:0;pointer-events:none}
 /* question 2: over to the audience */
 .qo-where{padding:30px 40px}
 .qo-dia{width:1600px;height:auto;display:block}
@@ -577,7 +577,7 @@
 .egd-x{font-family:Sora,sans-serif;font-size:36px;font-weight:600;color:var(--ink)}
 .egd-x b{color:var(--orange-deep)}
 .wh3.ask b{font-size:30px}
-#fleet[data-st="5"] .fl5.heal .fl5-d{padding-top:18px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.heal .fl5-d{padding-top:18px}
 #gph .gp4-pl{transition:opacity .3s}#gph[data-st="0"] .gp4-pl,#gph[data-st="4"] .gp4-pl{opacity:0;pointer-events:none}
 /* heal examples are seeked by the player: paused keyframes, offset by --f5t */
 #fleet .f5-w,#fleet .f5-wa,#fleet .f5-wx,#fleet .f5-wn,#fleet .f5-pr,#fleet .f5-in,#fleet .f5-px,#fleet .f5-pn,#fleet .f5-v,#fleet .f5-va,#fleet .f5-vx,#fleet .f5-vn{animation-delay:var(--f5t,0s)!important;animation-play-state:paused!important;animation-iteration-count:1!important;animation-fill-mode:both!important}
@@ -622,3 +622,12 @@
 /* close: authors with LinkedIn */
 .cl-au{display:flex;align-items:center;gap:10px;white-space:nowrap}.cl-au b{color:#fff;font-weight:600}
 .cl-li{width:26px;height:26px;flex:none;margin-left:4px}.cl-au span{color:#fff}
+
+/* scaling steps: three clickable chips in the panel header, one per step */
+.fl6-steps{position:absolute;right:110px;top:26px;display:flex;gap:12px;opacity:0;pointer-events:none;transition:opacity .3s}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl6-steps{opacity:1;pointer-events:auto}
+.fl6-steps button{display:inline-flex;align-items:center;gap:10px;font:600 22px 'IBM Plex Sans',sans-serif;color:var(--body);background:#fff;border:2px solid var(--line);border-radius:999px;padding:8px 20px 8px 10px;cursor:pointer;transition:all .25s}
+.fl6-steps button i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#E8EDF6;color:var(--muted);font:700 17px Sora,sans-serif}
+.fl6-steps button:hover{border-color:var(--orange)}
+#fleet[data-st="5"] .fl6-steps [data-k="5"],#fleet[data-st="6"] .fl6-steps [data-k="6"],#fleet[data-st="7"] .fl6-steps [data-k="7"]{background:var(--ink);border-color:var(--ink);color:#fff}
+#fleet[data-st="5"] .fl6-steps [data-k="5"] i,#fleet[data-st="6"] .fl6-steps [data-k="6"] i,#fleet[data-st="7"] .fl6-steps [data-k="7"] i{background:var(--orange);color:#fff}

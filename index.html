@@ -1649,13 +1649,13 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 #fleet:not([data-st="0"]) .fl5 .fl5-d{opacity:1;pointer-events:auto}
 #fleet[data-st="1"] .fl5.heal,#fleet[data-st="2"] .fl5.heal,#fleet[data-st="3"] .fl5.heal,#fleet[data-st="4"] .fl5.heal{top:226px;height:620px;width:1680px}
 #fleet[data-st="1"] .fl5.scale,#fleet[data-st="2"] .fl5.scale,#fleet[data-st="3"] .fl5.scale,#fleet[data-st="4"] .fl5.scale{left:120px;top:870px;width:1680px;height:104px}
-#fleet[data-st="5"] .fl5.heal{top:226px;height:92px;width:1680px}
-#fleet[data-st="5"] .fl5.scale{left:120px;top:332px;width:1680px;height:706px}
-#fleet[data-st="6"] .fl5.heal{top:226px;height:104px;width:820px}
-#fleet[data-st="6"] .fl5.scale{left:980px;top:226px;width:820px;height:104px}
-#fleet[data-st="5"] .fl5.heal .fl5-h h3,#fleet[data-st="6"] .fl5 .fl5-h h3,#fleet[data-st="1"] .fl5.scale .fl5-h h3,#fleet[data-st="2"] .fl5.scale .fl5-h h3,#fleet[data-st="3"] .fl5.scale .fl5-h h3,#fleet[data-st="4"] .fl5.scale .fl5-h h3{font-size:28px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.heal{top:226px;height:92px;width:1680px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.scale{left:120px;top:332px;width:1680px;height:706px}
+#fleet[data-st="8"] .fl5.heal{top:226px;height:104px;width:820px}
+#fleet[data-st="8"] .fl5.scale{left:980px;top:226px;width:820px;height:104px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.heal .fl5-h h3,#fleet[data-st="8"] .fl5 .fl5-h h3,#fleet[data-st="1"] .fl5.scale .fl5-h h3,#fleet[data-st="2"] .fl5.scale .fl5-h h3,#fleet[data-st="3"] .fl5.scale .fl5-h h3,#fleet[data-st="4"] .fl5.scale .fl5-h h3{font-size:28px}
 .fl5 .fl5-h::after{content:'▾';position:absolute;right:40px;top:34px;font-size:26px;color:var(--faint);transition:transform .3s}
-#fleet[data-st="5"] .heal .fl5-h::after,#fleet[data-st="6"] .fl5-h::after,#fleet[data-st="1"] .scale .fl5-h::after,#fleet[data-st="2"] .scale .fl5-h::after,#fleet[data-st="3"] .scale .fl5-h::after,#fleet[data-st="4"] .scale .fl5-h::after{transform:rotate(-90deg)}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .heal .fl5-h::after,#fleet[data-st="8"] .fl5-h::after,#fleet[data-st="1"] .scale .fl5-h::after,#fleet[data-st="2"] .scale .fl5-h::after,#fleet[data-st="3"] .scale .fl5-h::after,#fleet[data-st="4"] .scale .fl5-h::after{transform:rotate(-90deg)}
 .fl5 .fl5-d{width:100%}
 .fl6-svg{position:absolute;left:40px;top:112px;width:1600px;height:500px}
 .fl6-log{position:absolute;left:40px;right:620px;bottom:28px;font-size:26px;color:var(--ink);font-weight:500;line-height:34px;white-space:nowrap}
@@ -1770,7 +1770,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .h2sw{display:grid}.h2sw>span{grid-area:1/1}
 .fl5.scale .fl5-d{height:706px}
 .fl6-log,.fl6-pl{transition:opacity .3s}
-#fleet:not([data-st="5"]) .fl6-log,#fleet:not([data-st="5"]) .fl6-pl{opacity:0;pointer-events:none}
+#fleet:not(:is([data-st="5"],[data-st="6"],[data-st="7"])) .fl6-log,#fleet:not(:is([data-st="5"],[data-st="6"],[data-st="7"])) .fl6-pl{opacity:0;pointer-events:none}
 /* question 2: over to the audience */
 .qo-where{padding:30px 40px}
 .qo-dia{width:1600px;height:auto;display:block}
@@ -1808,7 +1808,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 .egd-x{font-family:Sora,sans-serif;font-size:36px;font-weight:600;color:var(--ink)}
 .egd-x b{color:var(--orange-deep)}
 .wh3.ask b{font-size:30px}
-#fleet[data-st="5"] .fl5.heal .fl5-d{padding-top:18px}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl5.heal .fl5-d{padding-top:18px}
 #gph .gp4-pl{transition:opacity .3s}#gph[data-st="0"] .gp4-pl,#gph[data-st="4"] .gp4-pl{opacity:0;pointer-events:none}
 /* heal examples are seeked by the player: paused keyframes, offset by --f5t */
 #fleet .f5-w,#fleet .f5-wa,#fleet .f5-wx,#fleet .f5-wn,#fleet .f5-pr,#fleet .f5-in,#fleet .f5-px,#fleet .f5-pn,#fleet .f5-v,#fleet .f5-va,#fleet .f5-vx,#fleet .f5-vn{animation-delay:var(--f5t,0s)!important;animation-play-state:paused!important;animation-iteration-count:1!important;animation-fill-mode:both!important}
@@ -1853,6 +1853,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 /* close: authors with LinkedIn */
 .cl-au{display:flex;align-items:center;gap:10px;white-space:nowrap}.cl-au b{color:#fff;font-weight:600}
 .cl-li{width:26px;height:26px;flex:none;margin-left:4px}.cl-au span{color:#fff}
+
+/* scaling steps: three clickable chips in the panel header, one per step */
+.fl6-steps{position:absolute;right:110px;top:26px;display:flex;gap:12px;opacity:0;pointer-events:none;transition:opacity .3s}
+#fleet:is([data-st="5"],[data-st="6"],[data-st="7"]) .fl6-steps{opacity:1;pointer-events:auto}
+.fl6-steps button{display:inline-flex;align-items:center;gap:10px;font:600 22px 'IBM Plex Sans',sans-serif;color:var(--body);background:#fff;border:2px solid var(--line);border-radius:999px;padding:8px 20px 8px 10px;cursor:pointer;transition:all .25s}
+.fl6-steps button i{font-style:normal;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#E8EDF6;color:var(--muted);font:700 17px Sora,sans-serif}
+.fl6-steps button:hover{border-color:var(--orange)}
+#fleet[data-st="5"] .fl6-steps [data-k="5"],#fleet[data-st="6"] .fl6-steps [data-k="6"],#fleet[data-st="7"] .fl6-steps [data-k="7"]{background:var(--ink);border-color:var(--ink);color:#fff}
+#fleet[data-st="5"] .fl6-steps [data-k="5"] i,#fleet[data-st="6"] .fl6-steps [data-k="6"] i,#fleet[data-st="7"] .fl6-steps [data-k="7"] i{background:var(--orange);color:#fff}
 </style></head>
 <body>
 <div id="stage-wrap"><div id="stage">
@@ -2466,7 +2475,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide light" id="fleet" data-steps="6" data-section="2 · Never losing work" data-time="3.2" data-title="Recovery and scaling without intervention">
+<section class="slide light" id="fleet" data-steps="8" data-section="2 · Never losing work" data-time="3.2" data-title="Recovery and scaling without intervention">
   <div class="hd">
     <div class="eyebrow">Problems 1 and 2, revisited</div>
     <h2>Recovery and scaling without intervention</h2>
@@ -2531,13 +2540,14 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     </div>
     <div class="fl5-d">
       <div class="fl5-h"><small class="or">2 · Scaling</small><h3>Pipelines do not own model servers</h3></div>
+      <div class="fl6-steps"><button type="button" data-k="5"><i>1</i>Servers are up</button><button type="button" data-k="6"><i>2</i>Servers are lent out</button><button type="button" data-k="7"><i>3</i>Servers come back</button></div>
       <svg class="fl6-svg" id="fl6-svg" viewBox="0 0 1600 500"></svg>
       <div class="fl6-log" id="fl6-log"></div>
       <div class="fl6-pl" id="fl6-pl"></div>
     </div>
   </div>
 
-  <div class="abs fl6-g" data-s="6" style="left:120px;top:350px;width:1680px">
+  <div class="abs fl6-g" data-s="8" style="left:120px;top:350px;width:1680px">
     <div class="card fl4c">
       <div class="v4cap">One day of a production run · samples per second · illustrative shape</div>
       <svg viewBox="0 0 1600 330" class="fl4-chart">
@@ -2573,8 +2583,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     <p data-step="2">A worker dies. The supervisor notices and starts a new one in its place, and the requests that worker had are sent again.</p>
     <p data-step="3">The whole program stops, or the node reboots. The watcher starts the program again. Whatever samples it had claimed and not finished go back to the table, and any node can pick them up.</p>
     <p data-step="4">A vLLM server crashes. Its own watcher restarts it, and the requests that were waiting on it go back to the queue. In every case nobody is paged and no work is lost.</p>
-    <p data-step="5">Now scaling. The key decision: pipelines don't own models. The cluster runs model servers on every machine, and the pipeline just uses whichever are serving. We even launch the run before any server is up: it just waits. Every 30 seconds the run checks which servers are serving, and starts one worker per serving server. No restart, no configuration. Every worker fetches samples from the database and sends them to its server. Now a colleague borrows servers 3 and 4. Their workers do not die: they drain, sending the samples they had not finished back to the database, and then wait. Everyone else carries on. When the servers come back, those workers fetch from the database again. Nothing was lost and nobody restarted anything. You can pause or drag the slider.</p>
-    <p data-step="6">Here is what that looks like over one day, as in our blog; the shape is illustrative. One: we launched before the models were up, and work started as each server came online. Two: a colleague borrowed GPUs; the workers using them drained and waited. Three: the test finished, and those workers fetched from the database again. Four: a server crashed; its requests went back and it restarted. Five: free GPUs appeared and the run spread onto them. Nobody touched the run all day.</p>
+    <p data-step="5">Now scaling, in three steps. Step one: all the servers are up. The key decision: pipelines don't own models. The cluster runs model servers on every machine, and the pipeline just uses whichever are serving. We even launch the run before any server is up: it just waits. Every 30 seconds the run checks which servers are serving, and starts one worker per serving server. No restart, no configuration. Every worker fetches samples from the database and sends them to its server.</p>
+    <p data-step="6">Step two: a colleague borrows servers 3 and 4. Their workers do not die: they drain, sending the samples they had not finished back to the database, and then they wait. Everyone else carries on.</p>
+    <p data-step="7">Step three: the servers come back, and those workers start again and fetch from the database. Nothing was lost and nobody restarted anything. You can click the steps, pause, or drag the slider.</p>
+    <p data-step="8">Here is what that looks like over one day, as in our blog; the shape is illustrative. One: we launched before the models were up, and work started as each server came online. Two: a colleague borrowed GPUs; the workers using them drained and waited. Three: the test finished, and those workers fetched from the database again. Four: a server crashed; its requests went back and it restarted. Five: free GPUs appeared and the run spread onto them. Nobody touched the run all day.</p>
   </aside>
 </section>
 
@@ -5399,8 +5411,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   /* the v1 "pipelines don't own models" picture, light: 3 machines x 2 servers, one worker per serving
      server, and the database the workers fetch from. Servers 3 and 4 are lent out mid-run and come back. */
   const HEAL = { 2: 2800, 3: 3500, 4: 3100 };            // step → length of its heal example (ms)
-  const DUR = 16000, N = 6, X = i => i * 268, LENT = [7000, 11500];
-  const onAt = i => 1600 + i * 350;
+  const N = 6, X = i => i * 268, LENT = [5000, 8700];
+  /* the scaling story is one timeline cut into three steps; each step plays its own slice */
+  const SEG = { 5: [0, 4900], 6: [5000, 8600], 7: [8700, 12700] };
+  const onAt = i => 1000 + i * 300;
   const lent = i => i === 2 || i === 3;
   function server(i, t) {
     if (t < onAt(i)) return 'off';
@@ -5425,12 +5439,12 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   };
   const RATE = 0.05, TOTAL = 3000;
   const LOG = [[0, 'Launched <b>before any model server is up</b>. The run waits.'],
-    [1600, 'Servers come up. The run <b>starts one worker per serving server</b>.'],
-    [4600, 'Each worker <b>fetches samples from the database</b> for its server.'],
+    [1000, 'Servers come up. The run <b>starts one worker per serving server</b>.'],
+    [3700, 'Each worker <b>fetches samples from the database</b> for its server.'],
     [LENT[0], 'Servers 3 and 4 are <b>lent out</b>. Their workers <b>drain</b>: samples go back.'],
     [LENT[0] + 1500, 'Workers 3 and 4 <b>wait</b>. Everyone else carries on.'],
     [LENT[1], 'The servers are back. Workers 3 and 4 <b>fetch again</b>.'],
-    [LENT[1] + 2200, 'No samples were lost, and <b>the run was not restarted</b>.']];
+    [LENT[1] + 2000, 'No samples were lost, and <b>the run was not restarted</b>.']];
   const STATUS = { work: 'working', drain: 'draining', wait: 'waiting', fetch: 'fetching', none: '' };
 
   function build(ctx) {
@@ -5496,7 +5510,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
   Deck.on('fleet', {
     enter(ctx) {
-      const open = { heal: [1, 6, 6, 6, 6, 1, 1], scale: [5, 5, 5, 5, 5, 6, 5] };    // by step: an open panel collapses, a closed one opens
+      const open = { heal: [1, 8, 8, 8, 8, 1, 1, 1, 1], scale: [5, 5, 5, 5, 5, 8, 8, 8, 5] };    // by step: an open panel collapses, a closed one opens
       if (!ctx.el.__fl5wired) {                                              // wire once: enter runs on every visit
         ctx.el.__fl5wired = true;
         ctx.qa('.fl5').forEach(card => card.addEventListener('click', e => {
@@ -5505,6 +5519,9 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
           if (st !== 0 && !e.target.closest('.fl5-h')) return;             // inside an open panel, only the header toggles
           e.stopPropagation();
           Deck.go(Deck.state.i, open[which][st]);
+        }));
+        ctx.qa('.fl6-steps button').forEach(b => b.addEventListener('click', e => {      // the three scaling steps, clickable
+          e.stopPropagation(); Deck.go(Deck.state.i, +b.dataset.k); b.blur();
         }));
         ctx.qa('.fl5-rows > div').forEach((row, k) => row.addEventListener('click', e => {   // each case plays its own example
           if (Deck.state.step === 0) return;
@@ -5520,9 +5537,10 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
         if (!ctx.__hp) ctx.__hp = Deck.player(ctx, ctx.q('#fl5-pl'), { dur: ctx.__hd, fmt: (t, D) => t >= D ? 'finished' : '', render: t => ctx.el.style.setProperty('--f5t', -Math.min(t, ctx.__hd * .94).toFixed(0) + 'ms') });
         else ctx.__hp.restart(ctx.__hd);
       } else if (ctx.__hp) ctx.__hp.pause();
-      if (s === 5) {
-        if (!ctx.__pl) ctx.__pl = Deck.player(ctx, ctx.q('#fl6-pl'), { dur: DUR, label: 'Time', mini: true, fmt: (t, d) => t >= d ? 'finished' : '', render: ctx.__render });
-        else ctx.__pl.replay();
+      if (SEG[s]) {                                           // scaling steps 1-3: play this step's slice of the timeline
+        const [a, b] = SEG[s]; ctx.__sa = a;
+        if (!ctx.__pl) ctx.__pl = Deck.player(ctx, ctx.q('#fl6-pl'), { dur: b - a, label: 'Time', mini: true, fmt: (t, d) => t >= d ? 'finished' : '', render: t => ctx.__render(ctx.__sa + t) });
+        else ctx.__pl.restart(b - a);
       } else if (ctx.__pl) ctx.__pl.pause();
     },
     leave(ctx) { ctx.el.classList.remove('fl5-now'); ctx.__pl = ctx.__hp = null; },

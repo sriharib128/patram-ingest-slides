@@ -59,8 +59,10 @@
   /* the v1 "pipelines don't own models" picture, light: 3 machines x 2 servers, one worker per serving
      server, and the database the workers fetch from. Servers 3 and 4 are lent out mid-run and come back. */
   const HEAL = { 2: 2800, 3: 3500, 4: 3100 };            // step → length of its heal example (ms)
-  const DUR = 16000, N = 6, X = i => i * 268, LENT = [7000, 11500];
-  const onAt = i => 1600 + i * 350;
+  const N = 6, X = i => i * 268, LENT = [5000, 8700];
+  /* the scaling story is one timeline cut into three steps; each step plays its own slice */
+  const SEG = { 5: [0, 4900], 6: [5000, 8600], 7: [8700, 12700] };
+  const onAt = i => 1000 + i * 300;
   const lent = i => i === 2 || i === 3;
   function server(i, t) {
     if (t < onAt(i)) return 'off';
@@ -85,12 +87,12 @@
   };
   const RATE = 0.05, TOTAL = 3000;
   const LOG = [[0, 'Launched <b>before any model server is up</b>. The run waits.'],
-    [1600, 'Servers come up. The run <b>starts one worker per serving server</b>.'],
-    [4600, 'Each worker <b>fetches samples from the database</b> for its server.'],
+    [1000, 'Servers come up. The run <b>starts one worker per serving server</b>.'],
+    [3700, 'Each worker <b>fetches samples from the database</b> for its server.'],
     [LENT[0], 'Servers 3 and 4 are <b>lent out</b>. Their workers <b>drain</b>: samples go back.'],
     [LENT[0] + 1500, 'Workers 3 and 4 <b>wait</b>. Everyone else carries on.'],
     [LENT[1], 'The servers are back. Workers 3 and 4 <b>fetch again</b>.'],
-    [LENT[1] + 2200, 'No samples were lost, and <b>the run was not restarted</b>.']];
+    [LENT[1] + 2000, 'No samples were lost, and <b>the run was not restarted</b>.']];
   const STATUS = { work: 'working', drain: 'draining', wait: 'waiting', fetch: 'fetching', none: '' };
 
   function build(ctx) {
@@ -156,7 +158,7 @@
 
   Deck.on('fleet', {
     enter(ctx) {
-      const open = { heal: [1, 6, 6, 6, 6, 1, 1], scale: [5, 5, 5, 5, 5, 6, 5] };    // by step: an open panel collapses, a closed one opens
+      const open = { heal: [1, 8, 8, 8, 8, 1, 1, 1, 1], scale: [5, 5, 5, 5, 5, 8, 8, 8, 5] };    // by step: an open panel collapses, a closed one opens
       if (!ctx.el.__fl5wired) {                                              // wire once: enter runs on every visit
         ctx.el.__fl5wired = true;
         ctx.qa('.fl5').forEach(card => card.addEventListener('click', e => {
@@ -165,6 +167,9 @@
           if (st !== 0 && !e.target.closest('.fl5-h')) return;             // inside an open panel, only the header toggles
           e.stopPropagation();
           Deck.go(Deck.state.i, open[which][st]);
+        }));
+        ctx.qa('.fl6-steps button').forEach(b => b.addEventListener('click', e => {      // the three scaling steps, clickable
+          e.stopPropagation(); Deck.go(Deck.state.i, +b.dataset.k); b.blur();
         }));
         ctx.qa('.fl5-rows > div').forEach((row, k) => row.addEventListener('click', e => {   // each case plays its own example
           if (Deck.state.step === 0) return;
@@ -180,9 +185,10 @@
         if (!ctx.__hp) ctx.__hp = Deck.player(ctx, ctx.q('#fl5-pl'), { dur: ctx.__hd, fmt: (t, D) => t >= D ? 'finished' : '', render: t => ctx.el.style.setProperty('--f5t', -Math.min(t, ctx.__hd * .94).toFixed(0) + 'ms') });
         else ctx.__hp.restart(ctx.__hd);
       } else if (ctx.__hp) ctx.__hp.pause();
-      if (s === 5) {
-        if (!ctx.__pl) ctx.__pl = Deck.player(ctx, ctx.q('#fl6-pl'), { dur: DUR, label: 'Time', mini: true, fmt: (t, d) => t >= d ? 'finished' : '', render: ctx.__render });
-        else ctx.__pl.replay();
+      if (SEG[s]) {                                           // scaling steps 1-3: play this step's slice of the timeline
+        const [a, b] = SEG[s]; ctx.__sa = a;
+        if (!ctx.__pl) ctx.__pl = Deck.player(ctx, ctx.q('#fl6-pl'), { dur: b - a, label: 'Time', mini: true, fmt: (t, d) => t >= d ? 'finished' : '', render: t => ctx.__render(ctx.__sa + t) });
+        else ctx.__pl.restart(b - a);
       } else if (ctx.__pl) ctx.__pl.pause();
     },
     leave(ctx) { ctx.el.classList.remove('fl5-now'); ctx.__pl = ctx.__hp = null; },
