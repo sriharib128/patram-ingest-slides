@@ -609,7 +609,8 @@
 .eco2-rel{padding:40px 44px;display:flex;flex-direction:column;align-items:flex-start;gap:18px;border-top:6px solid var(--blue)}
 .eco2-rel h3{font-size:60px;color:#1F4FA8;line-height:1}
 .eco2-rel p{font-size:25px;line-height:1.4;color:var(--body)}.eco2-rel p b{color:var(--ink)}
-.eco2-qr{width:240px;height:240px;border:3px dashed #9DB3DC;border-radius:16px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:17px;color:var(--muted);align-self:center;margin:8px 0}
+.eco2-qr{width:270px;height:270px;border:3px solid #C3CEE5;border-radius:16px;align-self:center;margin:6px 0 0;display:block}
+.eco2-rel .eco2-url{font-family:'IBM Plex Mono',monospace;font-size:20px;color:var(--muted);align-self:center;margin-top:-6px}
 .eco2-rel .eco2-ask{font-family:Sora,sans-serif;font-weight:600;color:var(--ink);align-self:center}
 /* under the hood: the question the Q&A works through */
 .dp-q{font-family:Sora,sans-serif;font-size:52px;line-height:1.25;font-weight:600;color:var(--ink);text-wrap:balance}.dp-q b{color:var(--orange-deep)}
