@@ -572,7 +572,10 @@
 .cl-form b{display:block;font-family:Sora,sans-serif;font-size:34px;color:#FFC078;margin-bottom:16px}
 .cl-qr{width:236px;height:236px;border-radius:14px;display:block}
 .cl-form span{display:block;font-size:22px;line-height:1.4;color:#E4ECFA}
-.cl-form .cl-url{font-family:'IBM Plex Mono',monospace;font-size:18px;color:#9DB3DC;margin:12px 0 10px}
+.cl-qra{display:block;line-height:0}
+.cl-form a.cl-url{font-family:'IBM Plex Mono',monospace;font-size:18px;color:#9DB3DC;margin:12px 0 10px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(157,179,220,.45)}
+.cl-au a{color:#fff;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,255,255,.35)}
+.cl-form a.cl-url:hover,.cl-au a:hover{color:#FFC078;text-decoration-color:#FFC078}
 /* what training data looks like */
 .egd-img{padding:18px;display:flex;align-items:center;justify-content:center}
 .egd-pg{position:relative;height:100%;aspect-ratio:900/1272}
