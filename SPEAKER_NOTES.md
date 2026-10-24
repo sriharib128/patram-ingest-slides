@@ -58,7 +58,7 @@ Structure: first the problem, then how we keep the GPUs busy, how we never lose 
 
 What we do: the Vision team at BharatGen builds sovereign vision foundation models for Indian documents. The model reads the page image directly, so layout, tables and stamps are not lost on the way.
 
-This is our stack as a pyramid, read from the bottom up. At the base is storage: our own file system and database. On it, we collect raw data, scraped and synthetic documents, and beside that sits our annotation and visualization tool, DarshinAI. Above that is training data generation: that is Patram-Ingest, what this talk is about, which turns raw pages into training data. Then the training infrastructure. Then the models, the Patram Suite, shown on the right: multi-task foundation models, Patram 1.5 today, one model for 34 tasks, and Patram 2.0 next, with more than 22 Indian languages; task-specific models for grounding, layout and grounded reasoning; and agents such as PatramParse. At the top, evaluation measures all of it. Everything above the ETL layer is trained or measured on data Patram-Ingest produced.
+This is our stack as a pyramid, read from the bottom up. At the base is storage: our own file system and database. On it, we collect raw data, scraped and synthetic documents, and beside that sits our annotation and visualization tool, DarshinAI. Above that is training data generation: that is Patram-Ingest, what this talk is about, which turns raw pages into training data. Then the training infrastructure. Then the models, the Patram Suite, shown on the right: multi-task foundation models, the Patram series, the current one covering 34 tasks and the next adding more than 22 Indian languages; task-specific models for grounding, layout and grounded reasoning; and agents such as PatramParse. At the top, evaluation measures all of it. Everything above the ETL layer is trained or measured on data Patram-Ingest produced.
 
 ## 3. The scale a foundation model needs
 *Context · ~0.6 min · no steps*
@@ -311,15 +311,15 @@ Failure propagation: if a stage fails a sample, every later stage marks it upstr
 Validation at start-up: acyclicity, reachability, routing-target isolation and the split between the two activation paths. And every output records the stages its sample passed through, so any record can be traced through the graph. Bit positions are stored in 64-bit integers; a wider bit string would serve any number of stages. Graphs are acyclic.
 
 ## 29. Scaling compared with DBOS and Temporal
-*3 · Graphs of stages · ~1.5 min · reveal steps: 3*
+*3 · Graphs of stages · ~1.5 min · no steps*
 
 Very few alternatives come close to these features. Among the 13 systems in our comparison, only DBOS and Temporal do: they already survive crashes, route per sample and run across machines. So we ran the same pipeline on both, on the same DB server and the same emulated model servers. We made the servers answer in 20 milliseconds, so inference could not be the limit, and added nodes until throughput stopped growing.
 
-**[step 1]** DBOS gained nothing from nodes past 16: about 1,350 pages per second at 16 nodes and at 40. Temporal peaked at 546 on 4 nodes and stayed between roughly 260 and 390 from 8 to 32. In both, the database's replication path was saturated: most DBOS backends were waiting inside a commit for the standby.
+DBOS gained nothing from nodes past 16: about 1,350 pages per second at 16 nodes and at 40. Temporal peaked at 546 on 4 nodes and stayed between roughly 260 and 390 from 8 to 32. In both, the database's replication path was saturated: most DBOS backends were waiting inside a commit for the standby.
 
-**[step 2]** Ours kept growing with every added node, to 8,571 pages per second at 32 nodes, which is 6 times DBOS and 28 times Temporal, with the database mostly idle. Why: the database only holds state, a few small rows per page, written in the background in groups; the results themselves go to files on each node, and no node ever waits on another. A driver replaying our statements with no model calls reached over 13,000 pages per second, so the database could give more.
+Ours kept growing with every added node, to 8,571 pages per second at 32 nodes, which is 6 times DBOS and 28 times Temporal, with the database mostly idle. Why: the database only holds state, a few small rows per page, written in the background in groups; the results themselves go to files on each node, and no node ever waits on another. A driver replaying our statements with no model calls reached over 13,000 pages per second, so the database could give more.
 
-**[step 3]** And the overhead stays tiny as nodes are added. Against a bare client that reads prompts from a file and writes answers to local disk, with no database at all, we reach 98.9 to 99.7 percent of its throughput at every scale from 1 to 48 nodes. Throughput grew from 3.88 requests per second on one node to 183.6 on 48, which is 98.6 percent of linear. Caveat: this is one deployment of each system, each configuration ran once, and the servers were emulated.
+And the overhead stays tiny as nodes are added. Against a bare client that reads prompts from a file and writes answers to local disk, with no database at all, we reach 98.9 to 99.7 percent of its throughput at every scale from 1 to 48 nodes. Throughput grew from 3.88 requests per second on one node to 183.6 on 48, which is 98.6 percent of linear. Caveat: this is one deployment of each system, each configuration ran once, and the servers were emulated.
 
 ## 30. Key takeaways
 *Wrap-up · ~1 min · no steps*
@@ -354,7 +354,7 @@ To step back: Patram-Ingest, everything we talked about today, is just one part 
 
 **[step 2]** And above it, Patram-Core takes this data, our training corpus, and makes it possible to train models. Using all of this, we have trained many foundation models, the Patram Suite, and evaluated them on our own benchmarks.
 
-**[step 3]** These are all internal models as of now. We are soon planning to release Patram 1.5. If you are interested, please sign up using this form, and we will let you know.
+**[step 3]** These are all internal models as of now. We are soon planning to release the Patram series. If you are interested, please sign up using this form, and we will let you know.
 
 ## 33. Part four · Q&amp;A
 *4 · Q&amp;A · ~0.2 min · no steps*

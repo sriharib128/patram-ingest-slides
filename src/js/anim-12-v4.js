@@ -71,7 +71,7 @@
         return { g, st: s.st };
       });
     },
-    step(ctx, s) { ctx.__S.forEach(o => o.g.style.opacity = s >= o.st ? 1 : 0); },
+    step(ctx, s) { ctx.__S.forEach(o => o.g.style.opacity = 1); },
   });
 
 })();

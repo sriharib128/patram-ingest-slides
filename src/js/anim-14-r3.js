@@ -58,7 +58,7 @@
   const U = Deck.util, clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
   /* the v1 "pipelines don't own models" picture, light: 3 machines x 2 servers, one worker per serving
      server, and the database the workers fetch from. Servers 3 and 4 are lent out mid-run and come back. */
-  const HEAL = { 2: 4000, 3: 5000, 4: 4400 };            // step → length of its heal example (ms)
+  const HEAL = { 2: 2800, 3: 3500, 4: 3100 };            // step → length of its heal example (ms)
   const DUR = 16000, N = 6, X = i => i * 268, LENT = [7000, 11500];
   const onAt = i => 1600 + i * 350;
   const lent = i => i === 2 || i === 3;

@@ -434,26 +434,28 @@
 #fleet[data-st="2"] .fl5-rows div:not(.r1),#fleet[data-st="3"] .fl5-rows div:not(.r2),#fleet[data-st="4"] .fl5-rows div:not(.r3){opacity:.4}
 /* looping examples: a worker dies and is replaced; the program stops and is restarted; the server crashes and restarts */
 .f5-wx,.f5-wn,.f5-px,.f5-pn,.f5-vx,.f5-vn{opacity:0}
-#fleet[data-st="2"] .f5-w{animation:f5wr 4s infinite}
-#fleet[data-st="2"] .f5-wa{animation:f5a 4s infinite}
-#fleet[data-st="2"] .f5-wx{animation:f5x 4s infinite}
-#fleet[data-st="2"] .f5-wn{animation:f5n 4s infinite}
+#fleet[data-st="2"] .f5-w{animation:f5wr 2.8s infinite}
+#fleet[data-st="2"] .f5-wa{animation:f5a 2.8s infinite}
+#fleet[data-st="2"] .f5-wx{animation:f5x 2.8s infinite}
+#fleet[data-st="2"] .f5-wn{animation:f5n 2.8s infinite}
 @keyframes f5wr{0%,22%{fill:#DDF1EA;stroke:#0E7C61}26%,55%{fill:#FBE6E4;stroke:#C93C3C}60%,100%{fill:#DDF1EA;stroke:#0E7C61}}
 @keyframes f5a{0%,22%{opacity:1}25%,100%{opacity:0}}
 @keyframes f5x{0%,24%{opacity:0}27%,55%{opacity:1}58%,100%{opacity:0}}
 @keyframes f5n{0%,58%{opacity:0}62%,95%{opacity:1}100%{opacity:0}}
-#fleet[data-st="3"] .f5-pr{animation:f5pr 5s infinite}
-#fleet[data-st="3"] .f5-in{animation:f5in 5s infinite}
-#fleet[data-st="3"] .f5-px{animation:f5x 5s infinite}
-#fleet[data-st="3"] .f5-pn{animation:f5pn 5s infinite}
+#fleet[data-st="3"] .f5-pr{animation:f5pr 3.5s infinite}
+#fleet[data-st="3"] .f5-in{animation:f5in 3.5s infinite}
+#fleet[data-st="3"] .f5-px{animation:f5x 3.5s infinite}
+#fleet[data-st="3"] .f5-pn{animation:f5pn 3.5s infinite}
 @keyframes f5pr{0%,22%{fill:#E4ECFA;stroke:#2A63C9}26%,62%{fill:#FBE6E4;stroke:#C93C3C}66%,100%{fill:#E4ECFA;stroke:#2A63C9}}
 @keyframes f5in{0%,22%{opacity:1}25%,64%{opacity:0}70%,100%{opacity:1}}
 @keyframes f5pn{0%,42%{opacity:0}45%,62%{opacity:1}65%,100%{opacity:0}}
-#fleet[data-st="4"] .f5-v{animation:f5v 4.4s infinite}
-#fleet[data-st="4"] .f5-va{animation:f5va 4.4s infinite}
-#fleet[data-st="4"] .f5-vx{animation:f5x 4.4s infinite}
-#fleet[data-st="4"] .f5-vn{animation:f5pn 4.4s infinite}
+#fleet[data-st="4"] .f5-v{animation:f5v 3.1s infinite}
+#fleet[data-st="4"] .f5-va{animation:f5va 3.1s infinite}
+#fleet[data-st="4"] .f5-vx{animation:f5vx 3.1s infinite}
+#fleet[data-st="4"] .f5-vn{animation:f5vn 3.1s infinite}
 @keyframes f5v{0%,22%{fill:#FFF4E2;stroke:#F28C28}26%,62%{fill:#FBE6E4;stroke:#C93C3C}66%,100%{fill:#FFF4E2;stroke:#F28C28}}
+@keyframes f5vx{0%,24%{opacity:0}27%,40%{opacity:1}43%,100%{opacity:0}}
+@keyframes f5vn{0%,44%{opacity:0}47%,62%{opacity:1}65%,100%{opacity:0}}
 @keyframes f5va{0%,22%{opacity:1}25%,64%{opacity:0}68%,100%{opacity:1}}
 .sc2why{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-size:22px!important;color:var(--muted)!important}
 .sc2why b{color:var(--green)}

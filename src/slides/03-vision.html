@@ -16,12 +16,12 @@
   <svg class="abs" style="left:0;top:0;width:1920px;height:1080px;pointer-events:none" viewBox="0 0 1920 1080"><g stroke="#7C9BD6" stroke-width="2.5" stroke-dasharray="3 9" stroke-linecap="round" fill="none"><path d="M823 417 L1300 300"/><path d="M878 522 L1300 990"/></g></svg>
   <div class="abs ps" style="left:1300px;top:300px;width:500px;height:690px">
     <h3>Patram Suite</h3>
-    <div class="ps-g"><small>Multi-task foundation models</small><p><b class="big">Patram 1.5</b><b class="big">Patram 2.0</b></p></div>
+    <div class="ps-g"><small>Multi-task foundation models</small><p><b class="big">Patram series</b></p></div>
     <div class="ps-g"><small>Task-specific models</small><p><b>Patram-Grounder</b><b>Patram-Layout</b><b>Patram-CoT</b></p></div>
     <div class="ps-g"><small>Agents</small><p><b>PatramParse</b></p></div>
   </div>
   <aside class="notes">
     <p>What we do: the Vision team at BharatGen builds sovereign vision foundation models for Indian documents. The model reads the page image directly, so layout, tables and stamps are not lost on the way.</p>
-    <p>This is our stack as a pyramid, read from the bottom up. At the base is storage: our own file system and database. On it, we collect raw data, scraped and synthetic documents, and beside that sits our annotation and visualization tool, DarshinAI. Above that is training data generation: that is Patram-Ingest, what this talk is about, which turns raw pages into training data. Then the training infrastructure. Then the models, the Patram Suite, shown on the right: multi-task foundation models, Patram 1.5 today, one model for 34 tasks, and Patram 2.0 next, with more than 22 Indian languages; task-specific models for grounding, layout and grounded reasoning; and agents such as PatramParse. At the top, evaluation measures all of it. Everything above the ETL layer is trained or measured on data Patram-Ingest produced.</p>
+    <p>This is our stack as a pyramid, read from the bottom up. At the base is storage: our own file system and database. On it, we collect raw data, scraped and synthetic documents, and beside that sits our annotation and visualization tool, DarshinAI. Above that is training data generation: that is Patram-Ingest, what this talk is about, which turns raw pages into training data. Then the training infrastructure. Then the models, the Patram Suite, shown on the right: multi-task foundation models, the Patram series, the current one covering 34 tasks and the next adding more than 22 Indian languages; task-specific models for grounding, layout and grounded reasoning; and agents such as PatramParse. At the top, evaluation measures all of it. Everything above the ETL layer is trained or measured on data Patram-Ingest produced.</p>
   </aside>
 </section>
