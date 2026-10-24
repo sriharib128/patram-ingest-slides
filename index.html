@@ -1895,10 +1895,16 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 #queue2[data-st="1"] .q2-steps [data-k="1"] i,#queue2[data-st="2"] .q2-steps [data-k="2"] i,#queue2[data-st="3"] .q2-steps [data-k="3"] i,#queue2[data-st="4"] .q2-steps [data-k="4"] i{background:var(--orange);color:#fff}
 #q2-pl{transition:opacity .3s}
 #queue2[data-st="0"] #q2-pl{opacity:0;pointer-events:none}
+
+/* the BharatGen mark, bottom left on every slide that does not already show it */
+#brand{position:absolute;left:56px;bottom:14px;z-index:40;pointer-events:none;transition:opacity .3s}
+#brand.hide{opacity:0}
+#brand img{display:block;height:34px;width:auto;opacity:.9}
+.dark-ui #brand img{background:#fff;border-radius:10px;padding:4px 10px;height:42px;box-sizing:border-box;opacity:.95}
 </style></head>
 <body>
 <div id="stage-wrap"><div id="stage">
-<section class="slide dark" id="title" data-section="Context" data-time="0.3" data-title="Patram-Ingest: durable execution around vLLM">
+<section data-nobrand class="slide dark" id="title" data-section="Context" data-time="0.3" data-title="Patram-Ingest: durable execution around vLLM">
   <canvas class="abs" width="1920" height="1080" style="left:0;top:0;width:1920px;height:1080px"></canvas>
   <div class="abs" style="left:120px;top:140px;width:1240px">
     <div class="eyebrow">BharatGen · Vision Team</div>
@@ -2919,7 +2925,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<section class="slide dark" id="close" data-steps="0" data-section="4 · Thank you" data-time="0.6" data-title="Thank you">
+<section data-nobrand class="slide dark" id="close" data-steps="0" data-section="4 · Thank you" data-time="0.6" data-title="Thank you">
   <canvas class="abs" width="1920" height="1080" style="left:0;top:0;width:1920px;height:1080px"></canvas>
   <div class="abs" style="left:120px;top:78px;width:1680px">
     <div class="eyebrow">In summary</div>
@@ -3077,7 +3083,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </aside>
 </section>
 
-<div id="acts"></div><div id="bar"></div><div id="counter"></div><div id="hud"></div>
+<div id="acts"></div><div id="brand"><img src="assets/bharatgen_logo_crop.png" alt="BharatGen"></div><div id="bar"></div><div id="counter"></div><div id="hud"></div>
 </div></div>
 <div id="overview"></div>
 <div id="presenter-panel">
@@ -3222,6 +3228,7 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
     ctrN.textContent = (state.i + 1) + ' / ' + N;
     bar.style.width = ((state.i + 1) / N * 100) + '%';
     stage.classList.toggle('dark-ui', el.classList.contains('dark'));
+    const brand = $('#brand'); if (brand) brand.classList.toggle('hide', el.hasAttribute('data-nobrand'));   // the title and thank-you slides carry the logo themselves
     const acts = $('#acts');
     if (acts) {
       if (!acts.children.length) { const sp = document.createElement('span'); sp.dataset.part = 'title'; sp.className = 'ttl'; sp.title = 'Go to the title slide'; sp.innerHTML = '<b>Title</b>'; acts.appendChild(sp); } if (acts.children.length === 1) ['The problem', 'Busy GPUs', 'No lost work', 'Graphs', 'Thank you', 'Q&A'].forEach((n, k) => { const sp = document.createElement('span'); sp.dataset.part = k; sp.title = 'Go to part ' + k + ': ' + n; sp.innerHTML = '<b>' + k + '</b><u>' + n + '</u>'; acts.appendChild(sp); });

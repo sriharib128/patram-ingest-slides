@@ -664,3 +664,9 @@
 #queue2[data-st="1"] .q2-steps [data-k="1"] i,#queue2[data-st="2"] .q2-steps [data-k="2"] i,#queue2[data-st="3"] .q2-steps [data-k="3"] i,#queue2[data-st="4"] .q2-steps [data-k="4"] i{background:var(--orange);color:#fff}
 #q2-pl{transition:opacity .3s}
 #queue2[data-st="0"] #q2-pl{opacity:0;pointer-events:none}
+
+/* the BharatGen mark, bottom left on every slide that does not already show it */
+#brand{position:absolute;left:56px;bottom:14px;z-index:40;pointer-events:none;transition:opacity .3s}
+#brand.hide{opacity:0}
+#brand img{display:block;height:34px;width:auto;opacity:.9}
+.dark-ui #brand img{background:#fff;border-radius:10px;padding:4px 10px;height:42px;box-sizing:border-box;opacity:.95}
