@@ -5,14 +5,14 @@
   </div>
   <div class="abs" id="ar3-k" style="left:120px;top:228px;width:1680px;height:640px"></div>
   <div class="abs wh3" style="left:120px;top:900px;width:1680px">
-    <div class="p"><b>Processes</b>step workers, the pool, each model worker: CPU work, crashes stay apart, one GPU each</div>
+    <div class="p"><b>Processes</b>the orchestrator, the pool, each worker: CPU work, crashes stay apart, one GPU each</div>
     <div class="t"><b>Threads</b>prepare, collect, write, upload, dispatch, supervise: they mostly wait</div>
-    <div class="e"><b>Event loop</b>inside each model worker: many calls in flight at once</div>
+    <div class="e"><b>Event loop</b>inside each worker: many calls in flight at once</div>
   </div>
   <aside class="notes">
     <p>Here is what we chose: the same picture, coloured by kind.</p>
-    <p>Processes, in blue: each step worker, the pool, and each model worker. These do CPU work in Python, such as checking images and handling JSON, so they need their own interpreter. A crash, for example an out-of-memory kill, takes down one process and nothing else. And a GPU is owned by exactly one process. We learned this the hard way: early versions ran the model in the same process as up to ten steps, and the shared interpreter lock was the first bottleneck.</p>
-    <p>Threads, in purple: inside a step worker, prepare, collect, write and upload are threads, and in the pool so are the dispatcher and the supervisor. They spend their time waiting on the database, on fsync or on the network, and waiting releases the lock, so threads overlap well. Handing a result from one to the next is just passing an object.</p>
-    <p>Event loops, in orange: inside each model worker, one asyncio loop keeps many calls in flight, for example 24 requests per vLLM server, each handled as its answer arrives. One thread, no lock, many waits.</p>
+    <p>Processes, in blue: the orchestrator, the worker pool, and each worker. These do CPU work in Python, such as checking images and handling JSON, so they need their own interpreter. A crash, for example an out-of-memory kill, takes down one process and nothing else. And a GPU is owned by exactly one process. We learned this the hard way: early versions ran the model in the same process as the rest of the pipeline, and the shared interpreter lock was the first bottleneck.</p>
+    <p>Threads, in purple: inside the orchestrator, prepare, collect, write and upload are threads, and in the pool so are the dispatcher and the supervisor. They spend their time waiting on the database, on fsync or on the network, and waiting releases the lock, so threads overlap well. Handing a result from one to the next is just passing an object.</p>
+    <p>Event loops, in orange: inside each worker, one asyncio loop keeps many calls in flight, for example 24 requests per vLLM server, each handled as its answer arrives. One thread, no lock, many waits.</p>
   </aside>
 </section>

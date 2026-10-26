@@ -2318,8 +2318,8 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   <div class="abs v4cap2" style="left:120px;top:906px;width:1680px;font-size:34px">All of these run <span class="hi">at the same time</span>. Each needs the right kind of parallelism.</div>
   <aside class="notes">
     <p>Here is what runs on every node, before we talk about how. Every node runs the same program; there is no master node.</p>
-    <p>On the left, a step worker, one per step of the pipeline. It has four jobs. Prepare claims samples and builds the model requests. Collect gathers the results as they come back. Write saves them to disk and then marks them done. Upload moves finished files to the object store.</p>
-    <p>In the middle, the worker pool, shared by all the steps. A dispatcher hands each request to a worker. There is one worker per model server, GPU, browser or CPU slot, and each worker calls a backend. A supervisor restarts any worker that dies.</p>
+    <p>On the left, the orchestrator process. It has four jobs. Prepare claims samples and builds the model requests. Collect gathers the results as they come back. Write saves them to disk and then marks them done. Upload moves finished files to the object store.</p>
+    <p>In the middle, the worker pool: the worker processes that run the models. A dispatcher hands each request to a worker. There is one worker per model server, GPU, browser or CPU slot, and each worker calls a backend. A supervisor restarts any worker that dies.</p>
     <p>On the right, the backends a worker can call: vLLM servers, Hugging Face models, a CPU process such as page rendering, or any classic model such as SAM3 or YOLO. And around everything, a small watcher restarts the whole program if it exits or the node reboots.</p>
     <p>All of these pieces must run at the same time, or the GPU waits, as we just saw. So for each one we have to choose the right kind of parallelism. First, the three options.</p>
   </aside>
@@ -2423,15 +2423,15 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
   </div>
   <div class="abs" id="ar3-k" style="left:120px;top:228px;width:1680px;height:640px"></div>
   <div class="abs wh3" style="left:120px;top:900px;width:1680px">
-    <div class="p"><b>Processes</b>step workers, the pool, each model worker: CPU work, crashes stay apart, one GPU each</div>
+    <div class="p"><b>Processes</b>the orchestrator, the pool, each worker: CPU work, crashes stay apart, one GPU each</div>
     <div class="t"><b>Threads</b>prepare, collect, write, upload, dispatch, supervise: they mostly wait</div>
-    <div class="e"><b>Event loop</b>inside each model worker: many calls in flight at once</div>
+    <div class="e"><b>Event loop</b>inside each worker: many calls in flight at once</div>
   </div>
   <aside class="notes">
     <p>Here is what we chose: the same picture, coloured by kind.</p>
-    <p>Processes, in blue: each step worker, the pool, and each model worker. These do CPU work in Python, such as checking images and handling JSON, so they need their own interpreter. A crash, for example an out-of-memory kill, takes down one process and nothing else. And a GPU is owned by exactly one process. We learned this the hard way: early versions ran the model in the same process as up to ten steps, and the shared interpreter lock was the first bottleneck.</p>
-    <p>Threads, in purple: inside a step worker, prepare, collect, write and upload are threads, and in the pool so are the dispatcher and the supervisor. They spend their time waiting on the database, on fsync or on the network, and waiting releases the lock, so threads overlap well. Handing a result from one to the next is just passing an object.</p>
-    <p>Event loops, in orange: inside each model worker, one asyncio loop keeps many calls in flight, for example 24 requests per vLLM server, each handled as its answer arrives. One thread, no lock, many waits.</p>
+    <p>Processes, in blue: the orchestrator, the worker pool, and each worker. These do CPU work in Python, such as checking images and handling JSON, so they need their own interpreter. A crash, for example an out-of-memory kill, takes down one process and nothing else. And a GPU is owned by exactly one process. We learned this the hard way: early versions ran the model in the same process as the rest of the pipeline, and the shared interpreter lock was the first bottleneck.</p>
+    <p>Threads, in purple: inside the orchestrator, prepare, collect, write and upload are threads, and in the pool so are the dispatcher and the supervisor. They spend their time waiting on the database, on fsync or on the network, and waiting releases the lock, so threads overlap well. Handing a result from one to the next is just passing an object.</p>
+    <p>Event loops, in orange: inside each worker, one asyncio loop keeps many calls in flight, for example 24 requests per vLLM server, each handled as its answer arrives. One thread, no lock, many waits.</p>
   </aside>
 </section>
 
@@ -5561,12 +5561,12 @@ input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;bac
 
   /* boxes: [key, x, y, w, h, name, description, kind]; kind: p = process, t = thread, '' = untagged */
   const BOX = [
-    ['stage', 30, 50, 520, 500, 'Step worker', 'one per step', 'p'],
+    ['stage', 30, 50, 520, 500, 'Orchestrator', 'claims, collects, saves', 'p'],
     ['prep', 60, 110, 460, 88, 'Prepare', 'claim samples, build requests', 't'],
     ['coll', 60, 215, 460, 88, 'Collect', 'gather the results', 't'],
     ['write', 60, 320, 460, 88, 'Write', 'save to disk, then mark done', 't'],
     ['up', 60, 425, 460, 88, 'Upload', 'move files to the object store', 't'],
-    ['pool', 650, 50, 570, 500, 'Worker pool', 'shared by all steps', 'p'],
+    ['pool', 650, 50, 570, 500, 'Worker pool', 'runs the models', 'p'],
     ['disp', 680, 110, 510, 88, 'Dispatcher', 'hands each request to a worker', 't'],
     ['w1', 680, 232, 158, 172, 'Worker 1', '', 'w'],
     ['w2', 856, 232, 158, 172, 'Worker 2', '', 'w'],
