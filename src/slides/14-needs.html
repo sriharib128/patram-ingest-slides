@@ -52,9 +52,9 @@
   </div>
   <aside class="notes">
     <p>From those problems come three needs, and we take them in order.</p>
-    <p>First, busy GPUs. The GPUs are the expensive part of the cluster, and part one is about never letting them wait for anything: not the host, not the disk, not another stage.</p>
+    <p>First, busy GPUs. The GPUs are the expensive part of the cluster, and part one is about never letting them wait for anything: not the host, not the disk, not another step.</p>
     <p>Second, crash safety. Nodes die and GPUs come and go, and when the dust settles the output must still hold every record exactly once, without a person cleaning up. That is part two. Normally this need is expensive, because engines that survive crashes write every step to a database; part two shows how we avoid that.</p>
-    <p>Third, any workflow with very little code. Once someone can picture a pipeline, with stages that branch and merge on what the data contains, getting it running across every node should take a few lines of code and one command. Coordination, retries and scaling should come for free. That is part three.</p>
+    <p>Third, any workflow with very little code. Once someone can picture a pipeline, with steps that branch and merge on what the data contains, getting it running across every node should take a few lines of code and one command. Coordination, retries and scaling should come for free. That is part three.</p>
     <p>First, busy GPUs.</p>
   </aside>
 </section>

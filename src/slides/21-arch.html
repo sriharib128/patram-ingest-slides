@@ -7,8 +7,8 @@
   <div class="abs v4cap2" style="left:120px;top:906px;width:1680px;font-size:34px">All of these run <span class="hi">at the same time</span>. Each needs the right kind of parallelism.</div>
   <aside class="notes">
     <p>Here is what runs on every node, before we talk about how. Every node runs the same program; there is no master node.</p>
-    <p>On the left, a stage worker, one per stage of the pipeline. It has four jobs. Prepare claims samples and builds the model requests. Collect gathers the results as they come back. Write saves them to disk and then marks them done. Upload moves finished files to the object store.</p>
-    <p>In the middle, the worker pool, shared by the stages. A dispatcher hands each request to a worker. There is one worker per model server, GPU, browser or CPU slot, and each worker calls a backend. A supervisor restarts any worker that dies.</p>
+    <p>On the left, a step worker, one per step of the pipeline. It has four jobs. Prepare claims samples and builds the model requests. Collect gathers the results as they come back. Write saves them to disk and then marks them done. Upload moves finished files to the object store.</p>
+    <p>In the middle, the worker pool, shared by all the steps. A dispatcher hands each request to a worker. There is one worker per model server, GPU, browser or CPU slot, and each worker calls a backend. A supervisor restarts any worker that dies.</p>
     <p>On the right, the backends a worker can call: vLLM servers, Hugging Face models, a CPU process such as page rendering, or any classic model such as SAM3 or YOLO. And around everything, a small watcher restarts the whole program if it exits or the node reboots.</p>
     <p>All of these pieces must run at the same time, or the GPU waits, as we just saw. So for each one we have to choose the right kind of parallelism. First, the three options.</p>
   </aside>

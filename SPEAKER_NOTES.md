@@ -91,7 +91,7 @@ One: nodes die and restart. Over weeks, nodes crash, reboot, run out of memory o
 
 Two: GPUs are lent out. The cluster is shared, so we sometimes lend GPUs to another team for a while. The run should carry on with fewer, and when the GPUs come back it should scale up and use them again on its own, without a restart.
 
-Three: complex workloads need pipeline parallelism. A page goes through several model stages, and we want every stage running at the same time, with stages spread over different nodes.
+Three: complex workloads need pipeline parallelism. A page goes through several model steps, and we want every step running at the same time, with steps spread over different nodes.
 
 If asked whether this really happens: in one run, nine of 24 nodes stopped working, and nobody noticed for six hours, because nothing was in place to notice.
 
@@ -100,11 +100,11 @@ If asked whether this really happens: in one run, nine of 24 nodes stopped worki
 
 From those problems come three needs, and we take them in order.
 
-First, busy GPUs. The GPUs are the expensive part of the cluster, and part one is about never letting them wait for anything: not the host, not the disk, not another stage.
+First, busy GPUs. The GPUs are the expensive part of the cluster, and part one is about never letting them wait for anything: not the host, not the disk, not another step.
 
 Second, crash safety. Nodes die and GPUs come and go, and when the dust settles the output must still hold every record exactly once, without a person cleaning up. That is part two. Normally this need is expensive, because engines that survive crashes write every step to a database; part two shows how we avoid that.
 
-Third, any workflow with very little code. Once someone can picture a pipeline, with stages that branch and merge on what the data contains, getting it running across every node should take a few lines of code and one command. Coordination, retries and scaling should come for free. That is part three.
+Third, any workflow with very little code. Once someone can picture a pipeline, with steps that branch and merge on what the data contains, getting it running across every node should take a few lines of code and one command. Coordination, retries and scaling should come for free. That is part three.
 
 First, busy GPUs.
 
@@ -125,9 +125,9 @@ Start with what the GPU actually does. For every batch of pages, the model run i
 
 Here is what runs on every node, before we talk about how. Every node runs the same program; there is no master node.
 
-On the left, a stage worker, one per stage of the pipeline. It has four jobs. Prepare claims samples and builds the model requests. Collect gathers the results as they come back. Write saves them to disk and then marks them done. Upload moves finished files to the object store.
+On the left, a step worker, one per step of the pipeline. It has four jobs. Prepare claims samples and builds the model requests. Collect gathers the results as they come back. Write saves them to disk and then marks them done. Upload moves finished files to the object store.
 
-In the middle, the worker pool, shared by the stages. A dispatcher hands each request to a worker. There is one worker per model server, GPU, browser or CPU slot, and each worker calls a backend. A supervisor restarts any worker that dies.
+In the middle, the worker pool, shared by all the steps. A dispatcher hands each request to a worker. There is one worker per model server, GPU, browser or CPU slot, and each worker calls a backend. A supervisor restarts any worker that dies.
 
 On the right, the backends a worker can call: vLLM servers, Hugging Face models, a CPU process such as page rendering, or any classic model such as SAM3 or YOLO. And around everything, a small watcher restarts the whole program if it exits or the node reboots.
 
@@ -156,9 +156,9 @@ Now that you know the three options, here is the node again. Every one of these 
 
 Here is what we chose: the same picture, coloured by kind.
 
-Processes, in blue: each stage worker, the pool, and each model worker. These do CPU work in Python, such as checking images and handling JSON, so they need their own interpreter. A crash, for example an out-of-memory kill, takes down one process and nothing else. And a GPU is owned by exactly one process. We learned this the hard way: early versions ran the model in the same process as up to ten stages, and the shared interpreter lock was the first bottleneck.
+Processes, in blue: each step worker, the pool, and each model worker. These do CPU work in Python, such as checking images and handling JSON, so they need their own interpreter. A crash, for example an out-of-memory kill, takes down one process and nothing else. And a GPU is owned by exactly one process. We learned this the hard way: early versions ran the model in the same process as up to ten steps, and the shared interpreter lock was the first bottleneck.
 
-Threads, in purple: inside a stage worker, prepare, collect, write and upload are threads, and in the pool so are the dispatcher and the supervisor. They spend their time waiting on the database, on fsync or on the network, and waiting releases the lock, so threads overlap well. Handing a result from one to the next is just passing an object.
+Threads, in purple: inside a step worker, prepare, collect, write and upload are threads, and in the pool so are the dispatcher and the supervisor. They spend their time waiting on the database, on fsync or on the network, and waiting releases the lock, so threads overlap well. Handing a result from one to the next is just passing an object.
 
 Event loops, in orange: inside each model worker, one asyncio loop keeps many calls in flight, for example 24 requests per vLLM server, each handled as its answer arrives. One thread, no lock, many waits.
 
@@ -197,7 +197,7 @@ Busy GPUs are only useful if the work survives. Part two is the core of the talk
 ## 18. Nodes take work from one table
 *2 · Crash safe · ~1.6 min · no steps*
 
-Busy GPUs are only useful if the work survives, so start with how many nodes share one run, with as little overhead as possible. Nodes do not talk to each other and there is no coordinator. Each stage's queue is a table in the DB with one row per sample, drawn here as one box per image, and each row has a state: waiting, claimed, done or failed. A node that wants work sends the database one command that picks a few waiting rows, marks them as its own and writes its name on them, all in one step. A second node making the same request at the same instant skips those rows, so two nodes can never get the same image. Nothing is assigned in advance, so a fast node simply takes more work. Click the steps, or press next, to walk through one run.
+Busy GPUs are only useful if the work survives, so start with how many nodes share one run, with as little overhead as possible. Nodes do not talk to each other and there is no coordinator. Each step's queue is a table in the DB with one row per sample, drawn here as one box per image, and each row has a state: waiting, claimed, done or failed. A node that wants work sends the database one command that picks a few waiting rows, marks them as its own and writes its name on them, all in one step. A second node making the same request at the same instant skips those rows, so two nodes can never get the same image. Nothing is assigned in advance, so a fast node simply takes more work. Click the steps, or press next, to walk through one run.
 
 **[step 1]** Nodes A and B each ask the queue for a batch of images. Each batch takes its node's colour, and the node works on it.
 

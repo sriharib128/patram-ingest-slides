@@ -4,12 +4,12 @@
 
   /* boxes: [key, x, y, w, h, name, description, kind]; kind: p = process, t = thread, '' = untagged */
   const BOX = [
-    ['stage', 30, 50, 520, 500, 'Stage worker', 'one per stage', 'p'],
+    ['stage', 30, 50, 520, 500, 'Step worker', 'one per step', 'p'],
     ['prep', 60, 110, 460, 88, 'Prepare', 'claim samples, build requests', 't'],
     ['coll', 60, 215, 460, 88, 'Collect', 'gather the results', 't'],
     ['write', 60, 320, 460, 88, 'Write', 'save to disk, then mark done', 't'],
     ['up', 60, 425, 460, 88, 'Upload', 'move files to the object store', 't'],
-    ['pool', 650, 50, 570, 500, 'Worker pool', 'shared by the stages', 'p'],
+    ['pool', 650, 50, 570, 500, 'Worker pool', 'shared by all steps', 'p'],
     ['disp', 680, 110, 510, 88, 'Dispatcher', 'hands each request to a worker', 't'],
     ['w1', 680, 232, 158, 172, 'Worker 1', '', 'w'],
     ['w2', 856, 232, 158, 172, 'Worker 2', '', 'w'],
